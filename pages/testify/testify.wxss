@@ -66,3 +66,12 @@
     font-size: 26rpx;
     width: 347rpx;
 }
+.getPhone{
+   /* width:140rpx;   */
+   border: none;
+   background: #4E63A9;
+   color: #fff;
+   font-size: 14px;
+   margin: 0;
+   padding: 0 8rpx;
+}

@@ -11,7 +11,7 @@
                         <image class="avatar-login-useravatar" src="{{userInfo.headimgurl}}" wx:if="{{userInfo.headimgurl}}"></image>
                     </image>
                 </view>
-                <view bindtap="toTestify" class="extra-unpost" wx:if="{{!extraHas}}">未认证</view>
+                <view bindtap="toTestify" class="extra-unpost" wx:if="{{userInfo.is_auth==2}}">未认证</view>
                 <image bindtap="extraHas" class="extra-haspost" src="/images/index_extra-haspost.png" wx:else></image>
             </view>
             <view>
@@ -172,7 +172,7 @@
                 </view>
             </view>
         </view>
-        <image class="addpopup" src="/images/popup.gif" wx:if="{{new}}"></image>
+        <image class="addpopup" src="/images/popup.gif" ></image>
         <view bindtap="record" class="add">登山备案</view>
         <view style="position:fixed;left:-100%">
             <canvas bindlongtap="save" canvasId="canvas" class="canvas" style="width:{{qrcodeWidth}}px; height:{{qrcodeWidth}}px"></canvas>

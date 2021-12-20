@@ -1,8 +1,10 @@
 var e = require("../../@babel/runtime/helpers/interopRequireDefault"), t = require("../../@babel/runtime/helpers/defineProperty"), a = e(require("../../utils/mixins/pageMixin/myPageMixin")), n = getApp(), s = require("../../utils/util.js");
 
+import Api from "../../api/index"
 Page({
     mixins: [ a.default ],
     data: t({
+        dataBack:true,
         group: [ "单人", "团队" ],
         family: [ "是", "否" ],
         reason: [ "游玩/活动", "生产作业", "采集山产品", "车辆通行", "祭祀", "迁坟", "其他" ],
@@ -45,12 +47,38 @@ Page({
         });
     },
     createDone: s.throttle(function(e) {
+        let that=this
+        let {ensureGroup,showEnsureFamilyNum,ensureReason,date}=this.data
+        let type=ensureGroup=="个人"?1:2
+        let reason=ensureReason//登山原因
+        let ds_time=date//登山时间
+        
+        wx.showLoading({
+          title: '备案中',
+          mask: true,
+        })
+        Api.subDsLog({
+            type,reason,ds_time
+        }).then(res=>{
+            wx.hideloading()
+            wx.showToast({
+              title: '备案成功',
+              icon:'none',
+              mask:true
+            })
+            that.setData({
+
+            })
+        }
+        )
+        return
         var t = this;
         if (0 != this.data.isRead) if (this.data.ensureEnter) {
             if ("单人" == this.data.ensureGroup) wx.showModal({
                 title: "提交备案",
                 content: "请确认备案信息是否正确，正确请选择确定返回主页",
                 success: function(e) {
+                    e.confirm && 
                     e.confirm && wx.login({
                         success: function(e) {
                             wx.request({
@@ -129,6 +157,10 @@ Page({
                     title: "提交备案",
                     content: "请确认备案信息是否正确，正确请选择确定返回主页",
                     success: function(e) {
+                        e.confirm&&Api.subDsLog({}).then(res=>{
+                            
+                        })
+                         return
                         e.confirm && wx.login({
                             success: function(e) {
                                 wx.request({

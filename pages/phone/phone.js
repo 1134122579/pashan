@@ -17,6 +17,10 @@ Page({
         });
     },
     getPhone: function(e) {
+        wx.redirectTo({
+            url: "../backgroundLocation/backgroundLocation"
+        });
+        return
         var t = this;
         "getPhoneNumber:ok" == e.detail.errMsg && wx.login({
             success: function(o) {

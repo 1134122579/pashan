@@ -2,21 +2,21 @@
 <view >
     <view class="user-box user-type">
         <view class="user-title">头像</view>
-        <image class="user-avatar" src="{{userInfoDataBase.avatarUrl}}" wx:if="{{userInfo}}"></image>
+        <image class="user-avatar" src="{{userInfo.headimgurl}}" wx:if="{{userInfo.is_auth==1}}"></image>
         <image class="user-avatar" src="/images/index_squad_avatar.png" wx:else></image>
     </view>
     <view class="user-box">
         <view class="user-type">
             <view class="user-title">手机号码</view>
-            <view class="user-info">{{phone}}</view>
+            <view class="user-info">{{userInfo.mobile}}</view>
         </view>
         <view class="user-type">
             <view class="user-title">姓名</view>
-            <view class="user-info">{{fullnameTrans}}</view>
+            <view class="user-info">{{userInfo.name}}</view>
         </view>
         <view class="user-type">
             <view class="user-title">身份证号码</view>
-            <view class="user-info">{{idcardTrans}}</view>
+            <view class="user-info">{{userInfo.idcard}}</view>
         </view>
     </view>
     <view class="user-box">

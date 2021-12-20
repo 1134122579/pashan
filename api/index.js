@@ -41,4 +41,36 @@ export default {
       isThree: false,
     });
   },
+  editUserInfo(params) {
+    return fly({
+      url: `editUserInfo`,
+      method: "post",
+      params,
+      isThree: false,
+    });
+  },
+  encrypt_info(params) {
+    return fly({
+      url: `encrypt_info`,
+      method: "post",
+      params,
+      isThree: false,
+    });
+  },
+  editDsLog(params) {
+    return fly({
+      url: `editDsLog`,
+      method: "post",
+      params,
+      isThree: false,
+    });
+  },
+  subDsLog(params) {
+    return fly({
+      url: `subDsLog`,
+      method: "post",
+      params,
+      isThree: false,
+    });
+  },
 };

@@ -1,8 +1,11 @@
 var t = require("../../@babel/runtime/helpers/interopRequireDefault")(require("../../utils/mixins/pageMixin/myPageMixin")), e = getApp(), a = require("../../utils/util.js");
-
+let App=getApp()
+import storage from '../../utils/cache'
 Page({
     mixins: [ t.default ],
-    data: {},
+    data: {
+        userInfo:App.globalData.userIfo
+    },
     toFire: a.throttle(function(t) {
         wx.navigateTo({
             url: "/pages/fire/fire"
@@ -24,6 +27,10 @@ Page({
         });
     }, 2e3),
     onLoad: function(t) {
+        // this.setData({
+        // userInfo:App.globalData.userIfo
+        // })
+        return
         if (console.log(e.globalData), this.setData({
             userInfoDataBase: e.globalData.userInfoDataBase
         }), e.globalData.extraInfo && this.setData({
@@ -44,7 +51,13 @@ Page({
             });
         }
     },
-    onReady: function() {},
+    onReady: function() {
+        console.log(App.globalData.userIfo)
+       App.globalData.userInfo= storage.getUserInfo()
+        this.setData({
+            userInfo: storage.getUserInfo()
+            })
+    },
     onShow: function() {},
     onHide: function() {},
     onUnload: function() {},

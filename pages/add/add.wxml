@@ -41,13 +41,13 @@
                 <view class="picker" wx:if="{{!ensureEnter}}">
                     <view class="entry-select-option">
                         <view>请选择登山口</view>
-                        <view>></view>
+                        <view><van-icon name="arrow" /></view>
                     </view>
                 </view>
                 <view class="picker" wx:else>
                     <view class="entry-select-option">
                         <view>{{ensureEnter}}</view>
-                        <view>></view>
+                        <view><van-icon name="arrow" /></view>
                     </view>
                 </view>
             </picker>
@@ -58,13 +58,13 @@
                 <view class="picker" wx:if="{{ensureGroup=='单人'}}">
                     <view class="type-select-option">
                         <view>单人</view>
-                        <view>></view>
+                        <view><van-icon name="arrow" /></view>
                     </view>
                 </view>
                 <view class="picker" wx:else>
                     <view class="type-select-option">
                         <view>{{group[groupIndex]}}</view>
-                        <view>></view>
+                        <view><van-icon name="arrow" /></view>
                     </view>
                 </view>
             </picker>
@@ -79,13 +79,13 @@
                 <view class="picker" wx:if="{{ensureReason=='游玩活动'}}">
                     <view class="type-select-option">
                         <view>游玩\活动</view>
-                        <view>></view>
+                        <view><van-icon name="arrow" /></view>
                     </view>
                 </view>
                 <view class="picker" wx:else>
                     <view class="type-select-option">
                         <view>{{reason[reasonIndex]}}</view>
-                        <view>></view>
+                        <view><van-icon name="arrow" /></view>
                     </view>
                 </view>
             </picker>
@@ -96,7 +96,7 @@
                 <view>开始时间</view>
                 <view style="display:flex">
                     <view>{{date}}</view>
-                    <view>></view>
+                    <view><van-icon name="arrow" /></view>
                 </view>
             </view>
         </picker>

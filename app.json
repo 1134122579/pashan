@@ -1,6 +1,7 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/testify/testify",
         "pages/user/user",
         "pages/entryDetail/entryDetail",
         "pages/backgroundLocation/backgroundLocation",
@@ -18,7 +19,6 @@
         "pages/list/list",
         "pages/login/login",
         "pages/phone/phone",
-        "pages/testify/testify",
         "pages/detail/detail",
         "pages/registered/registered",
         "pages/scanResult/scanResult",
@@ -38,5 +38,8 @@
         "scope.userLocation": {
             "desc": "aaa"
         }
+    },
+    "usingComponents": {
+        "van-icon": "@vant/weapp/icon/index"
     }
 }

@@ -34,6 +34,10 @@ Page({
   record() {
     this.islogin((res) => {
       wx.navigateTo({
+        url: '/pages/add/add',
+      })
+      return
+      wx.navigateTo({
         url: '../backgroundLocation/backgroundLocation',
       })
     })

@@ -2,19 +2,20 @@
 <view>
     <view class="title">
         <image class="title-icon" src="/images/testify.png"></image>
-        <view class="title-words" wx:if="{{state=='set'}}">用户认证</view>
-        <view class="title-words" wx:if="{{state=='reset'}}">修改认证</view>
+        <view class="title-words" wx:if="{{userInfo.is_auth==2}}">用户认证</view>
+        <view class="title-words" wx:if="{{userInfo.is_auth==1}}">修改认证</view>
     </view>
     <view class="testify-desc">为了更好地认证您的身份以及便于突发的救援，请先完善以下信息</view>
     <view class="testify-box">
         <view class="testify-type">
             <view class="testify-title">头像</view>
-            <image class="avatar-img" src="{{userInfoDataBase.avatarUrl}}" wx:if="{{userInfo}}"></image>
+            <image class="avatar-img" src="{{userInfo.headimgurl}}" wx:if="{{userInfo}}"></image>
             <image class="avatar-img" src="/images/index_squad_avatar.png" wx:else></image>
         </view>
         <view class="testify-type">
             <view class="testify-title">手机号码</view>
-            <view>{{phone}}</view>
+            <view>{{userInfo.mobile}}</view>
+            <button open-type="getPhoneNumber" bindgetphonenumber="getphone" class="getPhone">获取手机号</button>
         </view>
     </view>
     <view class="testify-desc">请准确输入您的姓名及身份证号码以便下一步进行核验</view>
@@ -22,15 +23,15 @@
         <view class="testify-type">
             <view class="testify-title">
                 <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view>姓名</view>
-            <input bindblur="name" class="testify-input" placeholder="请输入您的真实姓名" type="text" value="{{extraInfo.fullname}}"></input>
+            <input bindblur="name" class="testify-input" placeholder="请输入您的真实姓名" type="text" value="{{userInfo.name}}"></input>
         </view>
         <view class="testify-type">
             <view class="testify-title">
                 <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view>身份证</view>
-            <input bindblur="idcard" class="testify-input" placeholder="请输入您的身份证号码" type="text" value="{{extraInfo.idcard}}"></input>
+            <input bindblur="idcard" class="testify-input" placeholder="请输入您的身份证号码" type="text" value="{{userInfo.idcard}}"></input>
         </view>
     </view>
-    <view class="testify-desc">有耕种作业的本地居民请选择“本地居民”选项，否则无法申请长期备案</view>
+    <!-- <view class="testify-desc">有耕种作业的本地居民请选择“本地居民”选项，否则无法申请长期备案</view>
     <view class="testify-type testify-box">
         <view class="testify-title">
             <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view>身份</view>
@@ -48,18 +49,18 @@
                 </view>
             </view>
         </picker>
-    </view>
+    </view> -->
     <view class="testify-desc">请完善以下紧急救援信息以便突发情况使用（选填）</view>
     <view class="testify-box">
         <view class="testify-type">
             <view class="testify-title">
                 <view style="color:#fff;margin-right:10rpx;font-weight:bold">*</view>紧急联系人姓名</view>
-            <input bindblur="urgentname" class="testify-input" placeholder="请输入您的紧急联系人姓名" style="width:320rpx" type="text" value="{{extraInfo.emerg_contact}}"></input>
+            <input bindblur="urgentname" class="testify-input" placeholder="请输入您的紧急联系人姓名" style="width:320rpx" type="text" value="{{userInfo.sos_name}}"></input>
         </view>
         <view class="testify-type">
             <view class="testify-title">
                 <view style="color:#fff;margin-right:10rpx;font-weight:bold">*</view>紧急联系人电话</view>
-            <input bindblur="urgentphone" class="testify-input" placeholder="请输入您的紧急联系人电话" style="width:320rpx" type="text" value="{{extraInfo.emerg_contact_phone}}"></input>
+            <input bindblur="urgentphone" class="testify-input" placeholder="请输入您的紧急联系人电话" style="width:320rpx" type="text" value="{{userInfo.sos_mobile}}"></input>
         </view>
     </view>
     <view class="testify-box testify-type" style="justify-content:space-around;align-items:center" wx:if="{{disease}}">
