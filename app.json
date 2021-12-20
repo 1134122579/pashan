@@ -1,0 +1,42 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/user/user",
+        "pages/entryDetail/entryDetail",
+        "pages/backgroundLocation/backgroundLocation",
+        "pages/testCanvas/testCanvas",
+        "pages/tempReport/tempReport",
+        "pages/pdf/pdf",
+        "pages/route/route",
+        "pages/promise/promise",
+        "pages/fire/fire",
+        "pages/test/test",
+        "pages/article/article",
+        "pages/QR/QR",
+        "pages/add/add",
+        "pages/scan/scan",
+        "pages/list/list",
+        "pages/login/login",
+        "pages/phone/phone",
+        "pages/testify/testify",
+        "pages/detail/detail",
+        "pages/registered/registered",
+        "pages/scanResult/scanResult",
+        "pages/map/map",
+        "pages/day_static/day_static",
+        "pages/moth_static/moth_static"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "行山易",
+        "navigationBarTextStyle": "black"
+    },
+
+    "sitemapLocation": "sitemap.json",
+    "permission": {
+        "scope.userLocation": {
+            "desc": "aaa"
+        }
+    }
+}

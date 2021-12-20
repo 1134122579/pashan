@@ -1,0 +1,77 @@
+<!-- <loading type="1" wx:if="{{!dataBack}}"></loading> -->
+<view>
+    <view class="title">
+        <image class="title-icon" src="/images/testify.png"></image>
+        <view class="title-words" wx:if="{{state=='set'}}">用户认证</view>
+        <view class="title-words" wx:if="{{state=='reset'}}">修改认证</view>
+    </view>
+    <view class="testify-desc">为了更好地认证您的身份以及便于突发的救援，请先完善以下信息</view>
+    <view class="testify-box">
+        <view class="testify-type">
+            <view class="testify-title">头像</view>
+            <image class="avatar-img" src="{{userInfoDataBase.avatarUrl}}" wx:if="{{userInfo}}"></image>
+            <image class="avatar-img" src="/images/index_squad_avatar.png" wx:else></image>
+        </view>
+        <view class="testify-type">
+            <view class="testify-title">手机号码</view>
+            <view>{{phone}}</view>
+        </view>
+    </view>
+    <view class="testify-desc">请准确输入您的姓名及身份证号码以便下一步进行核验</view>
+    <view class="testify-box">
+        <view class="testify-type">
+            <view class="testify-title">
+                <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view>姓名</view>
+            <input bindblur="name" class="testify-input" placeholder="请输入您的真实姓名" type="text" value="{{extraInfo.fullname}}"></input>
+        </view>
+        <view class="testify-type">
+            <view class="testify-title">
+                <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view>身份证</view>
+            <input bindblur="idcard" class="testify-input" placeholder="请输入您的身份证号码" type="text" value="{{extraInfo.idcard}}"></input>
+        </view>
+    </view>
+    <view class="testify-desc">有耕种作业的本地居民请选择“本地居民”选项，否则无法申请长期备案</view>
+    <view class="testify-type testify-box">
+        <view class="testify-title">
+            <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view>身份</view>
+        <picker bindchange="bindPickerRole" class="type-select" range="{{role}}" value="{{index}}">
+            <view class="picker" wx:if="{{ensureRole==undefined}}">
+                <view class="type-select-option">
+                    <view>请选择您的身份</view>
+                </view>
+            </view>
+            <view class="picker" wx:else>
+                <view class="type-select-option">
+                    <view wx:if="{{ensureRole}}">{{ensureRole}}</view>
+                    <view wx:elif="{{extraInfo.usertype}}">{{extraInfo.usertype}}</view>
+                    <view wx:else>{{role[roleIndex]}}</view>
+                </view>
+            </view>
+        </picker>
+    </view>
+    <view class="testify-desc">请完善以下紧急救援信息以便突发情况使用（选填）</view>
+    <view class="testify-box">
+        <view class="testify-type">
+            <view class="testify-title">
+                <view style="color:#fff;margin-right:10rpx;font-weight:bold">*</view>紧急联系人姓名</view>
+            <input bindblur="urgentname" class="testify-input" placeholder="请输入您的紧急联系人姓名" style="width:320rpx" type="text" value="{{extraInfo.emerg_contact}}"></input>
+        </view>
+        <view class="testify-type">
+            <view class="testify-title">
+                <view style="color:#fff;margin-right:10rpx;font-weight:bold">*</view>紧急联系人电话</view>
+            <input bindblur="urgentphone" class="testify-input" placeholder="请输入您的紧急联系人电话" style="width:320rpx" type="text" value="{{extraInfo.emerg_contact_phone}}"></input>
+        </view>
+    </view>
+    <view class="testify-box testify-type" style="justify-content:space-around;align-items:center" wx:if="{{disease}}">
+        <checkbox-group bindchange="checkboxChange">
+            <view>
+                <label class="checkbox" wx:for="{{dList}}" wx:key="Index">
+                    <checkbox checked="{{item.checked}}" style="padding:15rpx;align-items:center" value="{{item.title}},{{item.id}}"></checkbox>{{item.name}} </label>
+            </view>
+            <view bindtap="checkBoxSubmit" class="checkbox-confirm">确定</view>
+        </checkbox-group>
+    </view>
+    <view bindtap="confirmTestify" class="testify-confirm">提交认证</view>
+    <!-- <view bindtap="confirmTestify" class="testify-confirm" wx:if="{{state=='set'}}">提交认证</view> -->
+    <!-- <view bindtap="confirmTestify" class="testify-confirm" wx:if="{{state=='reset'}}">保存修改</view> -->
+</view>
