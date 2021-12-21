@@ -5,6 +5,7 @@ Page({
     mixins: [ a.default ],
     data: t({
         dataBack:true,
+        ensureEnter:'',
         group: [ "单人", "团队" ],
         family: [ "是", "否" ],
         reason: [ "游玩/活动", "生产作业", "采集山产品", "车辆通行", "祭祀", "迁坟", "其他" ],
@@ -46,29 +47,39 @@ Page({
             clear: !0
         });
     },
+    getDsRk(){
+        Api.getDsRk().then(res=>{
+            this.setData({
+                enter:res
+            })
+        })
+    },
     createDone: s.throttle(function(e) {
         let that=this
-        let {ensureGroup,showEnsureFamilyNum,ensureReason,date}=this.data
+        let {ensureGroup,showEnsureFamilyNum,ensureReason,date,ensureEnter}=this.data
         let type=ensureGroup=="个人"?1:2
         let reason=ensureReason//登山原因
         let ds_time=date//登山时间
+        let rukou= ensureEnter //登山入口
         
         wx.showLoading({
           title: '备案中',
           mask: true,
         })
         Api.subDsLog({
-            type,reason,ds_time
+            type,reason,ds_time,rukou
         }).then(res=>{
-            wx.hideloading()
+            wx.hideLoading()
             wx.showToast({
               title: '备案成功',
               icon:'none',
               mask:true
             })
-            that.setData({
-
-            })
+            setTimeout(() => {
+                wx.redirectTo({
+                    url: "/pages/index/index.js"
+                })    
+            }, 1500);
         }
         )
         return
@@ -250,7 +261,7 @@ Page({
     bindPickerEnter: function(e) {
         this.setData({
             enterIndex: e.detail.value,
-            ensureEnter: this.data.enter[e.detail.value]
+            ensureEnter: this.data.enter[e.detail.value]['name']
         });
     },
     bindPickerExit: function(e) {
@@ -287,7 +298,9 @@ Page({
         });
     },
     onReady: function() {},
-    onShow: function() {},
+    onShow: function() {
+        this.getDsRk()
+    },
     onHide: function() {},
     onUnload: function() {},
     onPullDownRefresh: function() {},

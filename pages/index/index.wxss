@@ -452,6 +452,7 @@ page {
     left: 50%;
     padding: 50rpx;
     position: fixed;
+    z-index: 3;
     top: 50%;
     transform: translate(-50%,-50%);
     width: 440rpx;
@@ -474,8 +475,13 @@ page {
     padding: 13rpx 0;
     text-align: center;
     width: 150rpx;
+    border-radius: 10rpx;
 }
-
+.cancelModify{
+    background: #fff;
+    color: #4e63a9;
+    border: 1px solid #4e63a9;
+}
 .confirmTelB {
     background-color: #fff;
     margin-bottom: 20rpx;
@@ -519,4 +525,24 @@ page {
     right: 5%;
     top: 14.5%;
     width: 50rpx;
+}
+.editStyle{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    
+}
+.title{
+    display: flex;
+    justify-content: space-between;
+    align-items:flex-end;
+}
+.admin{
+  margin-right: 20rpx;
+  font-size: 14px;
+  padding: 4rpx 10rpx;
+  border: 1px solid #367CD5;
+  color: #367CD5;
+  border-radius: 10rpx;
 }

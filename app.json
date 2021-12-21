@@ -1,6 +1,7 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/count/count",
         "pages/testify/testify",
         "pages/user/user",
         "pages/entryDetail/entryDetail",
@@ -36,7 +37,7 @@
     "sitemapLocation": "sitemap.json",
     "permission": {
         "scope.userLocation": {
-            "desc": "aaa"
+            "desc": "用来记录登山路线"
         }
     },
     "usingComponents": {

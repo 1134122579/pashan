@@ -1,6 +1,6 @@
 <!-- <loading type="1" wx:if="{{!dataBack}}"></loading> -->
 <view >
-    <map arrowLine showLocation covers="{{covers}}" enableSatellite="{{satellite}}" id="myMap" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" polyline="{{polyline}}" style="width: 100%; height: {{windowHeight}}rpx;"></map>
+    <!-- <map arrowLine showLocation covers="{{covers}}" enableSatellite="{{satellite}}" id="myMap" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" polyline="{{polyline}}" style="width: 100%; height: {{windowHeight}}rpx;"></map> -->
     <view class="detail">
         <view wx:if="{{foldState}}">
             <view>
@@ -43,14 +43,16 @@
             <view>行山易祝您登山路途愉快，一路平安</view>
             <view>如遇到突发情况请及时进行紧急呼叫</view>
         </view>
-        <image class="qrcode" src="../../images/bg.png" style="width:100px; height:100px"></image>
+        <image class="qrcode" src="{{userInfo.headimgurl}}" style="width:100px; height:100px;display: block;border-radius: 50%;"></image>
         <view class="qrcode-info">
             <view class="cub time">
-                <view>11月</view>
-                <view>11日</view>
+                <!-- <view>11月</view>
+                <view>11日</view> -->
+                <view>{{fn.split(userInfo.bean_info.ds_time)}}</view>
             </view>
-            <view class="cub">12</view>
+            <!-- <view class="cub">12</view> -->
         </view>
+
         <view class="btn-group">
             <view bindtap="start" class="startbtn">开始登山</view>
             <view bindtap="cancel" class="cancelbtn">取消备案</view>
@@ -88,3 +90,10 @@
     <image bindtap="toCurrentLocation" src="../../images/aim.png" style="width:60rpx;height:60rpx;position:fixed;right:30rpx;top:{{windowHeight*0.57}}rpx;padding:10rpx;background-color:#fff;opacity:0.9;border-radius:100rpx;"></image>
     <image bindtap="satellite" src="../../images/change.png" style="width:50rpx;height:50rpx;position:fixed;right:30rpx;top:{{windowHeight*0.57-100}}rpx;background-color:#fff;opacity:0.9;padding:15rpx;border-radius:80rpx"></image>
 </view>
+<wxs module="fn">
+    module.exports = ({
+        split: (function (str) {
+            return (str.substring(0, 10))
+        }),
+    });
+</wxs>

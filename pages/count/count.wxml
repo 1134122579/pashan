@@ -1,0 +1,60 @@
+<view class="countPage" wx:if="{{!is_jy}}">
+  <view class="header" style="display: flex;">
+    <image src="{{userInfo.headimgurl}}" style="width: 80px;height: 80px;border-radius: 50%;display: block;"></image>
+    <view class="name">{{userInfo.name}}</view>
+    <view class="name dt">进入地图</view>
+    <view class="name newJY">新救援申请</view>
+  </view>
+  <view class="content">
+    <view class="title">
+      <view class="title_l">
+        当日登山流量
+      </view>
+      <view class="title_r" bindtap="getCount">
+        <van-icon name="replay" />
+        <view>刷新</view>
+      </view>
+    </view>
+    <view class="trh" style="border-bottom:6rpx #E8E8E8 solid ">
+      <view class="th">登山口</view>
+      <view class="th">总数</view>
+      <view class="th ">未启</view>
+      <view class="th ">在途</view>
+      <view class="th ">结束</view>
+    </view>
+    <view class="tr" style="font-weight:bold;font-size: 14px;">
+      <view class="td">总数</view>
+      <view class="td">{{all_numAll}}</view>
+      <view class="td">{{beianAll}}</view>
+      <view class="td">{{zaituAll}}</view>
+      <view class="td">{{jieshuAll}}</view>
+    </view>
+    <view class="tr" style="font-weight:bold;font-size: 14px;" wx:for="{{getdataCount}}" wx:key="inde">
+      <view class="td">{{item.rukou}}</view>
+      <view class="td">{{item.all_num}}</view>
+      <view class="td">{{item.beian}}</view>
+      <view class="td">{{item.zaitu}}</view>
+      <view class="td">{{item.jieshu}}</view>
+    </view>
+  </view>
+</view>
+<view class="countPage" wx:if="{{is_jy}}">
+  <view class="block">
+    <view class="title_time">2021-12-10 20:00:00</view>
+    <view class="header" style="display: flex;">
+    <image src="{{userInfo.headimgurl}}" style="width: 80px;height: 80px;border-radius: 50%;display: block;"></image>
+    <view class="name">{{userInfo.name}}</view>
+    <view class="name dt">进入地图</view>
+    <view class="name newJY">等待救援</view>
+  </view>
+  </view>
+</view>
+
+<view class="flooter">
+  <view class="block" bindtap="tj">
+    统计
+  </view>
+  <view class="block" bindtap="jy">
+    救援
+  </view>
+</view>

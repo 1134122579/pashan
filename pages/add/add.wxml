@@ -37,7 +37,7 @@
     <view class="add-detail" wx:if="{{!clear}}">
         <view class="add-type">
             <view>起始登山口</view>
-            <picker bindchange="bindPickerEnter" class="entry-select" range="{{enter}}" value="{{index}}">
+            <picker bindchange="bindPickerEnter" class="entry-select" range="{{enter}}" range-key="name"  value="{{index}}">
                 <view class="picker" wx:if="{{!ensureEnter}}">
                     <view class="entry-select-option">
                         <view>请选择登山口</view>
@@ -69,10 +69,10 @@
                 </view>
             </picker>
         </view>
-        <view class="add-type" wx:if="{{ensureGroup=='团队'}}">
+        <!-- <view class="add-type" wx:if="{{ensureGroup=='团队'}}">
             <view class="type st">团队人数 </view>
             <input bindblur="ensureFamilyNum" class="type-select" style="text-align: right;" type="number" value="{{showEnsureFamilyNum}}"></input>
-        </view>
+        </view> -->
         <view class="add-type">
             <view class="type st">登山原因 </view>
             <picker bindchange="bindPickerReason" class="type-select" range="{{reason}}" value="{{index}}">

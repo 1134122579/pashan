@@ -73,4 +73,44 @@ export default {
       isThree: false,
     });
   },
+  getDsRk(params) {
+    return fly({
+      url: `getDsRk`,
+      method: "get",
+      params,
+      isThree: false,
+    });
+  },
+  editDsLog(params) {
+    return fly({
+      url: `editDsLog`,
+      method: "post",
+      params,
+      isThree: false,
+    });
+  },
+  getDsCount(params) {
+    return fly({
+      url: `getDsCount`,
+      method: "get",
+      params,
+      isThree: false,
+    });
+  },
+  cacheDsLog(params) {
+    return fly({
+      url: `cacheDsLog`,
+      method: "post",
+      params,
+      isThree: false,
+    });
+  },
+  subPosition(params) {
+    return fly({
+      url: `subPosition`,
+      method: "post",
+      params,
+      isThree: false,
+    });
+  },
 };

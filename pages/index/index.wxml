@@ -1,5 +1,5 @@
 <!-- <loading type="1" wx:if="{{!dataBack}}"></loading> -->
-<view >
+<view>
     <view class="isUser" wx:if="{{isUser}}">
         <view class="minigram-info">
             <view class="userinfo">
@@ -11,7 +11,7 @@
                         <image class="avatar-login-useravatar" src="{{userInfo.headimgurl}}" wx:if="{{userInfo.headimgurl}}"></image>
                     </image>
                 </view>
-                <view bindtap="toTestify" class="extra-unpost" wx:if="{{userInfo.is_auth==2}}">未认证</view>
+                <view bindtap="toTestify" class="extra-unpost" wx:if="{{!userInfo.is_auth==1}}">未认证</view>
                 <image bindtap="extraHas" class="extra-haspost" src="/images/index_extra-haspost.png" wx:else></image>
             </view>
             <view>
@@ -23,8 +23,9 @@
                                 <image src="/images/crowd_yellow.png" style="width:116rpx;height:44rpx" wx:elif="{{crowd=='yellow'}}"></image>
                                 <image src="/images/crowd_green.png" style="width:116rpx;height:44rpx" wx:elif="{{crowd=='green'}}"></image>
                             </view>
-                            <view class="situation-si-data" style="color:#000" wx:if="{{registeredSum}}">
-                                <view class="registered-title">当前登记人数：</view>{{registeredSum}} </view>
+                            <view class="situation-si-data" style="color:#000" wx:if="{{DsCount}}">
+                                <view class="registered-title">当前登记人数：</view>{{registeredSum}}
+                            </view>
                             <view class="situation-si-data" style="color:#000" wx:else>暂无数据</view>
                         </view>
                     </view>
@@ -81,72 +82,85 @@
                 </swiper>
             </view>
         </view>
-        <view bindtap="start" class="start" style="padding:20rpx 45rpx" wx:if="{{detail.condition=='0'}}">
-            <view class="startl" style="padding:30rpx auto">
-                <image src="../../images/bei.png" style="width:78rpx;height:90rpx"></image>
-                <view style="margin-left:30rpx">
-                    <view style="color:#000;font-size:26rpx;font-weight:bold">您有一个正在进行中的登山备案</view>
-                    <view style="color:#6b6b6b;font-size:26rpx;margin:5rpx 0">请点击查看</view>
-                </view>
-            </view>
-            <image src="../../images/jia.png" style="width:44rpx;height:44rpx"></image>
-        </view>
-        <view class="" style="background-color:#fff;width:710rpx;margin:30rpx auto;padding:20rpx 0" wx:elif="{{detail.condition=='-10'}}">
-            <view>
-                <view class="start">
-                    <view class="startl">
-                        <image src="../../images/bei.png" style="width:78rpx;height:90rpx"></image>
-                        <view style="margin-left:30rpx">
-                            <view style="color:#000;font-size:26rpx;font-weight:bold">您有一个可以开启的登山备案</view>
-                            <view style="color:#6b6b6b;font-size:26rpx;margin:5rpx 0">请点击查看</view>
-                        </view>
+        <view wx:if="{{userInfo.bean_info}}">
+            <view bindtap="start" class="start" style="padding:20rpx 45rpx" wx:if="{{userInfo.bean_info.status==2}}">
+                <view class="startl" style="padding:30rpx auto">
+                    <image src="../../images/bei.png" style="width:78rpx;height:90rpx"></image>
+                    <view style="margin-left:30rpx">
+                        <view style="color:#000;font-size:26rpx;font-weight:bold">您有一个正在进行中的登山备案</view>
+                        <view style="color:#6b6b6b;font-size:26rpx;margin:5rpx 0">请点击查看</view>
                     </view>
-                    <view bindtap="start" style="background-color:rgb(87,190,106);color:#fff;padding:10rpx 20rpx;display:inline-block;font-size:26rpx;border-radius:5rpx">开始登山</view>
                 </view>
+                <image src="../../images/jia.png" style="width:44rpx;height:44rpx"></image>
             </view>
-            <view style="display:flex;justify-content:space-around;margin:0" wx:if="{{detail.condition=='-10'&&detail.teamid=='0'}}">
-                <view style="font-size:26rpx;font-weight:bold;padding:10rpx">备案登山口：{{detail.entry}}</view>
-                <view bindtap="modify" style="font-size:26rpx;text-decoration:underline;padding:10rpx">修改</view>
-            </view>
-            <view style="width:{{screenWidth}}rpx;height:{{screenHeight}}rpx;position:fixed;left:0;top:0;background-color:#999;opacity:0.7" wx:if="{{modify}}"></view>
-            <view class="modify" wx:if="{{modify}}">
+            <view class="" style="background-color:#fff;width:710rpx;margin:30rpx auto;padding:20rpx 0" wx:elif="{{userInfo.bean_info.status==1}}">
                 <view>
-                    <view class="currentEntry" style="margin:15rpx 0">当前登山口：{{entryData.entry}}</view>
-                    <view style="display:flex;margin:15rpx 0">
-                        <view class="modifyEntry">修改登山口：</view>
-                        <picker bindchange="bindPickerEnter" class="entry-select" range="{{enter}}" value="{{index}}">
-                            <view class="picker" wx:if="{{!ensureEnter}}">
-                                <view class="entry-select-option">
-                                    <view class="sp">请选择登山口</view>
-                                    <view class="sp">></view>
+                    <view class="start">
+                        <view class="startl">
+                            <image src="../../images/bei.png" style="width:78rpx;height:90rpx"></image>
+                            <view style="margin-left:30rpx">
+                                <view style="color:#000;font-size:26rpx;font-weight:bold">您有一个可以开启的登山备案</view>
+                                <view style="color:#6b6b6b;font-size:26rpx;margin:5rpx 0">请点击查看</view>
+                            </view>
+                        </view>
+                        <view bindtap="start" style="background-color:#367CD5;color:#fff;padding:10rpx 20rpx;display:inline-block;font-size:26rpx;border-radius:10rpx">开始登山</view>
+                    </view>
+                </view>
+                <view style="display:flex;justify-content:space-between;margin:0;padding:0 40rpx;">
+                    <view style="font-size:26rpx;font-weight:bold;padding:10rpx">备案登山口：{{userInfo.bean_info.rukou}}</view>
+                    <view bindtap="modify" style="font-size:26rpx;border: 1px solid #367CD5;padding:6rpx 20rpx ;border-radius:10rpx;color: #367CD5;">立即修改</view>
+                </view>
+                <view style="width:100vw;height:100vh;position:fixed;left:0;top:0;background-color:rgba(0,0,0,.3); z-index: 2;" wx:if="{{modify}}"></view>
+                <view class="modify" wx:if="{{modify}}">
+                    <view class="editStyle">
+                        <view class="currentEntry" style="margin:15rpx 0">当前登山口：{{userInfo.bean_info.rukou}}</view>
+                        <view style="display:flex;margin:15rpx 0">
+                            <view class="modifyEntry">修改登山口：</view>
+                            <picker bindchange="bindPickerEnter" class="entry-select" range="{{enter}}" range-key="name" value="{{index}}">
+                                <view class="picker" wx:if="{{!ensureEnter}}">
+                                    <view class="entry-select-option">
+                                        <view class="sp">请选择登山口</view>
+                                        <view class="sp">
+                                            <van-icon name="arrow" />
+                                        </view>
+                                    </view>
+                                </view>
+                                <view class="picker" wx:else>
+                                    <view class="entry-select-option sp">
+                                        <view>{{ensureEnter||userInfo.bean_info.rukou}}</view>
+                                        <view>
+                                            <van-icon name="arrow" />
+                                        </view>
+                                    </view>
+                                </view>
+                            </picker>
+                        </view>
+                        <view class="currentTime" style="margin:15rpx 0">当前时间：{{fn.split(userInfo.bean_info.ds_time)}}</view>
+                        <picker bindchange="bindDateChange" class="add-type" end="2031-04-13" mode="date" start="{{date}}" style="margin:15rpx 0" value="{{date}}">
+                            <view style="display:flex" wx:if="{{!date}}">修改时间：<view class="sp" style="display:flex">
+                                    <view>请选择日期</view>
+                                    <view>
+                                        <van-icon name="arrow" />
+                                    </view>
                                 </view>
                             </view>
-                            <view class="picker" wx:else>
-                                <view class="entry-select-option sp">
-                                    <view>{{ensureEnter}}</view>
-                                    <view>></view>
+                            <view class="picker picker-date" wx:else>
+                                <view>修改时间：</view>
+                                <view>
+                                    <view class="sp" style="display:flex">
+                                        <view>{{date||fn.split(userInfo.bean_info.ds_time)}}</view>
+                                        <view>
+                                            <van-icon name="arrow" />
+                                        </view>
+                                    </view>
                                 </view>
                             </view>
                         </picker>
                     </view>
-                    <view class="currentTime" style="margin:15rpx 0">当前时间：{{fn.split(entryData.time)[0]}}</view>
-                    <picker bindchange="bindDateChange" class="add-type" end="2031-04-13" mode="date" start="{{date}}" style="margin:15rpx 0" value="{{date}}">
-                        <view style="display:flex" wx:if="{{!dateN}}">修改时间：<view class="sp">请选择日期</view>
-                        </view>
-                        <view class="picker picker-date" wx:else>
-                            <view>修改时间：</view>
-                            <view>
-                                <view class="sp" style="display:flex">
-                                    <view>{{dateN}}</view>
-                                    <view>></view>
-                                </view>
-                            </view>
-                        </view>
-                    </picker>
-                </view>
-                <view style="display:flex;justify-content:space-around;margin-top:30rpx">
-                    <view bindtap="confirmModify" class="confirmModify">确认修改</view>
-                    <view bindtap="cancelModify" class="cancelModify">取消修改</view>
+                    <view style="display:flex;justify-content:space-around;margin-top:30rpx">
+                        <view bindtap="confirmModify" class="confirmModify">确认修改</view>
+                        <view bindtap="cancelModify" class="cancelModify">取消修改</view>
+                    </view>
                 </view>
             </view>
         </view>
@@ -159,8 +173,13 @@
         </view>
         <view class="announcement">
             <view class="title">
+            <view style="display: flex;">
                 <image class="title-icon" src="/images/index_announcement_icon.png"></image>
                 <view class="title-words">园区公告</view>
+            </view>
+            <view class="admin">
+                队长端
+            </view>
             </view>
             <view class="content">
                 <view bindtap="toAnnouncementDetail" class="content-item" data-id="{{item.id}}" wx:for="{{resdata}}" wx:key="index">
@@ -172,7 +191,7 @@
                 </view>
             </view>
         </view>
-        <image class="addpopup" src="/images/popup.gif" ></image>
+        <image class="addpopup" src="/images/popup.gif"></image>
         <view bindtap="record" class="add">登山备案</view>
         <view style="position:fixed;left:-100%">
             <canvas bindlongtap="save" canvasId="canvas" class="canvas" style="width:{{qrcodeWidth}}px; height:{{qrcodeWidth}}px"></canvas>
@@ -291,9 +310,9 @@
     </view>
 </view>
 <wxs module="fn">
-module.exports = ({
-    split: (function(str) {
-        return (str.split('T'))
-    }),
-});
+    module.exports = ({
+        split: (function (str) {
+            return (str.substring(0, 10))
+        }),
+    });
 </wxs>

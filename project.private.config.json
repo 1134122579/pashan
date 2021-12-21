@@ -23,6 +23,24 @@
           "pathName": "pages/detail/detail",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "PDF",
+          "pathName": "pages/pdf/pdf",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "详情",
+          "pathName": "pages/detail/detail",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "登山地图",
+          "pathName": "pages/entryDetail/entryDetail",
+          "query": "",
+          "scene": null
         }
       ]
     }
