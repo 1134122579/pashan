@@ -165,7 +165,8 @@
             </view>
         </view>
         <view wx:else>
-            <view bindtap="pdf" class="warning" style="border:2rpx solid #4E63A9;margin:20rpx;margin-top:60rpx;font-size:36rpx;">
+            <!-- bindtap="pdf" -->
+            <view  class="warning" style="border:2rpx solid #4E63A9;margin:20rpx;margin-top:60rpx;font-size:36rpx;">
                 <view class="warning-box" style="border:2rpx solid #4E63A9;margin:5rpx;padding:40rpx 32rpx">
                     <view class="warning-left" style="color:#4E63A9;margin-bottom:10rpx;letter-spacing:6rpx;font-weight:bold"> 根据《广东省森林防火条例》设立森林防火检查站，请进入林区人员积极配合接受检查。</view>
                 </view>
@@ -177,7 +178,7 @@
                 <image class="title-icon" src="/images/index_announcement_icon.png"></image>
                 <view class="title-words">园区公告</view>
             </view>
-            <view class="admin">
+            <view class="admin" bindtap="goAdmin" >
                 队长端
             </view>
             </view>
@@ -191,8 +192,9 @@
                 </view>
             </view>
         </view>
-        <image class="addpopup" src="/images/popup.gif"></image>
-        <view bindtap="record" class="add">登山备案</view>
+        <image class="addpopup" wx:if="{{!userInfo.bean_info}}" src="/images/popup.gif"></image>
+        <view bindtap="record" wx:if="{{!userInfo.bean_info}}" class="add">登山备案</view>
+        <view bindtap="start" wx:if="{{userInfo.bean_info}}" class="add">开始登山</view>
         <view style="position:fixed;left:-100%">
             <canvas bindlongtap="save" canvasId="canvas" class="canvas" style="width:{{qrcodeWidth}}px; height:{{qrcodeWidth}}px"></canvas>
         </view>

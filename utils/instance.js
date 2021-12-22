@@ -35,7 +35,6 @@ fly.interceptors.request.use((request) => {
       request.headers["access-user-token"] = token;
     }
 
-
     return request;
   } catch (e) {}
 });

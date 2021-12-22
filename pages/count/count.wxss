@@ -116,3 +116,16 @@ page {
 .block{
   width: 100%;
 }
+.isNulist{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+}
+.listnull{
+  padding: 20rpx;
+  text-align: center;
+  font-size: 14px;
+  color:#ccc;
+}

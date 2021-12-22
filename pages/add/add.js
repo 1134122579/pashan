@@ -77,7 +77,7 @@ Page({
             })
             setTimeout(() => {
                 wx.redirectTo({
-                    url: "/pages/index/index.js"
+                    url: "/pages/index/index"
                 })    
             }, 1500);
         }

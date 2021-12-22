@@ -20,7 +20,7 @@
     "checkInvalidKey": true,
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
-    "compileHotReLoad": false,
+    "compileHotReLoad": true,
     "lazyloadPlaceholderEnable": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
@@ -48,7 +48,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.21.2",
-  "appid": "wx27c0d416d63b9754",
+  "appid": "wxd3966f233680ece2",
   "projectname": "%E7%99%BB%E5%B1%B1",
   "debugOptions": {
     "hidedInDevtools": []

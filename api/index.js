@@ -113,4 +113,20 @@ export default {
       isThree: false,
     });
   },
+  endDsLog(params) {
+    return fly({
+       url: `endDsLog`, 
+      method: "post",
+      params,
+      isThree: false,
+    });
+  },
+  getSosList(params) {
+    return fly({
+       url: `getSosList`, 
+      method: "post",
+      params,
+      isThree: false,
+    });
+  },
 };

@@ -41,6 +41,8 @@
         }
     },
     "usingComponents": {
+        "van-empty": "@vant/weapp/empty/index",
+        "van-button": "@vant/weapp/button/index",
         "van-icon": "@vant/weapp/icon/index"
     }
 }

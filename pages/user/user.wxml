@@ -24,9 +24,9 @@
             <view class="user-title">修改个人资料</view>
             <image class="user-more" src="/images/more.png">></image>
         </view>
-        <view bindtap="toList" class="user-type">
+        <!-- <view bindtap="toList" class="user-type">
             <view class="user-title">登山备案列表</view>
             <image class="user-more" src="/images/more.png">></image>
-        </view>
+        </view> -->
     </view>
 </view>

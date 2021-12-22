@@ -8,13 +8,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    is_jy:false,
+    is_jy: false,
     getdataCount: '',
     all_numAll: '',
     beianAll: '',
     zaituAll: '',
     jieshuAll: '',
-    userInfo: App.globalData.userInfo
+    userInfo: App.globalData.userInfo,
+    jy_list: []
   },
   getSum(total, num) {
     console.log(total, num)
@@ -44,17 +45,50 @@ Page({
       })
     })
   },
-  tj(){
+  getSosList() {
+    let {
+      is_jy,
+      page,
+      jy_list
+    } = this.data
+    if (is_jy) {
+      Api.getSosList({
+        page
+      }).then(res => {
+        this.setData({
+          isNulist: res.length <= 0 ? true : false
+        })
+        if (page == 1) {
+          this.setData({
+            jy_list: res
+          })
+        } else {
+          this.setData({
+            jy_list: jy_list.concat(res)
+          })
+        }
+      })
+    }
+  },
+  tj() {
     this.setData({
-      is_jy:false
+      is_jy: false
     })
   },
-  jy(){
+  jy() {
     this.setData({
-      is_jy:true
+      is_jy: true,
+      page:1
     })
+    this.getSosList()
   },
 
+  //触底响应函数
+  onBottom() {
+    var that = this;
+    (this.data.pageNum) ++;
+    this.getSosList();
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -74,6 +108,7 @@ Page({
    */
   onShow: function () {
     this.getCount()
+    this.getSosList()
   },
 
   /**
@@ -101,7 +136,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.onBottom()
   },
 
   /**

@@ -47,25 +47,77 @@ var t, e = require("../../@babel/runtime/helpers/interopRequireDefault"),
         }
     };
 
+
+
+const W = wx.getSystemInfoSync().windowWidth;
+const rate = 750.0 / W;
+// 300rpx 在6s上为 150px
+const qrcode_w = 300 / rate;
+let JStimeDSQ = ''
+let UPDKDD = ""
 let App = getApp()
 import storage from "../../utils/cache"
 import Api from '../../api/index'
-
+import {
+    parseTime
+} from "../../utils/index.js"
 Page({
     mixins: [n.default],
     data: {
         userInfo: App.globalData.userInfo,
         mask: true,
-        qrcodeWidth: c,
+        statusPoup: true,
+        createCodeImg: "",
+        qrcodeWidth: qrcode_w,
         latitude: 22.510274072389358,
         longitude: 114.52162398098838,
         markers: [],
+        statusArr: [],
+        statusDWobj: {},
         currentStatus: '',
-        altitude:'', 
+        altitude: '',
+        JStime: "00:00:00",
         gpsState: !0,
         timecostItv: !1,
         foldState: !0,
-        satellite: !1
+        satellite: !1,
+        startLocstartationUpdateBackground: ''
+    },
+    time() {
+        let getoldDate = wx.getStorageSync('statTime')
+        if (getoldDate) {
+            let That = this
+            clearInterval(JStimeDSQ)
+            JStimeDSQ = setInterval(() => {
+                let newDate = +new Date()
+                let time = newDate - getoldDate
+                That.setData({
+                    JStime: parseTime(time, "{h}:{i}:{s}")
+                })
+            }, 1000);
+            That.upDK()
+        } else {
+            this.setData({
+                mask: true
+            })
+        }
+    },
+    // 上传打卡
+    upDK() {
+        let {
+            statusDWobj,
+            userInfo
+        } = this.data
+        clearInterval(UPDKDD)
+        UPDKDD = setInterval(() => {
+            Api.subPosition({
+                lat: statusDWobj.latitude,
+                lng: statusDWobj.longitude,
+                beian_id: userInfo["bean_info"]["id"]
+            }).then(res => {
+                console.log("上传当前位置成功成功", res)
+            })
+        }, 300000);
     },
     satellite: function () {
         this.setData({
@@ -117,26 +169,71 @@ Page({
 
     }, 2e3),
     start: i.throttle(function (t) {
+        let newDate = +new Date()
         wx.setStorageSync("state", !0);
+        let {
+            statusDWobj,
+            userInfo
+        } = this.data
         var e = this;
-        this.setData({
-            mask: !1,
-            timecostItv: !0
-        }), wx.login({
-            success: function (t) {
-                wx.request({
-                    url: "https://sumou-server.tsunamitek.com/dengshan?code=".concat(t.code, "&cmd=entry.start"),
-                    method: "POST",
-                    data: {
-                        entryId: e.data.entryId.toString()
-                    },
-                    success: function (t) {
-                        wx.removeStorageSync("gps"), console.log("entry.start success", t), e.timecost();
-                    }
-                });
-            }
-        });
+        Api.subPosition({
+            lat: statusDWobj.latitude,
+            lng: statusDWobj.longitude,
+            beian_id: userInfo["bean_info"]["id"]
+        }).then(res => {
+            clearInterval(JStimeDSQ)
+            wx.setStorageSync('statTime', newDate)
+            e.time()
+            wx.showToast({
+                title: '开始登山',
+                icon: "none"
+            })
+            e.setData({
+                mask: !1,
+                timecostItv: !0
+            })
+        })
     }, 2e3),
+    onjishu() {
+        let {
+            userInfo
+        } = this.data
+        Api.endDsLog(userInfo.bean_info).then(res => {
+            wx.showToast({
+                title: '结束登山',
+                mask: true
+            })
+            setTimeout(() => {
+                wx.redirectTo({
+                    url: '/pages/index/index',
+                })
+            }, 1500);
+            clearInterval(JStimeDSQ)
+            clearInterval(UPDKDD)
+            wx.removeStorageSync('statTime')
+            wx.removeStorageSync('state')
+        })
+    },
+    // 获取位置
+    getLocation() {
+        console.log("获取位置", 99999999999999999999)
+        wx.onLocationChange((result) => {
+            console.log("获取位置", result)
+        })
+    },
+    lookCode() {
+        console.log(1)
+        this.setData({
+            mask: true,
+            statusPoup: false
+        })
+    },
+    onlookcancel() {
+        this.setData({
+            mask: false,
+            statusPoup: false
+        })
+    },
     finish: i.throttle(function (t) {
         wx.setStorageSync("state", !1);
         var e = this;
@@ -563,7 +660,30 @@ Page({
             latlng: JSON.parse(n)
         });
     },
+    caredCode() {
+        let {
+            userInfo
+        } = this.data
+        let that = this
+        let t = new r("canvas", {
+            // image: "/images/bg.png",
+            text: userInfo.idcard,
+            width: qrcode_w,
+            height: qrcode_w,
+            colorDark: "#00BFA5",
+            colorLight: "white",
+            correctLevel: r.CorrectLevel.H,
+            callback: (res) => {
+                // 生成二维码的临时文件
+                console.log("生成二维码的临时文件", res.path)
+                that.setData({
+                    createCodeImg: res.path
+                })
+            }
+        })
+    },
     onLoad: function (e) {
+        let that = this
         e.state ? "true" == e.state && (this.setData({
             timecostItv: !0,
             mask: !1
@@ -575,6 +695,7 @@ Page({
             imgsrc: e.imgsrc
         });
         var o = this;
+
         wx.getSystemInfo({
             success: function (t) {
                 console.log("getSystemInfo success", t), o.setData({
@@ -583,7 +704,7 @@ Page({
                 });
             }
         });
-         wx.startLocationUpdateBackground({
+        wx.startLocationUpdateBackground({
             success: function (t) {
                 if ("startLocationUpdateBackground:ok" == t.errMsg) {
                     wx.getSetting({
@@ -597,25 +718,32 @@ Page({
                     setInterval(function () {
                         e++;
                     }, 1e3), wx.onLocationChange(function (t) {
+                        let {
+                            latitude,
+                            longitude,
+                            altitude
+                        } = t
+                        that.setData({
+                            statusDWobj: {
+                                latitude: parseFloat(latitude).toFixed(6),
+                                longitude: parseFloat(longitude).toFixed(6),
+                                altitude
+                            },
+                        })
                         if (console.log(t), e >= 1) {
                             var n = t;
-                            n.latitude = parseFloat(t.latitude).toFixed(6), n.longitude = parseFloat(t.longitude).toFixed(6),
-                                o.setData({
-                                    currentStatus: n,
-                                    altitude: t.altitude.toFixed(2)
-                                });
+                            n.latitude = parseFloat(t.latitude).toFixed(6), n.longitude = parseFloat(t.longitude).toFixed(6);
+                            o.setData({
+                                statusArr: [{
+                                    latitude,
+                                    longitude,
+                                    altitude
+                                }],
+                                currentStatus: n,
+                                altitude: t.altitude.toFixed(2)
+                            });
                         }
-                        if (e >= 60) {
-                            "oU3jR4t_jCIXVuJ_a8De13TN0oi8" == o.data.openid || "oU3jR4uzCvHrt-7yGCBsJykcShkU" == o.data.openid || "hold1" == o.data.openid || "hold2" == o.data.openid ? (s.globalData.sio.emit("gpsEvent", parseFloat(t.latitude) - .073545 + "/" + (parseFloat(t.longitude) + .6418105)),
-                                console.log("e1,".concat(parseFloat(t.latitude) - .073545, ",").concat(parseFloat(t.longitude) + .6418105))) : s.globalData.sio.emit("gpsEvent", t.latitude + "/" + t.longitude);
-                            var i = {
-                                    latitude: t.latitude,
-                                    longitude: t.longitude
-                                },
-                                r = wx.getStorageSync("gps");
-                            o.data.gpsState && (r ? wx.setStorageSync("gps", [].concat(a(r), [i])) : wx.setStorageSync("gps", i)),
-                                e = 0;
-                        }
+
                     });
                 } else wx.showModal({
                     showCancel: !0,
@@ -630,6 +758,18 @@ Page({
                                             setInterval(function () {
                                                 e++;
                                             }, 1e3), wx.onLocationChange(function (t) {
+                                                let {
+                                                    latitude,
+                                                    longitude,
+                                                    altitude
+                                                } = t
+                                                that.setData({
+                                                    statusDWobj: {
+                                                        latitude: parseFloat(latitude).toFixed(6),
+                                                        longitude: parseFloat(longitude).toFixed(6),
+                                                        altitude
+                                                    },
+                                                })
                                                 if (console.log(t), e >= 1) {
                                                     var n = t;
                                                     n.latitude = parseFloat(t.latitude).toFixed(6), n.longitude = parseFloat(t.longitude).toFixed(6),
@@ -638,17 +778,7 @@ Page({
                                                             altitude: t.altitude.toFixed(2)
                                                         });
                                                 }
-                                                if (e >= 60) {
-                                                    "oU3jR4t_jCIXVuJ_a8De13TN0oi8" == o.data.openid || "oU3jR4uzCvHrt-7yGCBsJykcShkU" == o.data.openid || "hold1" == o.data.openid || "hold2" == o.data.openid ? (s.globalData.sio.emit("gpsEvent", parseFloat(t.latitude) - .073545 + "/" + (parseFloat(t.longitude) + .6418105)),
-                                                        console.log("e2,".concat(parseFloat(t.latitude) - .073545, ",").concat(parseFloat(t.longitude) + .6418105))) : s.globalData.sio.emit("gpsEvent", t.latitude + "/" + t.longitude);
-                                                    var i = {
-                                                            latitude: t.latitude,
-                                                            longitude: t.longitude
-                                                        },
-                                                        r = wx.getStorageSync("gps");
-                                                    o.data.gpsState && (r ? wx.setStorageSync("gps", [].concat(a(r), [i])) : wx.setStorageSync("gps", i)),
-                                                        e = 0;
-                                                }
+
                                             });
                                         }
                                     }
@@ -667,6 +797,7 @@ Page({
                             success: function (t) {
                                 wx.getSetting({
                                     success: function (t) {
+
                                         if (console.log(t), 1 == t.authSetting["scope.userLocationBackground"]) {
                                             wx.showToast({
                                                 title: "授权成功",
@@ -678,6 +809,18 @@ Page({
                                             setInterval(function () {
                                                 e++;
                                             }, 1e3), wx.onLocationChange(function (t) {
+                                                let {
+                                                    latitude,
+                                                    longitude,
+                                                    altitude
+                                                } = t
+                                                that.setData({
+                                                    statusDWobj: {
+                                                        latitude: parseFloat(latitude).toFixed(6),
+                                                        longitude: parseFloat(longitude).toFixed(6),
+                                                        altitude
+                                                    },
+                                                })
                                                 if (console.log(t), e >= 1) {
                                                     var n = t;
                                                     n.latitude = parseFloat(t.latitude).toFixed(6), n.longitude = parseFloat(t.longitude).toFixed(6),
@@ -685,17 +828,6 @@ Page({
                                                             currentStatus: n,
                                                             altitude: t.altitude.toFixed(2)
                                                         });
-                                                }
-                                                if (e >= 60) {
-                                                    "oU3jR4t_jCIXVuJ_a8De13TN0oi8" == o.data.openid || "oU3jR4uzCvHrt-7yGCBsJykcShkU" == o.data.openid || "hold1" == o.data.openid || "hold2" == o.data.openid ? (s.globalData.sio.emit("gpsEvent", parseFloat(t.latitude) - .073545 + "/" + (parseFloat(t.longitude) + .6418105)),
-                                                        console.log("e3,".concat(parseFloat(t.latitude) - .073545, ",").concat(parseFloat(t.longitude) + .6418105))) : s.globalData.sio.emit("gpsEvent", t.latitude + "/" + t.longitude);
-                                                    var i = {
-                                                            latitude: t.latitude,
-                                                            longitude: t.longitude
-                                                        },
-                                                        r = wx.getStorageSync("gps");
-                                                    o.data.gpsState && (r ? wx.setStorageSync("gps", [].concat(a(r), [i])) : wx.setStorageSync("gps", i)),
-                                                        e = 0;
                                                 }
                                             });
                                         }
@@ -814,18 +946,21 @@ Page({
     },
     onReady: function () {},
     onShow: function () {
+        let that = this
         if (storage.getToken()) {
             Api.getUserInfo().then(res => {
                 storage.setUserInfo(res)
                 this.setData({
                     userInfo: storage.getUserInfo()
                 })
+                that.caredCode()
+                that.time()
             })
         }
-        var t = this;
-        setTimeout(function () {
-            t.getOpenid();
-        }, 3e3);
+        // var t = this;
+        // setTimeout(function () {
+        //     t.getOpenid();
+        // }, 3e3);
     },
     onHide: function () {},
     onUnload: function () {},

@@ -29,6 +29,7 @@ Page({
   },
 // 获取数据
 getDsCount(){
+return
     Api.getDsCount().then(res=>{
       this.setData({
         DsCount:res
@@ -50,6 +51,11 @@ getDsCount(){
     this.setData({
       modify: !this.data.modify
     })
+  },
+  goAdmin(){
+wx.navigateTo({
+  url: '/pages/count/count',
+})
   },
   bindPickerEnter: function (e) {
     this.setData({
