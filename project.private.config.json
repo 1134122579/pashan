@@ -41,6 +41,18 @@
           "pathName": "pages/entryDetail/entryDetail",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "救援地图",
+          "pathName": "pages/jiuyuanDetail/jiuyuanDetail",
+          "query": "beian_id=21",
+          "scene": null
+        },
+        {
+          "name": "pages/jiuyuanDetail/jiuyuanDetail",
+          "pathName": "pages/jiuyuanDetail/jiuyuanDetail",
+          "query": "beian_id=9",
+          "scene": null
         }
       ]
     }

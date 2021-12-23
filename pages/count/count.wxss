@@ -14,7 +14,7 @@ page {
 
 .header {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   background: #ffffff;
   padding: 20rpx;
@@ -109,9 +109,9 @@ page {
   color: #fff;
   display: inline-block;
   margin: 20rpx auto;
-  padding: 10rpx;
-  border-radius: 20rpx;
-  font-size: 14px;
+  padding: 8rpx 20rpx;
+  border-radius: 30rpx;
+  font-size: 12px;
 }
 .block{
   width: 100%;

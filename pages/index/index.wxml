@@ -83,17 +83,17 @@
             </view>
         </view>
         <view wx:if="{{userInfo.bean_info}}">
-            <view bindtap="start" class="start" style="padding:20rpx 45rpx" wx:if="{{userInfo.bean_info.status==2}}">
+            <view bindtap="start" class="start" style="padding:20rpx 45rpx;border-radius: 10rpx;" wx:if="{{userInfo.bean_info.status==3}}">
                 <view class="startl" style="padding:30rpx auto">
                     <image src="../../images/bei.png" style="width:78rpx;height:90rpx"></image>
-                    <view style="margin-left:30rpx">
+                    <view style="margin-left:20rpx">
                         <view style="color:#000;font-size:26rpx;font-weight:bold">您有一个正在进行中的登山备案</view>
                         <view style="color:#6b6b6b;font-size:26rpx;margin:5rpx 0">请点击查看</view>
                     </view>
                 </view>
-                <image src="../../images/jia.png" style="width:44rpx;height:44rpx"></image>
+                <view  style="background-color:#367CD5;color:#fff;padding:10rpx 20rpx;display:inline-block;font-size:26rpx;border-radius:10rpx">查看登山</view>
             </view>
-            <view class="" style="background-color:#fff;width:710rpx;margin:30rpx auto;padding:20rpx 0" wx:elif="{{userInfo.bean_info.status==1}}">
+            <view class="" style="background-color:#fff;width:710rpx;margin:30rpx auto;padding:20rpx 0;border-radius: 10rpx" wx:elif="{{userInfo.bean_info.status==1}}">
                 <view>
                     <view class="start">
                         <view class="startl">
@@ -178,7 +178,8 @@
                 <image class="title-icon" src="/images/index_announcement_icon.png"></image>
                 <view class="title-words">园区公告</view>
             </view>
-            <view class="admin" wx:if="{{userInfo.is_admin==1}}" bindtap="goAdmin" >
+            <!-- wx:if="{{userInfo.is_admin==1}}" -->
+            <view class="admin"  bindtap="goAdmin" >
                 队长端
             </view>
             </view>

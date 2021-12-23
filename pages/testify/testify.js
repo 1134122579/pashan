@@ -89,6 +89,28 @@ Page({
             icon: "nonde",
             mask: true
         })
+        Api.editUserInfo(userInfo).then(res => {
+            Api.getUserInfo().then(res => {
+                wx.showToast({
+                    title: '认证成功',
+                    mask: true
+                })
+            wx.hideLoading()
+                storage.setUserInfo(res)
+                that.setData({
+                  userInfo: res
+                })
+                App.globalData.userInfo=res
+                App.globalData.is_login=false
+                setTimeout(() => {
+                    wx.redirectTo({
+                        url: "/pages/index/index"
+                    })
+                }, 1500);
+              })
+
+        })
+        return
         if(userInfo.is_auth==1){
             Api.editDsLog(userInfo).then(res => {
                 Api.getUserInfo().then(res => {

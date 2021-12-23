@@ -21,6 +21,18 @@ Page({
     console.log(total, num)
     return total + num.all_num;
   },
+  goJypage(event) {
+    console.log(event)
+    let {
+      item
+    } = event.currentTarget.dataset
+    if(item.status==1){
+      wx.navigateTo({
+        url: '/pages/jiuyuanDetail/jiuyuanDetail?beian_id='+item.id,
+      })
+    }
+ 
+  },
   getCount() {
     Api.getDsCount().then(res => {
       let all_numAll = res.reduce((total, num) => {
@@ -78,7 +90,7 @@ Page({
   jy() {
     this.setData({
       is_jy: true,
-      page:1
+      page: 1
     })
     this.getSosList()
   },

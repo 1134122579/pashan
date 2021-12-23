@@ -134,6 +134,12 @@ Page({
             })
         })
     },
+    showNum(num) {
+        if (num < 10) {
+            return '0' + num
+        }
+        return num
+    },
     time() {
         let getoldDate = wx.getStorageSync('statTime')
         if (getoldDate) {
@@ -141,9 +147,14 @@ Page({
             clearInterval(JStimeDSQ)
             JStimeDSQ = setInterval(() => {
                 let newDate = +new Date()
-                let time = newDate - getoldDate
+                let time = parseInt((newDate - getoldDate) / 1000)
+                let s=0, i=0, h=0
+                s = That.showNum(time % 60)
+                i = That.showNum(parseInt(time / 60) % 60)
+                h = That.showNum(parseInt(time / 60 / 60))
                 That.setData({
-                    JStime: parseTime(time, "{h}:{i}:{s}")
+                    // JStime: parseTime(time, "{h}:{i}:{s}")
+                    JStime:`${h}:${i}:${s}`
                 })
             }, 1000);
             That.upDK()
@@ -273,6 +284,9 @@ Page({
                 clearInterval(lineTime)
                 wx.removeStorageSync('statTime')
                 wx.removeStorageSync('state')
+                wx.offLocationChange((data) => {
+                    console.log(data, "结束定位")
+                })
             })
         })
 

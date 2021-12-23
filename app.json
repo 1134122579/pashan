@@ -4,6 +4,7 @@
         "pages/count/count",
         "pages/testify/testify",
         "pages/user/user",
+        "pages/jiuyuanDetail/jiuyuanDetail",
         "pages/entryDetail/entryDetail",
         "pages/backgroundLocation/backgroundLocation",
         "pages/testCanvas/testCanvas",

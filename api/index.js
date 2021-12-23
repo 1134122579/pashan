@@ -169,4 +169,12 @@ export default {
       isThree: false,
     });
   },
+  getSosRoute(params) {
+    return fly({
+       url: `getSosRoute`, 
+      method: "post",
+      params,
+      isThree: false,
+    });
+  },
 };

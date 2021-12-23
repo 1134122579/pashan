@@ -8,14 +8,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    Weather:{},
+    Weather: {},
     isUser: true,
     enter: [],
     date: '',
     enterIndex: '',
     ensureEnter: '',
     modify: false,
-    DsCount:'',
+    DsCount: '',
     userInfo: App.globalData.userInfo
   },
   bindDateChange: function (e) {
@@ -28,15 +28,15 @@ Page({
       url: '/pages/pdf/pdf',
     })
   },
-// 获取数据
-getDsCount(){
-return
-    Api.getDsCount().then(res=>{
+  // 获取数据
+  getDsCount() {
+    return
+    Api.getDsCount().then(res => {
       this.setData({
-        DsCount:res
+        DsCount: res
       })
     })
-},
+  },
   //  判断是否登录
   islogin(callback) {
     let token = storage.getToken()
@@ -53,10 +53,10 @@ return
       modify: !this.data.modify
     })
   },
-  goAdmin(){
-wx.navigateTo({
-  url: '/pages/count/count',
-})
+  goAdmin() {
+    wx.navigateTo({
+      url: '/pages/count/count',
+    })
   },
   bindPickerEnter: function (e) {
     this.setData({
@@ -115,12 +115,12 @@ wx.navigateTo({
       modify: !this.data.modify
     })
   },
-  getWeather(){
-Api.getWeather().then(res=>{
-  this.setData({
-    Weather:res
-  })
-})
+  getWeather() {
+    Api.getWeather().then(res => {
+      this.setData({
+        Weather: res
+      })
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -173,11 +173,12 @@ Api.getWeather().then(res=>{
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getWeather()
     if (storage.getToken()) {
-    this.getDsCount()
+      this.getDsCount()
       this.getUser()
       this.getDsRk()
+      this.getWeather()
+
     }
   },
 
