@@ -43,7 +43,7 @@
 }
 
 .read-words {
-    font-size: 34rpx;
+    font-size: 28rpx;
     line-height: 44rpx;
     width: 530rpx;
 }

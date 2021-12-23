@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    Weather:{},
     isUser: true,
     enter: [],
     date: '',
@@ -114,6 +115,13 @@ wx.navigateTo({
       modify: !this.data.modify
     })
   },
+  getWeather(){
+Api.getWeather().then(res=>{
+  this.setData({
+    Weather:res
+  })
+})
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -165,6 +173,7 @@ wx.navigateTo({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.getWeather()
     if (storage.getToken()) {
     this.getDsCount()
       this.getUser()

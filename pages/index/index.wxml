@@ -11,7 +11,7 @@
                         <image class="avatar-login-useravatar" src="{{userInfo.headimgurl}}" wx:if="{{userInfo.headimgurl}}"></image>
                     </image>
                 </view>
-                <view bindtap="toTestify" class="extra-unpost" wx:if="{{!userInfo.is_auth==1}}">未认证</view>
+                <view bindtap="toTestify" class="extra-unpost" wx:if="{{userInfo.is_auth!=1}}">未认证</view>
                 <image bindtap="extraHas" class="extra-haspost" src="/images/index_extra-haspost.png" wx:else></image>
             </view>
             <view>
@@ -45,7 +45,7 @@
                                 <image class="situation-si-icon" src="/images/index_situation_wind.png"></image>
                                 <view class="situation-si-title">风速</view>
                             </view>
-                            <view class="situation-si-data" wx:if="{{situation.winddirection.data&&situation.windpower.data}}"> {{situation.winddirection.data}}{{situation.windpower.data}}</view>
+                            <view class="situation-si-data" wx:if="{{Weather.power}}"> {{Weather.power}}</view>
                             <view class="situation-si-data" wx:else>暂无数据</view>
                         </view>
                     </swiper-item>
@@ -55,7 +55,7 @@
                                 <image class="situation-si-icon" src="/images/index_situation_temp.png"></image>
                                 <view class="situation-si-title">气温</view>
                             </view>
-                            <view class="situation-si-data" wx:if="{{situation.temperature.data}}">{{situation.temperature.data}}℃ </view>
+                            <view class="situation-si-data" wx:if="{{Weather.tempevalue}}">{{Weather.tempevalue}} </view>
                             <view class="situation-si-data" wx:else>暂无数据</view>
                         </view>
                     </swiper-item>
@@ -65,7 +65,7 @@
                                 <image class="situation-si-icon" src="/images/index_situation_humi.png"></image>
                                 <view class="situation-si-title">湿度</view>
                             </view>
-                            <view class="situation-si-data" wx:if="{{situation.humidity.data}}">{{situation.humidity.data}}</view>
+                            <view class="situation-si-data" wx:if="{{Weather.humidity}}">{{Weather.humidity}}</view>
                             <view class="situation-si-data" wx:else>暂无数据</view>
                         </view>
                     </swiper-item>
@@ -75,7 +75,7 @@
                                 <image class="situation-si-icon" src="/images/index_situation_tyfoon.png"></image>
                                 <view class="situation-si-title">台风预警</view>
                             </view>
-                            <view class="situation-si-data" wx:if="{{situation.humidity.data}}">无</view>
+                            <view class="situation-si-data" wx:if="{{Weather.humidity}}">无</view>
                             <view class="situation-si-data" wx:else>暂无数据</view>
                         </view>
                     </swiper-item>
@@ -178,7 +178,7 @@
                 <image class="title-icon" src="/images/index_announcement_icon.png"></image>
                 <view class="title-words">园区公告</view>
             </view>
-            <view class="admin" bindtap="goAdmin" >
+            <view class="admin" wx:if="{{userInfo.is_admin==1}}" bindtap="goAdmin" >
                 队长端
             </view>
             </view>

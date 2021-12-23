@@ -129,4 +129,44 @@ export default {
       isThree: false,
     });
   },
+  getWeather(params) {
+    return fly({
+       url: `getWeather`, 
+      method: "get",
+      params,
+      isThree: false,
+    });
+  },
+  getDsCount(params) {
+    return fly({
+       url: `getDsCount`, 
+      method: "get",
+      params,
+      isThree: false,
+    });
+  },
+  subSosLog(params) {
+    return fly({
+       url: `subSosLog`, 
+      method: "post",
+      params,
+      isThree: false,
+    });
+  },
+  startDsLog(params) {
+    return fly({
+       url: `startDsLog`, 
+      method: "get",
+      params,
+      isThree: false,
+    });
+  },
+  endDsLog(params) {
+    return fly({
+       url: `endDsLog`, 
+      method: "get",
+      params,
+      isThree: false,
+    });
+  },
 };

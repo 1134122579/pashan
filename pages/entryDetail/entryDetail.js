@@ -55,6 +55,7 @@ const rate = 750.0 / W;
 const qrcode_w = 300 / rate;
 let JStimeDSQ = ''
 let UPDKDD = ""
+let lineTime = ''
 let App = getApp()
 import storage from "../../utils/cache"
 import Api from '../../api/index'
@@ -74,6 +75,13 @@ Page({
         markers: [],
         statusArr: [],
         statusDWobj: {},
+        newpolyline: {
+            points: [],
+            width: 3,
+            dottedLine: !1,
+            arrowLine: !0,
+            color: "#4E63A"
+        },
         currentStatus: '',
         altitude: '',
         JStime: "00:00:00",
@@ -82,6 +90,49 @@ Page({
         foldState: !0,
         satellite: !1,
         startLocstartationUpdateBackground: ''
+    },
+    // 设置路线
+    setPolyline() {
+        clearInterval(lineTime)
+        let that = this
+        lineTime = setInterval(() => {
+            let {
+                statusDWobj,
+                newpolyline
+            } = that.data
+            let polylineone = {
+                points: newpolyline['points'].concat([statusDWobj]),
+                width: 3,
+                dottedLine: !1,
+                arrowLine: !0,
+                color: "#4E63A9"
+            }
+            console.log(polylineone, "polylineone")
+            that.setData({
+                newpolyline: polylineone
+            })
+        }, 30000);
+
+
+    },
+    onSos() {
+        let {
+            userInfo,
+            statusDWobj
+        } = this.data
+        wx.showLoading({
+            title: '申请中...',
+        })
+        Api.subSosLog({
+            lat: statusDWobj.latitude,
+            lng: statusDWobj.longitude,
+        }).then(res => {
+            wx.hideLoading()
+            wx.showModal({
+                title: '申请救援',
+                content: '已发送救援申请！请等待'
+            })
+        })
     },
     time() {
         let getoldDate = wx.getStorageSync('statTime')
@@ -96,6 +147,7 @@ Page({
                 })
             }, 1000);
             That.upDK()
+            That.setPolyline()
         } else {
             this.setData({
                 mask: true
@@ -176,21 +228,24 @@ Page({
             userInfo
         } = this.data
         var e = this;
-        Api.subPosition({
-            lat: statusDWobj.latitude,
-            lng: statusDWobj.longitude,
-            beian_id: userInfo["bean_info"]["id"]
-        }).then(res => {
-            clearInterval(JStimeDSQ)
-            wx.setStorageSync('statTime', newDate)
-            e.time()
-            wx.showToast({
-                title: '开始登山',
-                icon: "none"
-            })
-            e.setData({
-                mask: !1,
-                timecostItv: !0
+        Api.startDsLog().then(res => {
+            Api.subPosition({
+                lat: statusDWobj.latitude,
+                lng: statusDWobj.longitude,
+                beian_id: userInfo["bean_info"]["id"]
+            }).then(res => {
+                clearInterval(JStimeDSQ)
+                e.setPolyline()
+                wx.setStorageSync('statTime', newDate)
+                e.time()
+                wx.showToast({
+                    title: '开始登山',
+                    icon: "none"
+                })
+                e.setData({
+                    mask: !1,
+                    timecostItv: !0
+                })
             })
         })
     }, 2e3),
@@ -198,21 +253,29 @@ Page({
         let {
             userInfo
         } = this.data
-        Api.endDsLog(userInfo.bean_info).then(res => {
-            wx.showToast({
-                title: '结束登山',
-                mask: true
-            })
-            setTimeout(() => {
-                wx.redirectTo({
-                    url: '/pages/index/index',
-                })
-            }, 1500);
-            clearInterval(JStimeDSQ)
-            clearInterval(UPDKDD)
-            wx.removeStorageSync('statTime')
-            wx.removeStorageSync('state')
+        wx.showLoading({
+            title: '上传中',
         })
+        Api.endDsLog().then(res => {
+            Api.endDsLog(userInfo.bean_info).then(res => {
+                wx.hideLoading()
+                wx.showToast({
+                    title: '结束登山',
+                    mask: true
+                })
+                setTimeout(() => {
+                    wx.redirectTo({
+                        url: '/pages/index/index',
+                    })
+                }, 1500);
+                clearInterval(JStimeDSQ)
+                clearInterval(UPDKDD)
+                clearInterval(lineTime)
+                wx.removeStorageSync('statTime')
+                wx.removeStorageSync('state')
+            })
+        })
+
     },
     // 获取位置
     getLocation() {
@@ -919,8 +982,13 @@ Page({
             }
         }), this.toCurrentLocation();
     },
+    toDQLocation() {
+
+
+    },
     toCurrentLocation: i.throttle(function (t) {
         this.mapCtx = wx.createMapContext("myMap"), this.mapCtx.moveToLocation();
+        // console.log(   this.mapCtx)
     }, 2e3),
     points: function () {
         var t = this.data.openid;

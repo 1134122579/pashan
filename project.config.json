@@ -4,7 +4,7 @@
     "ignore": []
   },
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -31,7 +31,7 @@
       "outputPath": ""
     },
     "enableEngineNative": false,
-    "useIsolateContext": true,
+    "useIsolateContext": false,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": true,
     "packNpmRelationList": [
@@ -48,7 +48,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.21.2",
-  "appid": "wxd3966f233680ece2",
+  "appid": "wx23f0e224e37e69bd",
   "projectname": "%E7%99%BB%E5%B1%B1",
   "debugOptions": {
     "hidedInDevtools": []
