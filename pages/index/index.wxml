@@ -23,8 +23,8 @@
                                 <image src="/images/crowd_yellow.png" style="width:116rpx;height:44rpx" wx:elif="{{crowd=='yellow'}}"></image>
                                 <image src="/images/crowd_green.png" style="width:116rpx;height:44rpx" wx:elif="{{crowd=='green'}}"></image>
                             </view>
-                            <view class="situation-si-data" style="color:#000" wx:if="{{DsCount}}">
-                                <view class="registered-title">当前登记人数：</view>{{registeredSum}}
+                            <view class="situation-si-data" style="color:#000" wx:if="{{Weather.today_all_count}}">
+                                <view class="registered-title">当前登记人数：</view>{{Weather.today_all_count}}
                             </view>
                             <view class="situation-si-data" style="color:#000" wx:else>暂无数据</view>
                         </view>

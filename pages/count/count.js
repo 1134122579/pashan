@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    pageNum:1,
     is_jy: false,
     getdataCount: '',
     all_numAll: '',
@@ -26,9 +27,14 @@ Page({
     let {
       item
     } = event.currentTarget.dataset
-    if(item.status==1){
+    if(item.status==2){
       wx.navigateTo({
-        url: '/pages/jiuyuanDetail/jiuyuanDetail?beian_id='+item.id,
+        url: `/pages/jiuyuanDetail/jiuyuanDetail?beian_id=${item.id}&name=${item.name}`,
+      })
+    }else{
+      wx.showToast({
+        title: '已完成救援',
+        icon:'none'
       })
     }
  
@@ -97,6 +103,7 @@ Page({
 
   //触底响应函数
   onBottom() {
+    console.log(1231231)
     var that = this;
     (this.data.pageNum) ++;
     this.getSosList();
@@ -148,6 +155,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    console.log(112)
     this.onBottom()
   },
 
