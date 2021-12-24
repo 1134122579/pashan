@@ -65,7 +65,10 @@ import {
 Page({
     mixins: [n.default],
     data: {
+        markerList: [],
         name: '',
+        jystatusDWobj:{},
+        jy_location: [],
         Jyarray: [],
         jyObj: '',
         userInfo: App.globalData.userInfo,
@@ -79,13 +82,13 @@ Page({
         markers: [],
         statusArr: [],
         statusDWobj: {},
-        newpolyline: {
+        newpolyline: [{
             points: [],
             width: 3,
             dottedLine: !1,
             arrowLine: !0,
             color: "#4E63A"
-        },
+        }],
         beian_id: '',
         currentStatus: '',
         altitude: '',
@@ -104,33 +107,67 @@ Page({
         this.setData({
             jyObj: Jyarray[index].name,
             beian_id: Jyarray[index].id,
-            jy_loaction: Jyarray[index]
+            jy_loaction: Jyarray[index],
+            jystatusDWobj:Jyarray[index]
         })
     },
-    // 设置路线
-    setPolyline() {
-        clearInterval(lineTime)
-        let that = this
-        lineTime = setInterval(() => {
-            let {
-                statusDWobj,
-                newpolyline
-            } = that.data
-            let polylineone = {
-                points: newpolyline['points'].concat([statusDWobj]),
-                width: 3,
-                dottedLine: !1,
-                arrowLine: !0,
-                color: "#4E63A9"
-            }
-            console.log(polylineone, "polylineone")
-            that.setData({
-                newpolyline: polylineone
+    getSosList() {
+        let {
+          page,
+          Jyarray
+        } = this.data
+          Api.getSosList({
+            page
+          }).then(res => {
+           res=res.filter(item=>item.status!=2)
+            this.setData({
+              isNulist: res.length <= 0 ? true : false
             })
-        }, 30000);
+            if (page == 1) {
+              this.setData({
+                Jyarray: res
+              })
+            } else {
+              this.setData({
+                Jyarray: Jyarray.concat(res)
+              })
+            }
+          })
+      },
+    // 设置路线
+    // setPolyline() {
+    //     clearInterval(lineTime)
+    //     let that = this
+    //     lineTime = setInterval(() => {
+    //         let {
+    //             statusDWobj,
+    //             newpolyline
+    //         } = that.data
+    //         let polylineone = {
+    //             points: newpolyline['points'].concat([statusDWobj]),
+    //             width: 3,
+    //             dottedLine: !1,
+    //             arrowLine: !0,
+    //             color: "#4E63A9"
+    //         }
+    //         console.log(polylineone, "polylineone")
+    //         that.setData({
+    //             newpolyline: polylineone
+    //         })
+    //     }, 30000);
 
 
-    },
+    // },
+    fold: i.throttle(function (t) {
+        this.setData({
+            foldState: !1
+        });
+    }, 2e3),
+    unfold: i.throttle(function (t) {
+        this.setData({
+            foldState: !0
+        });
+    }, 2e3),
     onSos() {
         let {
             beian_id
@@ -141,15 +178,20 @@ Page({
             content: '已完成该项救援行动',
             success: res => {
                 console.log(res)
-                if (res.confirm ) {
+                if (res.confirm) {
                     wx.showLoading({
                         title: '提交中...',
                     })
                     Api.endSosLog({
                         id: beian_id
                     }).then(res => {
-                wx.hideLoading()
-
+                        wx.hideLoading()
+                        clearInterval(UPDKDD)
+                        wx.showToast({
+                          title: '已完成救援',
+                          icon:'none',
+                          mack:true
+                        })
                         wx.navigateBack({
                             delta: 1,
                         })
@@ -190,7 +232,7 @@ Page({
                 })
             }, 1000);
             That.upDK()
-            That.setPolyline()
+            // That.setPolyline()
         } else {
             this.setData({
                 mask: true
@@ -204,6 +246,16 @@ Page({
             userInfo
         } = this.data
         clearInterval(UPDKDD)
+        Api.subPosition({
+            lat: statusDWobj.latitude,
+            lng: statusDWobj.longitude,
+            beian_id: userInfo["bean_info"]["id"]
+        }).then(res => {
+            wx.showToast({
+                title: '已开始救援',
+                icon: 'none'
+            })
+        })
         UPDKDD = setInterval(() => {
             Api.subPosition({
                 lat: statusDWobj.latitude,
@@ -228,15 +280,16 @@ Page({
                     longitude: item.lng,
                 }
             })
-            console.log(list, "救援路线")
+            let jy_location = list[list.length - 1]
             this.setData({
-                newpolyline: {
+                jy_location,
+                newpolyline: [{
                     points: list,
-                    width: 3,
-                    dottedLine: !1,
-                    arrowLine: !0,
-                    color: "#4E63A9"
-                }
+                    width: 5,
+                    dottedLine: false,
+                    arrowLine: true,
+                    color: "#ff0000"
+                }]
             })
         })
     },
@@ -276,7 +329,7 @@ Page({
                 beian_id: userInfo["bean_info"]["id"]
             }).then(res => {
                 clearInterval(JStimeDSQ)
-                e.setPolyline()
+                // e.setPolyline()
                 wx.setStorageSync('statTime', newDate)
                 e.time()
                 wx.showToast({
@@ -321,12 +374,42 @@ Page({
         })
 
     },
+    onstartJy() {
+        console.log("开始救援", 1234556789)
+    },
 
     lookCode() {
         console.log(1)
         this.setData({
             mask: true,
             statusPoup: false
+        })
+    },
+
+    // 获取救援队
+    async getTeamPosition() {
+        let {
+            markerList
+        } = this.data
+        let res = await Api.getTeamPosition()
+        res = res.map(item => {
+            return {
+                latitude: item.lat,
+                longitude: item.lng,
+                title: "救援队员",
+                iconPath:item.headimgurl,
+                width:50,
+                height:50
+            }
+        })
+        let JYZB = wx.getStorageSync('JYZB')
+        JYZB["title"] = "被救援者"
+        JYZB["iconPath"] =JYZB['headimgurl']
+        JYZB["width"] = 50
+        JYZB["height"] = 50
+        this.setData({
+            markerList: res.concat([JYZB]),
+            jystatusDWobj:JYZB
         })
     },
     onLoad: function (e) {
@@ -359,6 +442,14 @@ Page({
                     setInterval(function () {
                         e++;
                     }, 1e3), wx.onLocationChange(function (t) {
+                        var n = t;
+                        n.latitude = parseFloat(t.latitude).toFixed(6), n.longitude = parseFloat(t.longitude).toFixed(6)
+                        that.setData({
+                            statusDWobj: n
+                        })
+                        wx.setStorageSync('location', t)
+                        return
+
                         let {
                             latitude,
                             longitude,
@@ -399,6 +490,13 @@ Page({
                                             setInterval(function () {
                                                 e++;
                                             }, 1e3), wx.onLocationChange(function (t) {
+                                                var n = t;
+                                                n.latitude = parseFloat(t.latitude).toFixed(6), n.longitude = parseFloat(t.longitude).toFixed(6)
+                                                that.setData({
+                                                    statusDWobj: n
+                                                })
+                                                wx.setStorageSync('location', t)
+                                                return
                                                 let {
                                                     latitude,
                                                     longitude,
@@ -450,6 +548,13 @@ Page({
                                             setInterval(function () {
                                                 e++;
                                             }, 1e3), wx.onLocationChange(function (t) {
+                                                var n = t;
+                                                n.latitude = parseFloat(t.latitude).toFixed(6), n.longitude = parseFloat(t.longitude).toFixed(6)
+                                                that.setData({
+                                                    statusDWobj: n
+                                                })
+                                                wx.setStorageSync('location', t)
+                                                return
                                                 let {
                                                     latitude,
                                                     longitude,
@@ -493,7 +598,9 @@ Page({
     onReady: function () {},
     onShow: function (e) {
         this.getPoyline()
-
+        this.getTeamPosition()
+      
+        console.log(this.data.markerList, 1223)
         let that = this
         if (storage.getToken()) {
             Api.getUserInfo().then(res => {

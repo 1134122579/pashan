@@ -111,7 +111,7 @@
         <view class="read">
             <image bindtap="isRead" src="/images/add_notok.png" style="width:36rpx;height:36rpx;margin:0 20rpx" wx:if="{{!isRead}}"></image>
             <image bindtap="notRead" src="/images/add_ok.png" style="width:36rpx;height:36rpx;margin:0 20rpx" wx:else></image>
-            <view class="read-words"> 我已阅读并同意<label bindtap="toFire" style="color:#4E63A9">《登山人员森林防火责任书》</label>以及<label bindtap="toPromise" style="color:#4E63A9">《进入户外线路声明》</label>。 </view>
+            <view class="read-words"> 我已阅读并同意<label style="color:#4E63A9"  bindtap="isRead">《登山人员森林防火责任书》</label>以及<label   bindtap="isRead" style="color:#4E63A9">《进入户外线路声明》</label>。 </view>
         </view>
         <view bindtap="createDone" class="createDone">提交备案</view>
     </view>

@@ -53,6 +53,18 @@
           "pathName": "pages/jiuyuanDetail/jiuyuanDetail",
           "query": "beian_id=9",
           "scene": null
+        },
+        {
+          "name": "pages/jiuyuanDetail/jiuyuanDetail",
+          "pathName": "pages/jiuyuanDetail/jiuyuanDetail",
+          "query": "beian_id=45&name=%E5%B0%8F%E8%8D%89",
+          "scene": null
+        },
+        {
+          "name": "pages/entryDetail/entryDetail",
+          "pathName": "pages/entryDetail/entryDetail",
+          "query": "",
+          "scene": null
         }
       ]
     }

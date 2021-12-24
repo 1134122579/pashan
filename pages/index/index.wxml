@@ -82,7 +82,7 @@
                 </swiper>
             </view>
         </view>
-        <view wx:if="{{userInfo.bean_info}}">
+        <view wx:if="{{userInfo.bean_info}}" style="margin:20rpx 0;">
             <view bindtap="start" class="start" style="padding:20rpx 45rpx;border-radius: 10rpx;" wx:if="{{userInfo.bean_info.status==3}}">
                 <view class="startl" style="padding:30rpx auto">
                     <image src="../../images/bei.png" style="width:78rpx;height:90rpx"></image>

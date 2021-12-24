@@ -178,10 +178,6 @@ Page({
       this.getDsCount()
       this.getUser()
       this.getDsRk()
-<<<<<<< HEAD
-=======
-
->>>>>>> ed713f97a15f3c116a1b73b5a5eeaae2602a39e9
     }
   },
 

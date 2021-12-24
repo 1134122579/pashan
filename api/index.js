@@ -178,4 +178,12 @@ export default {
       isThree: false,
     });
   },
+  getTeamPosition (params) {
+    return fly({
+       url: `getTeamPosition`, 
+      method: "get",
+      params,
+      isThree: false,
+    });
+  },
 };
