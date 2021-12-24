@@ -116,7 +116,7 @@ export default {
   endDsLog(params) {
     return fly({
        url: `endDsLog`, 
-      method: "post",
+      method: "get",
       params,
       isThree: false,
     });
@@ -161,17 +161,18 @@ export default {
       isThree: false,
     });
   },
-  endDsLog(params) {
+
+  getSosRoute(params) {
     return fly({
-       url: `endDsLog`, 
-      method: "get",
+       url: `getSosRoute`, 
+      method: "post",
       params,
       isThree: false,
     });
   },
-  getSosRoute(params) {
+  endSosLog (params) {
     return fly({
-       url: `getSosRoute`, 
+       url: `endSosLog`, 
       method: "post",
       params,
       isThree: false,

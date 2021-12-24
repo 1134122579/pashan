@@ -2,8 +2,8 @@
   <view class="header" style="display: flex;">
     <image src="{{userInfo.headimgurl}}" style="width: 80px;height: 80px;border-radius: 50%;display: block;"></image>
     <view class="name">{{userInfo.name}}</view>
-    <view class="name dt">进入地图</view>
-    <view class="name newJY">新救援申请</view>
+    <view class="name dt" bindtap="jy">进入地图</view>
+    <view class="name newJY" bindtap="jy">新救援申请</view>
   </view>
   <view class="content">
     <view class="title">
@@ -46,8 +46,8 @@
         <image src="{{item.headimgurl}}" style="width: 80px;height: 80px;border-radius: 50%;display: block;"></image>
         <view class="name">{{item.name}}</view>
         <view class="name dt" bindtap="goJypage" data-item="{{item}}" >进入地图</view>
-        <view class="name newJY" wx:if="{{item.status==1}}">等待救援</view>
-        <view class="name " wx:if="{{item.status!=1}}">已完成</view>
+        <view class="name newJY" wx:if="{{item.status==2}}">等待救援</view>
+        <view class="name " wx:if="{{item.status==1}}">已完成</view>
       </view>
     </view>
     <view class="listnull" wx:if="{{isNulist}}">暂无更多..</view>

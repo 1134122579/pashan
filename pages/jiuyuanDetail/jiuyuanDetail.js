@@ -65,11 +65,12 @@ import {
 Page({
     mixins: [n.default],
     data: {
-        Jyarray:[],
-        jyObj:'',
+        name: '',
+        Jyarray: [],
+        jyObj: '',
         userInfo: App.globalData.userInfo,
         mask: true,
-        jy_loaction:{},
+        jy_loaction: {},
         statusPoup: true,
         createCodeImg: "",
         qrcodeWidth: qrcode_w,
@@ -85,7 +86,7 @@ Page({
             arrowLine: !0,
             color: "#4E63A"
         },
-        beian_id:'',
+        beian_id: '',
         currentStatus: '',
         altitude: '',
         JStime: "00:00:00",
@@ -95,13 +96,15 @@ Page({
         satellite: !1,
         startLocstartationUpdateBackground: ''
     },
-    bindchange(event){
-        let index=event.detail.value
-        let {Jyarray}=this.data
+    bindchange(event) {
+        let index = event.detail.value
+        let {
+            Jyarray
+        } = this.data
         this.setData({
-            jyObj:Jyarray[index].name,
-            beian_id:Jyarray[index].id,
-            jy_loaction:Jyarray[index]
+            jyObj: Jyarray[index].name,
+            beian_id: Jyarray[index].id,
+            jy_loaction: Jyarray[index]
         })
     },
     // 设置路线
@@ -132,18 +135,34 @@ Page({
         let {
             beian_id
         } = this.data
-        wx.showLoading({
-            title: '提交中...',
+
+        wx.showModal({
+            title: '救援完成',
+            content: '已完成该项救援行动',
+            success: res => {
+                console.log(res)
+                if (res.confirm ) {
+                    wx.showLoading({
+                        title: '提交中...',
+                    })
+                    Api.endSosLog({
+                        id: beian_id
+                    }).then(res => {
+                wx.hideLoading()
+
+                        wx.navigateBack({
+                            delta: 1,
+                        })
+                    })
+                } else {
+                    console.log('取消')
+                }
+            },
+            complete: res => {
+
+            }
         })
-        Api.endSosLog({
-            beian_id
-        }).then(res => {
-            wx.hideLoading()
-            wx.showModal({
-                title: '救援完成',
-                content: '已完成该项救援行动'
-            })
-        })
+
     },
     showNum(num) {
         if (num < 10) {
@@ -203,7 +222,7 @@ Page({
         Api.getSosRoute({
             beian_id
         }).then(res => {
-          let list=  res.map(item => {
+            let list = res.map(item => {
                 return {
                     latitude: item.lat,
                     longitude: item.lng,
@@ -212,7 +231,7 @@ Page({
             console.log(list, "救援路线")
             this.setData({
                 newpolyline: {
-                    points: res,
+                    points: list,
                     width: 3,
                     dottedLine: !1,
                     arrowLine: !0,
@@ -311,9 +330,10 @@ Page({
         })
     },
     onLoad: function (e) {
-        console.log(e,123)
+        console.log(e, 123)
         this.setData({
-            beian_id:e.beian_id
+            beian_id: e.beian_id,
+            name: e.name
         })
         let that = this
         var o = this;

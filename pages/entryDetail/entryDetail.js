@@ -747,7 +747,7 @@ Page({
             text: userInfo.idcard,
             width: qrcode_w,
             height: qrcode_w,
-            colorDark: "#00BFA5",
+            colorDark: "#15D36A",
             colorLight: "white",
             correctLevel: r.CorrectLevel.H,
             callback: (res) => {
