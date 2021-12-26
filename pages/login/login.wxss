@@ -8,8 +8,10 @@
 }
 
 .login-top-icon {
-    height: 474rpx;
-    width: 500rpx;
+    height: 420rpx;
+    width: 420rpx;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 .login-top-desc {

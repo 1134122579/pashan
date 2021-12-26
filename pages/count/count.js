@@ -28,12 +28,15 @@ Page({
       item
     } = event.currentTarget.dataset
     if(item.status==2){
-      item['latitude']=item['lat']
-      item['longitude']=item['lng']
-      wx.setStorageSync('JYZB', item)
-      wx.navigateTo({
-        url: `/pages/jiuyuanDetail/jiuyuanDetail?beian_id=${item.beian_id}&name=${item.name}`,
+      App.isGetlocation(()=>{
+        item['latitude']=item['lat']
+        item['longitude']=item['lng']
+        wx.setStorageSync('JYZB', item)
+        wx.navigateTo({
+          url: `/pages/jiuyuanDetail/jiuyuanDetail?beian_id=${item.id}&name=${item.name}`,
+        })
       })
+   
     }else{
       wx.showToast({
         title: '已完成救援',

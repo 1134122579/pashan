@@ -178,8 +178,7 @@
                 <image class="title-icon" src="/images/index_announcement_icon.png"></image>
                 <view class="title-words">园区公告</view>
             </view>
-            <!-- wx:if="{{userInfo.is_admin==1}}" -->
-            <view class="admin"  bindtap="goAdmin" >
+            <view class="admin"   wx:if="{{userInfo.is_admin==1}}" bindtap="goAdmin" >
                 队长端
             </view>
             </view>

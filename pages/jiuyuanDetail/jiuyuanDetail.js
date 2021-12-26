@@ -246,10 +246,12 @@ Page({
             userInfo
         } = this.data
         clearInterval(UPDKDD)
+        let JYZB= wx.getStorageSync("JYZB")
+        console.log(JYZB)
         Api.subPosition({
             lat: statusDWobj.latitude,
             lng: statusDWobj.longitude,
-            beian_id: userInfo["bean_info"]["id"]
+            beian_id: JYZB["id"]
         }).then(res => {
             wx.showToast({
                 title: '已开始救援',
@@ -260,7 +262,7 @@ Page({
             Api.subPosition({
                 lat: statusDWobj.latitude,
                 lng: statusDWobj.longitude,
-                beian_id: userInfo["bean_info"]["id"]
+                beian_id: JYZB["id"]
             }).then(res => {
                 console.log("上传当前位置成功成功", res)
             })
@@ -322,11 +324,12 @@ Page({
             userInfo
         } = this.data
         var e = this;
+        let JYZB= wx.getStorageSync("JYZB")
         Api.startDsLog().then(res => {
             Api.subPosition({
                 lat: statusDWobj.latitude,
                 lng: statusDWobj.longitude,
-                beian_id: userInfo["bean_info"]["id"]
+                beian_id: JYZB["id"]
             }).then(res => {
                 clearInterval(JStimeDSQ)
                 // e.setPolyline()
@@ -397,16 +400,36 @@ Page({
                 latitude: item.lat,
                 longitude: item.lng,
                 title: "救援队员",
-                iconPath:item.headimgurl,
-                width:50,
-                height:50
+                // iconPath:item.headimgurl,
+                iconPath:"/images/sos1.png",
+                
+                width:40,
+                height:40,
+                // callout: {
+                //     borderRadius:50,
+                //     color:"#57BE6A"
+                // }
             }
         })
         let JYZB = wx.getStorageSync('JYZB')
         JYZB["title"] = "被救援者"
-        JYZB["iconPath"] =JYZB['headimgurl']
-        JYZB["width"] = 50
-        JYZB["height"] = 50
+        // JYZB["iconPath"] =JYZB['headimgurl']
+        JYZB["iconPath"] ="/images/sos.png"
+        JYZB["width"] = 40
+        JYZB["height"] = 40
+        // JYZB["label"] = {
+        //     // content:"被救援者",  
+        //     color:'#ffffff',
+        //     bgColor:"#ff0000",
+        //     anchorY:JYZB.longitude,
+        //     anchorX:JYZB.latitude,
+        // }
+        
+        // JYZB["callout"] = {
+        //     borderRadius:50,
+        //     color:"#57BE6A"
+        // }
+        
         this.setData({
             markerList: res.concat([JYZB]),
             jystatusDWobj:JYZB

@@ -40,8 +40,15 @@ Page({
   //  判断是否登录
   islogin(callback) {
     let token = storage.getToken()
+    let userInfo=storage.getUserInfo()
     if (token) {
-      (callback && typeof (callback) === "function") && callback();
+     if( userInfo.is_auth==1){
+        (callback && typeof (callback) === "function") && callback();
+      }else{
+        wx.navigateTo({
+          url: '/pages/testify/testify',
+        })
+      }
     } else {
       wx.redirectTo({
         url: '/pages/login/login',
@@ -105,8 +112,10 @@ Page({
     })
   },
   start() {
-    wx.navigateTo({
-      url: '/pages/entryDetail/entryDetail',
+    App.isGetlocation(()=>{
+      wx.navigateTo({
+        url: '/pages/entryDetail/entryDetail',
+      })
     })
   },
 

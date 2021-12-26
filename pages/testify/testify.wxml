@@ -13,7 +13,7 @@
             <image class="avatar-img" src="/images/index_squad_avatar.png" wx:else></image>
         </view>
         <view class="testify-type">
-            <view class="testify-title">手机号码</view>
+            <view class="testify-title"> <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view>手机号码</view>
             <view>{{userInfo.mobile}}</view>
             <button open-type="getPhoneNumber" bindgetphonenumber="getphone" class="getPhone">获取手机号</button>
         </view>

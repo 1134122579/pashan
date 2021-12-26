@@ -666,7 +666,7 @@ Page({
         let that = this
         let t = new r("canvas", {
             // image: "/images/bg.png",
-            text: userInfo.idcard,
+            text:`${+new Date()}${userInfo.idcard}`,
             width: qrcode_w,
             height: qrcode_w,
             colorDark: "#15D36A",

@@ -41,6 +41,7 @@
             "desc": "用来记录登山路线"
         }
     },
+    "requiredBackgroundModes": ["location"],
     "usingComponents": {
         "van-empty": "@vant/weapp/empty/index",
         "van-button": "@vant/weapp/button/index",
