@@ -504,6 +504,10 @@ Page({
                     showCancel: !0,
                     content: "未开启后台位置获取，请点击右上角“…”，进入设置，选择位置消息，勾选按钮“使用小程序期间和离开小程序后”。",
                     success: function (t) {
+                        wx.navigateBack({
+                          delta: 1,
+                        })
+                        return
                         console.log(t), wx.openSetting({
                             success: function (t) {
                                 wx.getSetting({
@@ -555,6 +559,10 @@ Page({
                     showCancel: !0,
                     content: "未开启后台位置获取，请点击右上角“…”，进入设置，选择位置消息，勾选按钮“使用小程序期间和离开小程序后”。",
                     success: function (t) {
+                        wx.navigateBack({
+                            delta: 1,
+                          })
+                          return
                         wx.openSetting({
                             success: function (t) {
                                 wx.getSetting({

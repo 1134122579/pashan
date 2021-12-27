@@ -68,7 +68,7 @@ Page({
             ensureEnter,
             isRead
         } = this.data
-        let type = ensureGroup == "个人" ? 1 : 2
+        let type = ensureGroup != "团队" ? 1 : 2
         let reason = ensureReason //登山原因
         let ds_time = date //登山时间
         let rukou = ensureEnter //登山入口
@@ -79,7 +79,13 @@ Page({
             })
             return
         }
-
+        if(type==2&&!showEnsureFamilyNum){
+            wx.showToast({
+                title: '请填写数量',
+                icon: "none"
+            })
+            return
+        }
         wx.showLoading({
             title: '备案中',
             mask: true,
@@ -88,7 +94,8 @@ Page({
             type,
             reason,
             ds_time,
-            rukou
+            rukou,
+            num:type==1?"":showEnsureFamilyNum
         }).then(res => {
             wx.hideLoading()
             wx.showToast({

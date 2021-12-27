@@ -16,26 +16,26 @@ module.exports = {
         }
         var l = g.indexOf(0);
         if (0 == l) ; else if (-1 == l && !a.globalData.navigated) {
-            wx.login({
-                success: function(e) {
-                    console.log("wx request"), wx.request({
-                        url: "https://sumou-server.tsunamitek.com/dengshan?code=".concat(e.code, "&cmd=login.check"),
-                        timeout: "5000",
-                        success: function(e) {
-                            wx.setStorageSync("authJudge", e.data), console.log("login.check success", e.data), 
-                            console.log("1" == e.data["userinfo.has"] && "1" == e.data["phone.has"]), "1" == e.data["userinfo.has"] && "1" == e.data["phone.has"] || ("1" != e.data["userinfo.has"] || "1" != e.data["phone.has"] && !a.globalData.navigated) && (wx.navigateTo({
-                                url: "/pages/login/login"
-                            }), a.globalData.navigated = !0);
-                        },
-                        fail: function(e) {
-                            console.log("storage"), "true" == wx.getStorageSync("userinfo") && wx.getStorageSync("phoneState"), 
-                            "true" == wx.getStorageSync("userinfo") && "true" == wx.getStorageSync("phoneState") || wx.navigateTo({
-                                url: "/pages/login/login"
-                            }), a.globalData.navigated = !0;
-                        }
-                    });
-                }
-            });
+            // wx.login({
+            //     success: function(e) {
+            //         console.log("wx request"), wx.request({
+            //             url: "https://sumou-server.tsunamitek.com/dengshan?code=".concat(e.code, "&cmd=login.check"),
+            //             timeout: "5000",
+            //             success: function(e) {
+            //                 wx.setStorageSync("authJudge", e.data), console.log("login.check success", e.data), 
+            //                 console.log("1" == e.data["userinfo.has"] && "1" == e.data["phone.has"]), "1" == e.data["userinfo.has"] && "1" == e.data["phone.has"] || ("1" != e.data["userinfo.has"] || "1" != e.data["phone.has"] && !a.globalData.navigated) && (wx.navigateTo({
+            //                     url: "/pages/login/login"
+            //                 }), a.globalData.navigated = !0);
+            //             },
+            //             fail: function(e) {
+            //                 console.log("storage"), "true" == wx.getStorageSync("userinfo") && wx.getStorageSync("phoneState"), 
+            //                 "true" == wx.getStorageSync("userinfo") && "true" == wx.getStorageSync("phoneState") || wx.navigateTo({
+            //                     url: "/pages/login/login"
+            //                 }), a.globalData.navigated = !0;
+            //             }
+            //         });
+            //     }
+            // });
         }
         a.globalData.pageData ? this.setData({
             dataBack: !0,

@@ -69,10 +69,11 @@
                 </view>
             </picker>
         </view>
-        <!-- <view class="add-type" wx:if="{{ensureGroup=='团队'}}">
+        <view class="add-type" wx:if="{{ensureGroup=='团队'}}">
             <view class="type st">团队人数 </view>
-            <input bindblur="ensureFamilyNum" class="type-select" style="text-align: right;" type="number" value="{{showEnsureFamilyNum}}"></input>
-        </view> -->
+            <input bindblur="ensureFamilyNum" class="type-select" style="text-align: right;" type="number" placeholder="请输入团队人数" value="{{showEnsureFamilyNum}}"></input>
+            <!-- <view><van-icon name="arrow" /></view> -->
+        </view>
         <view class="add-type">
             <view class="type st">登山原因 </view>
             <picker bindchange="bindPickerReason" class="type-select" range="{{reason}}" value="{{index}}">

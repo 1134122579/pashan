@@ -63,69 +63,188 @@ App({
     } else {}
 
   },
-  // 获取定位权限
-  isGetlocation(cb) {
-    var that = this
-    wx.getLocation({
-      success(res) {
-            cb()
-      },
-      fail() {
-        wx.getSetting({
-          success(res) {
-            //这里判断是否有地位权限
-            if (!res.authSetting['scope.userLocationBackground']) {
-                  wx.showModal({
-                    showCancel: !0,
-                    content: "未开启后台位置获取，请点击右上角“…”，进入设置，选择位置消息，勾选按钮“使用小程序期间和离开小程序后”。",
-                    success: function (t) {
-                      wx.openSetting({
-                        success: function (t) {
-                          wx.redirectTo({
-                            url: '/pages/index/index',
-                          })
-                          // wx.getSetting({
-                          //   success: function (t) {
-                          //     if (console.log(t), 1 == t.authSetting["scope.userLocationBackground"]) {
-                          //       cb()
-                          //     } else {
-                          //       wx.showModal({
-                          //         title: '您手机定位功能没有开启',
-                          //         content: '请在系统设置中打开定位服务',
-                          //         success() {
-                          //           // 跳到首页
-                          //           wx.redirectTo({
-                          //             url: '/pages/index/index',
-                          //           })
-                          //         }
-                          //       })
-                          //     }
-                          //   }
-                          // });
-                        }
-                      });
+  isGps: function (callback) {
+    let vm = this
+    wx.getSetting({
+      success: (res) => {
+        // res.authSetting['scope.userLocation'] == undefined    表示 初始化进入该页面
+        // res.authSetting['scope.userLocation'] == false    表示 非初始化进入该页面,且未授权
+        // res.authSetting['scope.userLocation'] == true    表示 地理位置授权
+        // 拒绝授权后再次进入重新授权
+        if (res.authSetting['scope.userLocation'] != undefined && res.authSetting['scope.userLocation'] != true) {
+          // console.log('authSetting:status:拒绝授权后再次进入重新授权', res.authSetting['scope.userLocation'])
+          wx.showModal({
+            title: '',
+            content: '未开启后台位置获取，请点击右上角“…”，进入设置，选择位置消息，勾选按钮“使用小程序期间和离开小程序后”。',
+            success: function (res) {
+              if (res.cancel) {
+                wx.showToast({
+                  title: '拒绝授权',
+                  icon: 'none'
+                })
+              } else if (res.confirm) {
+                wx.openSetting({
+                  success: function (dataAu) {
+                    // console.log('dataAu:success', dataAu)
+                    if (dataAu.authSetting["scope.userLocation"] == true) {
+                      //再次授权，调用wx.getLocation的API
+                      vm.getLocation(dataAu, callback)
+                    } else {
+                      wx.showToast({
+                        title: '授权失败',
+                        icon: 'none'
+                      })
                     }
-                  });
-            } else {
-              //如果有定位权限，调用地图
-              wx.showModal({
-                title: '您手机定位功能没有开启',
-                content: '请在系统设置中打开定位服务',
-                success() {
-                  // 跳到首页
-                  wx.redirectTo({
-                    url: '/pages/index/index',
-                  })
-                }
-              })
+                  }
+                })
+              }
             }
-          }
-        })
+          })
+        }
+        // 初始化进入，未授权
+        else if (res.authSetting['scope.userLocation'] == undefined) {
+          // console.log('authSetting:status:初始化进入，未授权', res.authSetting['scope.userLocation'])
+          //调用wx.getLocation的API
+          wx.getLocation({})
+          // vm.getLocation(res, callback)
+        }
+        // 已授权
+        else if (res.authSetting['scope.userLocation']) {
+          // console.log('authSetting:status:已授权', res.authSetting['scope.userLocation'])
+          //调用wx.getLocation的API
+          vm.getLocation(res, callback)
+        }
       }
     })
-  
+  },
+  // 微信获得经纬度
+  getLocation: function (userLocation, callback) {
+    let vm = this
+    wx.getLocation({
+      success: function (res) {
+        // console.log('getLocation:success', res)
+        var latitude = res.latitude
+        var longitude = res.longitude
+
+        callback && callback();
+
+      },
+      fail: function (res) {
+        // console.log('getLocation:fail', res)
+        if (res.errMsg === 'getLocation:fail:auth denied') {
+          wx.showToast({
+            title: '拒绝授权',
+            icon: 'none'
+          })
+        }
+        // if (!userLocation || !userLocation.authSetting['scope.userLocation']) {
+        //   vm.isGetlocation(callback)
+        // } else 
+        if (userLocation.authSetting['scope.userLocation']) {
+          wx.showModal({
+            title: '您手机定位功能没有开启',
+            content: '请在系统设置中打开定位服务',
+            showCancel: false,
+            success: result => {
+              // vm.isGetlocation(callback)
+            }
+          })
+        } else {
+          wx.showToast({
+            title: '授权失败',
+            icon: 'none'
+          })
+        }
+      }
+    })
+  },
+  // 微信获取移动定位
+  isGetlocation(cb) {
+    this.isGps(() => {
+      wx.getSetting({
+        success(res) {
+          if (res.authSetting['scope.userLocationBackground']) {
+            cb()
+          } else {
+            wx.showModal({
+              showCancel: true,
+              content: "未开启后台位置获取，请点击右上角“…”，进入设置，选择位置消息，勾选按钮“使用小程序期间和离开小程序后”。",
+              success: function (t) {
+                wx.openSetting({})
+              }
+            });
+          }
+        }
+      })
+    })
 
   },
+
+
+
+  // 获取定位权限
+  // isGetlocation(cb) {
+  //   var that = this
+  //   wx.getLocation({
+  //     success(res) {
+  //           cb()
+  //     },
+  //     fail() {
+  //       wx.getSetting({
+  //         success(res) {
+  //           //这里判断是否有地位权限
+  //           if (!res.authSetting['scope.userLocationBackground']) {
+  //                 wx.showModal({
+  //                   showCancel: !0,
+  //                   content: "未开启后台位置获取，请点击右上角“…”，进入设置，选择位置消息，勾选按钮“使用小程序期间和离开小程序后”。",
+  //                   success: function (t) {
+  //                     wx.openSetting({
+  //                       success: function (t) {
+  //                         wx.redirectTo({
+  //                           url: '/pages/index/index',
+  //                         })
+  //                         // wx.getSetting({
+  //                         //   success: function (t) {
+  //                         //     if (console.log(t), 1 == t.authSetting["scope.userLocationBackground"]) {
+  //                         //       cb()
+  //                         //     } else {
+  //                         //       wx.showModal({
+  //                         //         title: '您手机定位功能没有开启',
+  //                         //         content: '请在系统设置中打开定位服务',
+  //                         //         success() {
+  //                         //           // 跳到首页
+  //                         //           wx.redirectTo({
+  //                         //             url: '/pages/index/index',
+  //                         //           })
+  //                         //         }
+  //                         //       })
+  //                         //     }
+  //                         //   }
+  //                         // });
+  //                       }
+  //                     });
+  //                   }
+  //                 });
+  //           } else {
+  //             //如果有定位权限，调用地图
+  //             wx.showModal({
+  //               title: '您手机定位功能没有开启',
+  //               content: '请在系统设置中打开定位服务',
+  //               success() {
+  //                 // 跳到首页
+  //                 wx.redirectTo({
+  //                   url: '/pages/index/index',
+  //                 })
+  //               }
+  //             })
+  //           }
+  //         }
+  //       })
+  //     }
+  //   })
+
+
+  // },
   globalData: {
     userInfo: "",
     is_login: true,

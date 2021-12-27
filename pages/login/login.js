@@ -202,24 +202,26 @@ Page({
             locationUpdateBackgroundHas: !1
         }) : this.setData({
             locationUpdateBackgroundHas: !0
-        }), wx.login({
-            success: function(t) {
-                wx.request({
-                    url: "https://sumou-server.tsunamitek.com/dengshan?code=".concat(t.code, "&cmd=login.check"),
-                    success: function(t) {
-                        "1" == t.data["userinfo.has"] && (e.setData({
-                            userInfoHas: !0
-                        }), wx.redirectTo({
-                            url: "../phone/phone"
-                        })), "1" == t.data["phone.has"] && e.setData({
-                            phoneHas: !0
-                        });
-                    }
-                });
-            }
-        }), wx.getUserProfile && this.setData({
-            canIUseGetUserProfile: !0
-        });
+        })
+        // , 
+        // wx.login({
+        //     success: function(t) {
+        //         wx.request({
+        //             url: "https://sumou-server.tsunamitek.com/dengshan?code=".concat(t.code, "&cmd=login.check"),
+        //             success: function(t) {
+        //                 "1" == t.data["userinfo.has"] && (e.setData({
+        //                     userInfoHas: !0
+        //                 }), wx.redirectTo({
+        //                     url: "../phone/phone"
+        //                 })), "1" == t.data["phone.has"] && e.setData({
+        //                     phoneHas: !0
+        //                 });
+        //             }
+        //         });
+        //     }
+        // }), wx.getUserProfile && this.setData({
+        //     canIUseGetUserProfile: !0
+        // });
     },
     onReady: function() {},
     onShow: function() {},
