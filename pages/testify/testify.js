@@ -6,9 +6,20 @@ var e = require("../../@babel/runtime/helpers/interopRequireDefault"),
 let App = getApp()
 import storage from "../../utils/cache"
 import Api from "../../api/index"
+import {zrs,yhxy} from './zrs'
 Page({
     mixins: [a.default],
     data: {
+        iszrs:true,
+        isyhxy:false,
+        xytext:zrs,
+        floorNum:"f0",
+        yhxy,
+        queding:false,
+        prop: 0,
+        isRead:false,
+        clear:false,
+        isXieyi:false,
         userInfo: App.globalData.userInfo,
         ensureBloodType: void 0,
         ensureRole: void 0,
@@ -50,6 +61,62 @@ Page({
         cList: [],
         dArr: []
     },
+    fire: function () {
+        this.setData({
+            fire: !0,
+            promise: !1
+        });
+    },
+    onxieyiChange(e){
+        this.setData({
+            isXieyi:false
+        })
+console.log("协议",e)
+    },
+    onClose(){
+this.setData({
+    clear:false,
+})
+    },
+    isRead: function () {
+        this.data.queding ? this.setData({
+            queding: false
+        }) : this.setData({
+        //    queding:true
+        clear:true,
+        fire:true
+        });
+    },
+    onys(){
+this.setData({
+    iszrs:false,
+    isyhxy:true,
+})
+    },
+    onyszc(){
+        this.setData({
+            floorNum:"f1",
+            clear:false,
+            iszrs:true,
+            isyhxy:false,
+            queding:true
+        })
+    },
+    notRead(){
+        this.setData({
+            clear:false,
+            iszrs:true,
+            isyhxy:false,
+            queding:false
+        })
+    },
+    promise: function () {
+        this.setData({
+            promise: !0,
+            isRead: !0,
+            clear: !1
+        });
+    },
 
     getphone(e) {
         let data = e.detail
@@ -68,8 +135,16 @@ Page({
         var t = this;
         let that=this
         let {
-            userInfo
+            userInfo,
+            queding
         } = this.data
+        if (!queding) {
+            wx.showModal({
+                title: "协议",
+                content: "请勾选用户协议。"
+            })
+            return
+        }
         if (!userInfo.name) {
             wx.showModal({
                 title: "校验失败",
@@ -84,6 +159,7 @@ Page({
             })
             return
         }
+
         wx.showLoading({
             title: '认证中...',
             icon: "nonde",
