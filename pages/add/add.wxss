@@ -29,7 +29,7 @@
 }
 
 .createDone {
-    background: #4e63a9;
+    background: #377cd4;
     border-radius: 6rpx;
     color: #fff;
     font-family: PingFang SC;
@@ -44,8 +44,8 @@
 
 .read-words {
     font-size: 28rpx;
-    line-height: 44rpx;
-    width: 530rpx;
+    line-height: 1.4;
+    width: 630rpx;
 }
 
 .read {
@@ -105,7 +105,7 @@
 }
 
 .rcdb {
-    background: linear-gradient(132deg,#344388,#566db3);
+    background: #377cd4;
     border-radius: 10rpx;
     color: #fff;
     font-weight: 700;

@@ -50,9 +50,13 @@ var t, e = require("../../@babel/runtime/helpers/interopRequireDefault"),
 
 let islatitude = ''
 const W = wx.getSystemInfoSync().windowWidth;
+const windowHeight = wx.getSystemInfoSync().windowHeight;
+
+
 const rate = 750.0 / W;
+const H=windowHeight*rate
 // 300rpx 在6s上为 150px
-const qrcode_w = 300 / rate;
+const qrcode_w = 600 / rate;
 let JStimeDSQ = ''
 let UPDKDD = ""
 let lineTime = ''
@@ -69,6 +73,7 @@ Page({
         userInfo: App.globalData.userInfo,
         mask: true,
         statusPoup: true,
+        windowHeight:H,
         createCodeImg: "",
         qrcodeWidth: qrcode_w,
         latitude: 22.510274072389358,
@@ -532,7 +537,7 @@ Page({
         let that = this
         let t = new r("canvas", {
             // image: "/images/bg.png",
-            text: `${+new Date()}${userInfo.idcard}`,
+            text: `${+new Date()}+${userInfo.idcard}+${+new Date()}`,
             width: qrcode_w,
             height: qrcode_w,
             colorDark: "#15D36A",

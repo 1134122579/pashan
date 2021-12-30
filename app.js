@@ -246,6 +246,7 @@ App({
 
   // },
   globalData: {
+    baseImgUrl:"https://catshop.nxcsoft.top/",
     userInfo: "",
     is_login: true,
     navHeight: 0,

@@ -34,7 +34,7 @@ page {
 }
 
 .startt {
-    background-color: #4e63a9;
+    background-color: #377cd4;
     border-radius: 16rpx 16rpx 0 0;
     color: #fff;
     font-size: 32rpx;
@@ -44,7 +44,7 @@ page {
 }
 
 .qrcode {
-    margin: 30rpx auto 30rpx 50%;
+    margin: 56rpx auto 30rpx 50%;
     transform: translate(-50%,0);
 }
 
@@ -58,7 +58,7 @@ page {
     font-weight: 700;
     margin: 0 20rpx;
     padding: 10rpx 20rpx;
-    border-radius: 5rpx;
+    border-radius: 40rpx;
 }
 
 .qrcode-info {
@@ -76,7 +76,7 @@ page {
 }
 
 .cancelbtn,.startbtn {
-    background-color: #4e63a9;
+    background-color: #377cd4;
     border-radius: 5rpx;
     color: #fff;
     font-size: 26rpx;
@@ -104,10 +104,8 @@ page {
     font-family: PingFang SC;
     font-size: 32rpx;
     font-weight: 400;
-    line-height: 44rpx;
     opacity: 1;
-    padding: 44rpx 0;
-    width: auto;
+    padding-bottom: 10rpx;
 }
 
 .detail2-line {
@@ -120,7 +118,6 @@ page {
     color: #535353;
     display: flex;
     font-size: 32rpx;
-    line-height: 44rpx;
     justify-content: center;
     align-items: center;
 }
@@ -169,6 +166,10 @@ page {
     width: 200rpx;
     height: 200rpx;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .close {

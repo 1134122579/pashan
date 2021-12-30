@@ -73,8 +73,9 @@ const handleResponse = ({
     if (response.data.status == 203) {
       try {
         wx.navigateTo({
-          url: "/pages/login/login",
+          url: "/pages/index/index",
         });
+        storage.removeToken()
         return;
       } catch (e) {
         console.error(e);

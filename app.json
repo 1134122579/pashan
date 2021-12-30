@@ -1,6 +1,9 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/anlione/anlione",
+        "pages/anlitwo/anlitwo",
+        "pages/anlitiaoli/anlitiaoli",
         "pages/count/count",
         "pages/testify/testify",
         "pages/user/user",
@@ -31,7 +34,7 @@
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "行山易",
+        "navigationBarTitleText": "南澳登山",
         "navigationBarTextStyle": "black"
     },
 

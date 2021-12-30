@@ -110,10 +110,11 @@
     </view>
     <view class="bot-part" wx:if="{{!clear}}">
         <view class="read">
-            <image bindtap="isRead" src="/images/add_notok.png" style="width:36rpx;height:36rpx;margin:0 20rpx" wx:if="{{!isRead}}"></image>
-            <image bindtap="notRead" src="/images/add_ok.png" style="width:36rpx;height:36rpx;margin:0 20rpx" wx:else></image>
-            <view class="read-words"> 我已阅读并同意<label style="color:#4E63A9"  bindtap="isRead">《登山人员森林防火责任书》</label>以及<label   bindtap="isRead" style="color:#4E63A9">《进入户外线路声明》</label>。 </view>
+            <image bindtap="isRead" src="/images/add_notok.png" style="width:36rpx;height:36rpx;margin:0 10rpx" wx:if="{{!isRead}}"></image>
+            <image bindtap="notRead" src="/images/add_ok.png" style="width:36rpx;height:36rpx;margin:0 10rpx" wx:else></image>
+            <view class="read-words"  bindtap="isRead"> <view>我已阅读并同意<label style="color:#4f64a9"  bindtap="isRead">《登山人员森林防火责任书》</label></view> 
+           <view> 以及<label   bindtap="isRead" style="color:#4f64a9">《进入户外线路声明》</label>。</view>  </view>
         </view>
-        <view bindtap="createDone" class="createDone">提交备案</view>
+        <view bindtap="createDone" class="createDone"  >提交备案</view>
     </view>
 </view>

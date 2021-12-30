@@ -10,6 +10,7 @@ Page({
   data: {
     Weather: {},
     isUser: true,
+    isToken:false,
     enter: [],
     date: '',
     enterIndex: '',
@@ -18,6 +19,21 @@ Page({
     DsCount: '',
     userInfo: App.globalData.userInfo
   },
+  onanlione(){
+      wx.navigateTo({
+        url: '/pages/anlione/anlione',
+      })
+  },
+  onanlitwo(){
+    wx.navigateTo({
+      url: '/pages/anlitwo/anlitwo',
+    })
+},
+onanlitiaoli(){
+  wx.navigateTo({
+    url: '/pages/anlitiaoli/anlitiaoli',
+  })
+},
   bindDateChange: function (e) {
     this.setData({
       date: e.detail.value
@@ -48,11 +64,17 @@ Page({
         wx.navigateTo({
           url: '/pages/testify/testify',
         })
+      
       }
     } else {
-      wx.redirectTo({
-        url: '/pages/login/login',
+      wx.showModal({
+        content: '请点击左上方登录按钮',
+        showCancel: false,
+        title: '暂未登录',
       })
+      // wx.redirectTo({
+      //   url: '/pages/login/login',
+      // })
     }
   },
   modify() {
@@ -126,6 +148,8 @@ Page({
   },
   getWeather() {
     Api.getWeather().then(res => {
+      console.log()
+      res['BG']=res.power.slice(0,1)
       this.setData({
         Weather: res
       })
@@ -148,6 +172,57 @@ Page({
       wx.navigateTo({
         url: '../backgroundLocation/backgroundLocation',
       })
+    })
+  },
+  newgetUserProfile(e) {
+    let that = this
+    this.setData({
+      disabled: true
+    })
+    wx.login({
+      success: res => {
+        console.log(res)
+        this.setData({
+          code: res.code
+        })
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+      }
+    })
+    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
+    // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+    wx.getUserProfile({
+      desc: '用于完善资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      lang: 'zh_CN',
+      success: (res) => {
+        console.log(res)
+        let obj = res
+        obj.code = that.data.code
+        console.log(obj)
+        wx.showLoading({
+          title: '登陆中..',
+        })
+  
+        Api.wx_mini_login(obj).then(res => {
+          console.log(res)
+          // 获取用户信息
+          storage.setToken(res.token)
+          Api.getUserInfo().then(res => {
+            storage.setUserInfo(res)
+            wx.hideLoading()
+            that.setData({
+              userInfo: res,
+          isToken:!storage.getToken()?false:true
+            })
+            App.globalData.userInfo=res
+            App.globalData.is_login=false
+          })
+        })
+      },
+      complete: () => {
+        that.setData({
+          disabled: false,
+        })
+      }
     })
   },
   toTestify() {
@@ -182,6 +257,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.setData({
+      isToken:!storage.getToken()?false:true
+    }) 
     this.getWeather()
     if (storage.getToken()) {
       this.getDsCount()

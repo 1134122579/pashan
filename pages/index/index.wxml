@@ -2,45 +2,54 @@
 <view>
     <view class="isUser" wx:if="{{isUser}}">
         <view class="minigram-info">
-            <view class="userinfo">
-                <view bindtap="toUser" wx:if="{{!userInfo.headimgurl}}">
+            <view class="userinfo ">
+                <view bindtap="toUser" class="Pb" wx:if="{{!userInfo.headimgurl}}" >
                     <image class="avatar-unlogin-img" src="/images/index_avatar_unlogin.png"></image>
                 </view>
-                <view bindtap="toUser" wx:else>
+                <view bindtap="toUser" class="Pb"  wx:else>
                     <image class="avatar-login-img" src="/images/index_avatar_unlogin.png">
                         <image class="avatar-login-useravatar" src="{{userInfo.headimgurl}}" wx:if="{{userInfo.headimgurl}}"></image>
                     </image>
                 </view>
-                <view bindtap="toTestify" class="extra-unpost" wx:if="{{userInfo.is_auth!=1}}">未认证</view>
-                <image bindtap="extraHas" class="extra-haspost" src="/images/index_extra-haspost.png" wx:else></image>
+                <view wx:if="{{isToken}}">
+                    <view bindtap="toTestify borderR" class="extra-unpost" wx:if="{{userInfo.is_auth!=1}}">未认证</view>
+                <image bindtap="extraHas " class="extra-haspost borderR" src="/images/index_extra-haspost.png" wx:else></image>
+                </view>
+                <button bindtap="toTestify borderR" bindtap="newgetUserProfile" class="extra-unpost" wx:if="{{!isToken}}">立即登录</button>
             </view>
             <view>
-                <view>
+                <view style="background: #fff;border-radius: 10rpx;">
                     <view class="situation-sib">
-                        <view class="situation-si" style="background-color:#fff;">
+                        <view class="situation-si borderR" style="background-color:#fff;">
                             <view class="situation-sig">
-                                <image src="/images/crowd_red.png" style="width:116rpx;height:44rpx" wx:if="{{crowd=='red'}}"></image>
-                                <image src="/images/crowd_yellow.png" style="width:116rpx;height:44rpx" wx:elif="{{crowd=='yellow'}}"></image>
-                                <image src="/images/crowd_green.png" style="width:116rpx;height:44rpx" wx:elif="{{crowd=='green'}}"></image>
+                                <image src="/images/crowd_green.png" style="width:116rpx;height:44rpx" wx:if="{{Weather.today_all_count<=1000}}"></image>
+                                <image src="/images/crowd_yellow.png" style="width:116rpx;height:44rpx" wx:elif="{{Weather.today_all_count>1000||Weather.today_all_count<=3000}}"></image>
+                                <image src="/images/crowd_red.png" style="width:116rpx;height:44rpx" wx:elif="{{Weather.today_all_count>3000}}"></image>
                             </view>
-                            <view class="situation-si-data" style="color:#000" wx:if="{{Weather.today_all_count}}">
+                            <view class="situation-si-data borderR" style="color:#000" wx:if="{{Weather.today_all_count}}">
                                 <view class="registered-title">当前登记人数：</view>{{Weather.today_all_count}}
                             </view>
                             <view class="situation-si-data" style="color:#000" wx:else>暂无数据</view>
                         </view>
                     </view>
                     <view class="situation-sib">
-                        <view class="situation-si" style="background-color:#fff">
+                        <view class="situation-si borderR" style="background-color:#fff" wx:if="{{Weather.BG<=8}}">
                             <view class="situation-sig">
                                 <image class="situation-si-icon" src="/images/ok.png"></image>
                             </view>
                             <view class="situation-si-data">适宜登山</view>
                         </view>
+                        <view class="situation-si borderR" style="background-color:#fff" wx:if="{{Weather.BG>8}}">
+                            <view class="situation-sig">
+                                <image class="situation-si-icon" src="/images/nook.png"></image>
+                            </view>
+                            <view class="situation-si-data">不易登山</view>
+                        </view>
                     </view>
                 </view>
-                <swiper autoplay="true" circular="true" class="situation" displayMultipleItems="1" interval="3000" style="width:364rpx;display:flex;flex-direction:column;justify-content:space-between" vertical="true">
-                    <swiper-item class="situation-sib">
-                        <view class="situation-si" style="background-color:#fff">
+                <swiper autoplay="true" circular="true" class="situation borderR" displayMultipleItems="1" interval="3000" style="width:364rpx;display:flex;flex-direction:column;justify-content:space-between" vertical="true">
+                    <swiper-item class="situation-sib borderR">
+                        <view class="situation-si borderR" style="background-color:#fff">
                             <view class="situation-sig">
                                 <image class="situation-si-icon" src="/images/index_situation_wind.png"></image>
                                 <view class="situation-si-title">风速</view>
@@ -49,8 +58,8 @@
                             <view class="situation-si-data" wx:else>暂无数据</view>
                         </view>
                     </swiper-item>
-                    <swiper-item class="situation-sib">
-                        <view class="situation-si" style="background-color:#fff">
+                    <swiper-item class="situation-sib borderR ">
+                        <view class="situation-si borderR" style="background-color:#fff">
                             <view class="situation-sig">
                                 <image class="situation-si-icon" src="/images/index_situation_temp.png"></image>
                                 <view class="situation-si-title">气温</view>
@@ -59,8 +68,8 @@
                             <view class="situation-si-data" wx:else>暂无数据</view>
                         </view>
                     </swiper-item>
-                    <swiper-item class="situation-sib">
-                        <view class="situation-si" style="background-color:#fff">
+                    <swiper-item class="situation-sib borderR">
+                        <view class="situation-si borderR" style="background-color:#fff">
                             <view class="situation-sig">
                                 <image class="situation-si-icon" src="/images/index_situation_humi.png"></image>
                                 <view class="situation-si-title">湿度</view>
@@ -69,8 +78,8 @@
                             <view class="situation-si-data" wx:else>暂无数据</view>
                         </view>
                     </swiper-item>
-                    <swiper-item class="situation-sib">
-                        <view class="situation-si" style="background-color:#fff">
+                    <swiper-item class="situation-sib borderR">
+                        <view class="situation-si borderR" style="background-color:#fff">
                             <view class="situation-sig">
                                 <image class="situation-si-icon" src="/images/index_situation_tyfoon.png"></image>
                                 <view class="situation-si-title">台风预警</view>
@@ -103,12 +112,12 @@
                                 <view style="color:#6b6b6b;font-size:26rpx;margin:5rpx 0">请点击查看</view>
                             </view>
                         </view>
-                        <view bindtap="start" style="background-color:#367CD5;color:#fff;padding:10rpx 20rpx;display:inline-block;font-size:26rpx;border-radius:10rpx">开始登山</view>
+                        <view bindtap="start" style="background-color:#377cd4;color:#fff;padding:10rpx 20rpx;display:inline-block;font-size:26rpx;border-radius:10rpx">开始登山</view>
                     </view>
                 </view>
                 <view style="display:flex;justify-content:space-between;margin:0;padding:0 40rpx;">
                     <view style="font-size:26rpx;font-weight:bold;padding:10rpx">备案登山口：{{userInfo.bean_info.rukou}}</view>
-                    <view bindtap="modify" style="font-size:26rpx;border: 1px solid #367CD5;padding:6rpx 20rpx ;border-radius:10rpx;color: #367CD5;">立即修改</view>
+                    <view bindtap="modify" style="font-size:26rpx;border: 1px solid #377cd4;padding:6rpx 20rpx ;border-radius:10rpx;color: #377cd4;">立即修改</view>
                 </view>
                 <view style="width:100vw;height:100vh;position:fixed;left:0;top:0;background-color:rgba(0,0,0,.3); z-index: 2;" wx:if="{{modify}}"></view>
                 <view class="modify" wx:if="{{modify}}">
@@ -157,7 +166,7 @@
                             </view>
                         </picker>
                     </view>
-                    <view style="display:flex;justify-content:space-around;margin-top:30rpx">
+                    <view style="display:flex;justify-content:space-around;">
                         <view bindtap="confirmModify" class="confirmModify">确认修改</view>
                         <view bindtap="cancelModify" class="cancelModify">取消修改</view>
                     </view>
@@ -183,13 +192,29 @@
             </view>
             </view>
             <view class="content">
-                <view bindtap="toAnnouncementDetail" class="content-item" data-id="{{item.id}}" wx:for="{{resdata}}" wx:key="index">
+                <view bindtap="onanlitiaoli" class="content-item" data-id="{{item.id}}"  >
                     <view class="content-itemd">
-                        <view class="content-item-title">{{item.title[1]}}</view>
-                        <view class="content-item-date">{{item.title[0]}}</view>
+                        <view class="content-item-title">森林防火条例</view>
+                        <view class="content-item-date">2021-04-21</view>
                     </view>
-                    <view class="content-item-dashed" wx:if="{{resdata[index+1]}}"></view>
+                    <view class="content-item-dashed"></view>
                 </view>
+                <view bindtap="onanlione" class="content-item" data-id="{{item.id}}"  >
+                    <view class="content-itemd">
+                        <view class="content-item-title">违反森林用火案例一</view>
+                        <view class="content-item-date">2021-04-21</view>
+
+                    </view>
+                    <view class="content-item-dashed"></view>
+                </view>
+                <view bindtap="onanlitwo" class="content-item" data-id="{{item.id}}"  >
+                    <view class="content-itemd">
+                        <view class="content-item-title">违反森林用火案例二</view>
+                        <view class="content-item-date">2021-04-21</view>
+                    </view>
+                    <view class="content-item-dashed"></view>
+                </view>
+                
             </view>
         </view>
         <image class="addpopup" wx:if="{{!userInfo.bean_info}}" src="/images/popup.gif"></image>
