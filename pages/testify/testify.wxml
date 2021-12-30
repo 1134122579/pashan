@@ -13,7 +13,9 @@
             <image class="avatar-img" src="/images/index_squad_avatar.png" wx:else></image>
         </view>
         <view class="testify-type">
-            <view class="testify-title"> <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view>手机号码</view>
+            <view class="testify-title">
+                <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view>手机号码
+            </view>
             <view>{{userInfo.mobile}}</view>
             <button open-type="getPhoneNumber" bindgetphonenumber="getphone" class="getPhone">获取手机号</button>
         </view>
@@ -22,12 +24,14 @@
     <view class="testify-box">
         <view class="testify-type">
             <view class="testify-title">
-                <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view>姓名</view>
+                <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view>姓名
+            </view>
             <input bindblur="name" class="testify-input" placeholder="请输入您的真实姓名" type="text" value="{{userInfo.name}}"></input>
         </view>
         <view class="testify-type">
             <view class="testify-title">
-                <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view>身份证</view>
+                <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view>身份证
+            </view>
             <input bindblur="idcard" class="testify-input" placeholder="请输入您的身份证号码" type="text" value="{{userInfo.idcard}}"></input>
         </view>
     </view>
@@ -54,12 +58,14 @@
     <view class="testify-box">
         <view class="testify-type">
             <view class="testify-title">
-                <view style="color:#fff;margin-right:10rpx;font-weight:bold">*</view>紧急联系人姓名</view>
+                <view style="color:#fff;margin-right:10rpx;font-weight:bold">*</view>紧急联系人姓名
+            </view>
             <input bindblur="urgentname" class="testify-input" placeholder="请输入您的紧急联系人姓名" style="width:320rpx" type="text" value="{{userInfo.sos_name}}"></input>
         </view>
         <view class="testify-type">
             <view class="testify-title">
-                <view style="color:#fff;margin-right:10rpx;font-weight:bold">*</view>紧急联系人电话</view>
+                <view style="color:#fff;margin-right:10rpx;font-weight:bold">*</view>紧急联系人电话
+            </view>
             <input bindblur="urgentphone" class="testify-input" placeholder="请输入您的紧急联系人电话" style="width:320rpx" type="text" value="{{userInfo.sos_mobile}}"></input>
         </view>
     </view>
@@ -67,12 +73,32 @@
         <checkbox-group bindchange="checkboxChange">
             <view>
                 <label class="checkbox" wx:for="{{dList}}" wx:key="Index">
-                    <checkbox checked="{{item.checked}}" style="padding:15rpx;align-items:center" value="{{item.title}},{{item.id}}"></checkbox>{{item.name}} </label>
+                    <checkbox checked="{{item.checked}}" style="padding:15rpx;align-items:center" value="{{item.title}},{{item.id}}"></checkbox>{{item.name}}
+                </label>
             </view>
             <view bindtap="checkBoxSubmit" class="checkbox-confirm">确定</view>
         </checkbox-group>
     </view>
+
+    <view class="read">
+        <image bindtap="isRead" src="/images/add_notok.png" style="width:36rpx;height:36rpx;margin:0 20rpx;flex-shrink: 0;" wx:if="{{!queding}}"></image>
+        <image bindtap="notRead" src="/images/add_ok.png" style="width:36rpx;height:36rpx;margin:0 20rpx;flex-shrink: 0" wx:else></image>
+        <view class="read-words"> 我已阅读并同意<label style="color:#4E63A9" bindtap="isRead">《用户服务协议》</label>以及<label bindtap="isRead" style="color:#4E63A9">《隐私政策》</label>。 </view>
+    </view>
+
     <view bindtap="confirmTestify" class="testify-confirm">提交认证</view>
     <!-- <view bindtap="confirmTestify" class="testify-confirm" wx:if="{{state=='set'}}">提交认证</view> -->
     <!-- <view bindtap="confirmTestify" class="testify-confirm" wx:if="{{state=='reset'}}">保存修改</view> -->
 </view>
+<van-popup show="{{ clear }}" round   bind:close="onClose">
+    <view class="zrs" wx:if="{{fire}}">
+        <view class="" style="padding: 20rpx;">
+            <rich-text id="f0" nodes="{{xytext}}" wx:if="{{iszrs}}"></rich-text>
+            <rich-text id="f1" nodes="{{yhxy}}" wx:if="{{isyhxy}}"></rich-text>
+        </view>
+        <view style="padding-top:30rpx;">
+            <van-button type="primary" bindtap="onys" wx:if="{{iszrs}}" block>我已人认真阅读隐私政策</van-button>
+            <van-button type="primary" bindtap="onyszc" wx:if="{{isyhxy}}" block>我已人认真阅读用户协议</van-button>
+        </view>
+    </view>
+</van-popup>

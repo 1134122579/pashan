@@ -46,6 +46,7 @@
     },
     "requiredBackgroundModes": ["location"],
     "usingComponents": {
+        "van-popup": "@vant/weapp/popup/index", 
         "van-empty": "@vant/weapp/empty/index",
         "van-button": "@vant/weapp/button/index",
         "van-icon": "@vant/weapp/icon/index"
