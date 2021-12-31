@@ -10,6 +10,7 @@ page {
 .countPage {
   flex: 1;
   overflow-y: auto;
+  padding-bottom: 50rpx;
 }
 
 .header {
@@ -30,7 +31,7 @@ page {
 
 .dt {
   border: 1px solid #367CD5;
-  border-radius: 10rpx;
+  border-radius: 30rpx;
   color: #367CD5;
   font-size: 14px;
 }
@@ -91,6 +92,7 @@ page {
 }
 
 .flooter {
+  padding: 25rpx 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,7 +102,7 @@ page {
 .block {
   width: 50%;
   text-align: center;
-  padding: 20px 0;
+  /* padding: 10px 0; */
   color: #367CD5;
 }
 .title_time{
@@ -128,4 +130,19 @@ page {
   text-align: center;
   font-size: 14px;
   color:#ccc;
+}
+.backgroundred{
+  background: #e72828;
+}
+.textRukou{
+
+  overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
+}
+.jysize{
+  width: 100%;
+  text-align: right;
+  font-size: 24rpx;
+  color: #ccc;
 }

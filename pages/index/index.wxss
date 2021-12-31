@@ -68,13 +68,13 @@ page {
     color: #4296f9;
     font-size: 26rpx;
     font-weight: 400;
-    line-height: 96rpx;
+    line-height: 98rpx;
     text-align: center;
 }
 
 .extra-haspost,
 .extra-unpost {
-    height: 96rpx;
+    height: 98rpx;
     width: 353rpx;
 }
 

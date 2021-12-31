@@ -41,13 +41,25 @@
 <view class="countPage" wx:if="{{is_jy}}">
   <block wx:for="{{jy_list}}" wx:key="index" wx:if="{{jy_list.length>0}}">
     <view class="block">
-      <view class="title_time">{{item.create_time}}</view>
-      <view class="header" style="display: flex;">
+      <view class=" {{item.status==2?' title_time backgroundred':'title_time'}}">{{item.create_time}}</view>
+      <view class="header" style="display: flex; justify-content: space-around;">
         <image src="{{item.headimgurl}}" style="width: 80px;height: 80px;border-radius: 50%;display: block;"></image>
         <view class="name">{{item.name}}</view>
-        <view class="name dt" bindtap="goJypage" data-item="{{item}}" >进入地图</view>
-        <view class="name newJY" wx:if="{{item.status==2}}">等待救援</view>
-        <view class="name " wx:if="{{item.status==1}}">已完成</view>
+        <view class="name dt" bindtap="goJypage" data-item="{{item}}">进入地图</view>
+        <view class="name newJY" style="margin-top: -30rpx;"  wx:if="{{item.status==2}}">
+          <view class="jysize" style="color:#e72828 ;"> 等待救援</view>
+          <view style="display:flex;justify-content: center;align-items: center;">
+            <image style="width: 30rpx;height: 30rpx;display: block;" src="/images/rukou.jpg"></image>
+            <view class="textRukou">{{item.rukou}}</view>
+          </view>
+        </view>
+        <view class="name " style="margin-top: -30rpx;" wx:if="{{item.status==1}}">
+          <view class="jysize"> 已完成</view>
+          <view style="display:flex;justify-content: center;align-items: center;">
+            <image style="width: 30rpx;height: 30rpx;display: block;" src="/images/rukou.jpg"></image>
+            <view class="textRukou">{{item.rukou}}</view>
+          </view>
+        </view>
       </view>
     </view>
     <view class="listnull" wx:if="{{isNulist}}">暂无更多..</view>
