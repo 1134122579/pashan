@@ -8,8 +8,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    pageNum:1,
+    page:1,
     is_jy: false,
+    isNulist:false,
     getdataCount: '',
     all_numAll: '',
     beianAll: '',
@@ -109,9 +110,9 @@ Page({
 
   //触底响应函数
   onBottom() {
-    console.log(1231231)
     var that = this;
-    (this.data.pageNum) ++;
+    (this.data.page) ++;
+    console.log(this.data.page)
     this.getSosList();
   },
   /**
@@ -162,7 +163,10 @@ Page({
    */
   onReachBottom: function () {
     console.log(112)
-    this.onBottom()
+    let {is_jy}=this.data
+    if(is_jy){
+      this.onBottom()
+    }
   },
 
   /**

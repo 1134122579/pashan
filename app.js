@@ -246,7 +246,7 @@ App({
 
   // },
   globalData: {
-    baseImgUrl:"https://catshop.nxcsoft.top/",
+    baseImgUrl:"https://api.uba9.com/",
     userInfo: "",
     is_login: true,
     navHeight: 0,

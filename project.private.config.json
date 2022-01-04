@@ -71,6 +71,12 @@
           "pathName": "pages/testify/testify",
           "query": "state=reset",
           "scene": null
+        },
+        {
+          "name": "pages/count/count",
+          "pathName": "pages/count/count",
+          "query": "",
+          "scene": null
         }
       ]
     }

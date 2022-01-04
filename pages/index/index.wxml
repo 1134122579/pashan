@@ -27,7 +27,7 @@
                                 <image src="/images/crowd_red.png" style="width:116rpx;height:44rpx" wx:elif="{{Weather.today_all_count>3000}}"></image>
                             </view>
                             <view class="situation-si-data borderR" style="color:#000" wx:if="{{Weather.today_all_count}}">
-                                <view class="registered-title">当前登记人数：</view>{{Weather.today_all_count}}
+                                <view class="registered-title">当前登记人数：</view><text style="color: #37e654;">{{Weather.today_all_count}}</text> 
                             </view>
                             <view class="situation-si-data" style="color:#000" wx:else>暂无数据</view>
                         </view>
@@ -175,7 +175,7 @@
         </view>
         <view wx:else>
             <!-- bindtap="pdf" -->
-            <view  class="warning" style="background: #fff; margin:10rpx;margin-top:30rpx;font-size:36rpx;border-radius: 10rpx;">
+            <view  class="warning" bindtap="onanlitiaoli" style="background: #fff; margin:10rpx;margin-top:30rpx;font-size:36rpx;border-radius: 10rpx;">
                 <view class="warning-box" style="margin:5rpx;padding:40rpx 32rpx; display: flex;justify-content: center;align-items: center;">
                     <view class="warning-left" style="color:#4E63A9;margin-bottom:10rpx;letter-spacing:6rpx;font-weight:bold"> 根据《广东省森林防火条例》设立森林防火检查站，请进入林区人员积极配合接受检查。</view>
                     <van-icon name="arrow"color="#4E63A9" />
@@ -188,7 +188,7 @@
                 <image class="title-icon" src="/images/index_announcement_icon.png"></image>
                 <view class="title-words">园区公告</view>
             </view>
-            <view class="admin"   wx:if="{{userInfo.is_admin!=1}}" bindtap="goAdmin" >
+            <view class="admin"   wx:if="{{userInfo.is_admin==1}}" bindtap="goAdmin" >
                 队长端
             </view>
             </view>
