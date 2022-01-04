@@ -1,9 +1,9 @@
 <view class="countPage" wx:if="{{!is_jy}}">
   <view class="header" style="display: flex;">
-    <image src="{{userInfo.headimgurl}}" style="width: 80px;height: 80px;border-radius: 50%;display: block;"></image>
+    <image src="{{userInfo.headimgurl}}" style="width: 50px;height: 50px;border-radius: 50%;display: block;"></image>
     <view class="name">{{userInfo.name}}</view>
     <view class="name dt" bindtap="jy">进入地图</view>
-    <view class="name newJY" bindtap="jy">新救援申请</view>
+    <view class="name newJY" bindtap="jy" style="width: 30%;text-align: right;">新救援申请</view>
   </view>
   <view class="content">
     <view class="title">

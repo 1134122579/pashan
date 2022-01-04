@@ -35,7 +35,8 @@ page {
 .registered-title {
     color: #000;
     font-family: PingFang SC;
-    font-size: 20rpx;
+    margin-top: 20rpx;
+    font-size: 30rpx;
     font-weight: 700;
     opacity: 1;
 }
