@@ -46,25 +46,26 @@
         <image src="{{item.headimgurl}}" style="width: 50px;height: 50px;border-radius: 50%;display: block;"></image>
         <view class="name">{{item.name}}</view>
         <view class="name dt" bindtap="goJypage" data-item="{{item}}">进入地图</view>
-        <view class="name newJY" style="margin-top: -30rpx;"  wx:if="{{item.status==2}}">
+        <view class="name newJY" style="margin-top: -30rpx;  width: 36%;font-size: 22rpx;"  wx:if="{{item.status==2}}">
           <view class="jysize" style="color:#e72828 ;"> 等待救援</view>
-          <view style="display:flex;justify-content: center;align-items: center;">
+          <view style="display:flex;justify-content: flex-start;align-items: center;">
             <image style="width: 30rpx;height: 30rpx;display: block;" src="/images/rukou.jpg"></image>
             <view class="textRukou">{{item.rukou}}</view>
           </view>
         </view>
  
-        <view class="name " style="margin-top: -30rpx;  width: 40%;font-size: 22rpx;" wx:if="{{item.status==1}}">
+        <view class="name " style="margin-top: -30rpx;  width: 36%;font-size: 22rpx;" wx:if="{{item.status==1}}">
           <view class="jysize"> 已完成</view>
-          <view style="display:flex;justify-content: center;align-items: center;">
+          <view style="display:flex;justify-content: flex-start;align-items: center;">
             <image style="width: 30rpx;height: 30rpx;display: block;" src="/images/rukou.jpg"></image>
             <view class="textRukou">{{item.rukou}}</view>
           </view>
         </view>
       </view>
     </view>
-    <view class="listnull" wx:if="{{isNulist}}">暂无更多..</view>
+  
   </block>
+  <view class="listnull" wx:if="{{isNulist}}">暂无更多</view>
   <view class="isNulist" wx:if="{{jy_list.length<=0}}">
     <van-empty description="暂无数据" />
   </view>
