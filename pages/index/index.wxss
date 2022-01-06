@@ -576,6 +576,88 @@ page {
     overflow: hidden;
     box-sizing: border-box;
 }
-.Pb{
+
+.Pb {
     margin-bottom: 12rpx;
+}
+
+.ismc {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+}
+
+.bubble {
+    width: 680rpx;
+    height: 250rpx;
+    background: #fff;
+    margin: 0 auto;
+    position: relative;
+    border-radius: 20rpx;
+    margin-top: 360rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title_tx {
+    font-size: 50rpx;
+    text-align: center;
+    line-height: 1.8;
+    padding: 20rpx;
+
+}
+
+.bubble:before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 120rpx;
+    width: 0;
+    height: 0;
+    border-width: 20px;
+    border-style: solid;
+    border-color: transparent;
+    margin-bottom: 0px;
+    border-bottom-width: 25px;
+    border-bottom-color: currentColor;
+    color: #fff;
+}
+
+.qd {
+    flex: 1;
+    text-align: center;
+    padding: 20rpx 0;
+    font-size: 35rpx;
+}
+.bubbleTwo{
+    width: 680rpx;
+    height: 250rpx;
+    background: #fff;
+    margin: 0 auto;
+    position: relative;
+    border-radius: 20rpx;
+    margin-top: 716rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+.bubbleTwo:before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 120px;
+    width: 0;
+    height: 0;
+    border-width: 20px;
+    border-style: solid;
+    border-color: transparent;
+    border-top-width: 25px;
+    border-top-color: currentColor;
+    color: #fff;
 }

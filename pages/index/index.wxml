@@ -3,17 +3,17 @@
     <view class="isUser" wx:if="{{isUser}}">
         <view class="minigram-info">
             <view class="userinfo ">
-                <view bindtap="toUser" class="Pb" wx:if="{{!userInfo.headimgurl}}" >
+                <view bindtap="toUser" class="Pb" wx:if="{{!userInfo.headimgurl}}">
                     <image class="avatar-unlogin-img" src="/images/index_avatar_unlogin.png"></image>
                 </view>
-                <view bindtap="toUser" class="Pb"  wx:else>
+                <view bindtap="toUser" class="Pb" wx:else>
                     <image class="avatar-login-img" src="/images/index_avatar_unlogin.png">
                         <image class="avatar-login-useravatar" src="{{userInfo.headimgurl}}" wx:if="{{userInfo.headimgurl}}"></image>
                     </image>
                 </view>
                 <view wx:if="{{isToken}}">
                     <view bindtap="toTestify borderR" class="extra-unpost" wx:if="{{userInfo.is_auth!=1}}">未认证</view>
-                <image bindtap="extraHas " class="extra-haspost borderR" src="/images/index_extra-haspost.png" wx:else></image>
+                    <image bindtap="extraHas " class="extra-haspost borderR" src="/images/index_extra-haspost.png" wx:else></image>
                 </view>
                 <button bindtap="toTestify borderR" bindtap="newgetUserProfile" class="extra-unpost" wx:if="{{!isToken}}">立即登录</button>
             </view>
@@ -27,7 +27,8 @@
                                 <image src="/images/crowd_red.png" style="width:116rpx;height:44rpx" wx:elif="{{Weather.today_all_count>3000}}"></image>
                             </view>
                             <view class="situation-si-data borderR" style="color:#000" wx:if="{{Weather.today_all_count}}">
-                                <view class="registered-title"  >今日人数</view><view style="font-size:32rpx;color: #28CD73;font-weight: bold;margin-bottom: -2rpx;margin-top: 5rpx;">{{Weather.today_all_count}}</view> 
+                                <view class="registered-title">今日人数</view>
+                                <view style="font-size:32rpx;color: #28CD73;font-weight: bold;margin-bottom: -2rpx;margin-top: 5rpx;">{{Weather.today_all_count}}</view>
                             </view>
                             <view class="situation-si-data" style="color:#000" wx:else>暂无数据</view>
                         </view>
@@ -100,7 +101,7 @@
                         <view style="color:#6b6b6b;font-size:26rpx;margin:5rpx 0">请点击查看</view>
                     </view>
                 </view>
-                <view  style="background-color:#367CD5;color:#fff;padding:10rpx 20rpx;display:inline-block;font-size:26rpx;border-radius:10rpx">查看登山</view>
+                <view style="background-color:#367CD5;color:#fff;padding:10rpx 20rpx;display:inline-block;font-size:26rpx;border-radius:10rpx">查看登山</view>
             </view>
             <view class="" style="background-color:#fff;width:730rpx;margin:30rpx auto;padding:20rpx 0;border-radius: 10rpx" wx:elif="{{userInfo.bean_info.status==1}}">
                 <view>
@@ -176,32 +177,32 @@
         </view>
         <view wx:else>
             <!-- bindtap="pdf" -->
-            <view  class="warning" bindtap="onanlitiaoli" style="background: #fff; margin:10rpx;margin-top:30rpx;font-size:36rpx;border-radius: 10rpx;">
+            <view class="warning" bindtap="onanlitiaoli" style="background: #fff; margin:10rpx;margin-top:30rpx;font-size:36rpx;border-radius: 10rpx;">
                 <view class="warning-box" style="margin:5rpx;padding:40rpx 32rpx; display: flex;justify-content: center;align-items: center;">
                     <view class="warning-left" style="color:#4E63A9;margin-bottom:10rpx;letter-spacing:6rpx;font-weight:bold"> 根据《广东省森林防火条例》设立森林防火检查站，请进入林区人员积极配合接受检查。</view>
-                    <van-icon name="arrow"color="#4E63A9" />
+                    <van-icon name="arrow" color="#4E63A9" />
                 </view>
             </view>
         </view>
         <view class="announcement">
             <view class="title">
-            <view style="display: flex;">
-                <image class="title-icon" src="/images/index_announcement_icon.png"></image>
-                <view class="title-words">园区公告</view>
-            </view>
-            <view class="admin"   wx:if="{{userInfo.is_admin==1}}" bindtap="goAdmin" >
-                队长端
-            </view>
+                <view style="display: flex;">
+                    <image class="title-icon" src="/images/index_announcement_icon.png"></image>
+                    <view class="title-words">园区公告</view>
+                </view>
+                <view class="admin" wx:if="{{userInfo.is_admin==1}}" bindtap="goAdmin">
+                    队长端
+                </view>
             </view>
             <view class="content">
-                <view bindtap="onanlitiaoli" class="content-item" data-id="{{item.id}}"  >
+                <view bindtap="onanlitiaoli" class="content-item" data-id="{{item.id}}">
                     <view class="content-itemd">
                         <view class="content-item-title">森林防火条例</view>
                         <view class="content-item-date">2021-04-21</view>
                     </view>
                     <view class="content-item-dashed"></view>
                 </view>
-                <view bindtap="onanlione" class="content-item" data-id="{{item.id}}"  >
+                <view bindtap="onanlione" class="content-item" data-id="{{item.id}}">
                     <view class="content-itemd">
                         <view class="content-item-title">违反森林用火案例一</view>
                         <view class="content-item-date">2021-04-21</view>
@@ -209,14 +210,14 @@
                     </view>
                     <view class="content-item-dashed"></view>
                 </view>
-                <view bindtap="onanlitwo" class="content-item" data-id="{{item.id}}"  >
+                <view bindtap="onanlitwo" class="content-item" data-id="{{item.id}}">
                     <view class="content-itemd">
                         <view class="content-item-title">违反森林用火案例二</view>
                         <view class="content-item-date">2021-04-21</view>
                     </view>
                     <view class="content-item-dashed"></view>
                 </view>
-                
+
             </view>
         </view>
         <image class="addpopup" wx:if="{{!userInfo.bean_info}}" src="/images/popup.gif"></image>
@@ -337,6 +338,30 @@
         </view>
         <view bindtap="scanCode" class="squad-scanCode">核验二维码</view>
         <image bindtap="changeRole" class="changeRole" src="../../images/change.png"></image>
+    </view>
+</view>
+<view class="ismc" wx:if="{{is_ts}}">
+    <view class="bubble" wx:if="{{isone}}">
+        <view class="title_tx">第一步:点击登录</view>
+        <view style="display: flex;justify-content: space-around;width: 100%;">
+            <view class="qd" style="color: #377cd4;" bindtap="onOne">
+                确定
+            </view>
+            <view class="qd"  bindtap="onTSclone">
+                不在提示
+            </view>
+        </view>
+    </view>
+    <view class="bubbleTwo" wx:if="{{isTwo}}">
+        <view class="title_tx">第二步:进行登山备案</view>
+        <view style="display: flex;justify-content: space-around;width: 100%;">
+            <view class="qd" style="color: #377cd4;" bindtap="onTwo">
+                确定
+            </view>
+            <view class="qd" bindtap="onTSclone">
+                不在提示
+            </view>
+        </view>
     </view>
 </view>
 <wxs module="fn">

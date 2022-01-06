@@ -8,6 +8,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    is_ts:false,
+    isone: true,
+    isTwo:false,
     Weather: {},
     isUser: true,
     isToken: false,
@@ -19,6 +22,27 @@ Page({
     DsCount: '',
     userInfo: App.globalData.userInfo
   },
+  onTSclone(){
+    this.setData({
+      isone: true,
+      isTwo:false,
+      is_ts:false
+    })
+    wx.setStorageSync('ISTS', true)
+  },
+  onOne() {
+    this.setData({
+      isone: false,
+      isTwo:true
+    })
+  },
+  onTwo(){
+    this.setData({
+      isone: true,
+      isTwo:false,
+      is_ts:false
+    })
+  },
   onanlione() {
     wx.navigateTo({
       url: '/pages/anlione/anlione',
@@ -29,25 +53,25 @@ Page({
       url: '/pages/anlitwo/anlitwo',
     })
   },
-  cancel () {
+  cancel() {
     var e = this;
     let {
-        bean_info
+      bean_info
     } = storage.getUserInfo()
     Api.cacheDsLog({
-        ...bean_info
+      ...bean_info
     }).then(res => {
-        wx.showToast({
-            title: '备案已取消',
-            icon: 'none',
-            mask: true
-        })
-  this.setData({
-    "userInfo.bean_info":''
-  })
+      wx.showToast({
+        title: '备案已取消',
+        icon: 'none',
+        mask: true
+      })
+      this.setData({
+        "userInfo.bean_info": ''
+      })
     })
 
-},
+  },
   onanlitiaoli() {
     wx.navigateTo({
       url: '/pages/anlitiaoli/anlitiaoli',
@@ -227,7 +251,7 @@ Page({
           storage.setToken(res.token)
           Api.getUserInfo().then(res => {
             storage.setUserInfo(res)
-        
+
             wx.hideLoading()
             that.setData({
               userInfo: res,
@@ -235,7 +259,7 @@ Page({
             })
             App.globalData.userInfo = res
             App.globalData.is_login = false
-            if(res.is_auth!=1){
+            if (res.is_auth != 1) {
               wx.navigateTo({
                 url: '/pages/testify/testify',
               })
@@ -275,6 +299,11 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    // wx.setStorageSync('ISTS', false)
+   let ISTS=  wx.getStorageSync('ISTS')
+    this.setData({
+      is_ts:ISTS?false:true
+    })
 
   },
 
