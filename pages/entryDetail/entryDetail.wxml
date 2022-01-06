@@ -46,7 +46,7 @@
         <view class="startt" wx:if="{{!statusPoup}}" >
             <view>{{userInfo.bean_info.rukou}}</view>
         </view>
-        <image class="qrcode" wx:if="{{statusPoup}}" src="{{userInfo.headimgurl}}" style="width:100px; height:100px;display: block;border-radius: 50%;"></image>
+        <image class="qrcode" wx:if="{{!statusPoup}}" src="{{userInfo.headimgurl}}" style="width:100px; height:100px;display: block;border-radius: 50%;"></image>
             <image  class="qrcode" wx:else  src="{{createCodeImg}}" style="width:285px; height:285px;display: block;"></image>
         <view class="qrcode-info">
             <view class="cub time">
@@ -57,11 +57,11 @@
             <!-- <view class="cub">12</view> -->
         </view>
 
-        <view class="btn-group" wx:if="{{statusPoup}}" >
+        <view class="btn-group" wx:if="{{!statusPoup}}" >
             <view bindtap="start" class="startbtn">开始登山</view>
             <view bindtap="cancel" class="cancelbtn">取消备案</view>
         </view>
-        <view class="btn-group" wx:if="{{!statusPoup}}" >
+        <view class="btn-group" wx:if="{{statusPoup}}" >
             <view bindtap="onlookcancel" class="cancelbtn" style="width: 80%;">返回</view>
         </view>
     </view>
@@ -87,7 +87,8 @@
                 <van-button icon="qr" color="#377cd4" type="primary" bind:click="lookCode" block plain>登山码</van-button>
             </view>
             <view class="button_">
-                <van-button  color="#377cd4" bind:click="onjishu"  block type="primary">结束登山</van-button>
+                <van-button  color="#377cd4" bind:click="start" wx:if="{{is_gostart}}"  block type="primary">开始登山</van-button>
+                <van-button  color="#377cd4" bind:click="onjishu" wx:else block type="primary">结束登山</van-button>
             </view>
         </view>
     </view>

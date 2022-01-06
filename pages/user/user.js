@@ -51,6 +51,19 @@ Page({
             });
         }
     },
+    goOut(){
+        storage.removeToken()
+        storage.removeUserInfo()
+        wx.showToast({
+          title: '退出成功！1秒后跳转首页',
+          icon:'none'
+        })
+        setTimeout(() => {
+            wx.navigateTo({
+                url: '/pages/index/index',
+              })
+        }, 1500);
+    },
     onReady: function() {
         console.log(App.globalData.userIfo)
        App.globalData.userInfo= storage.getUserInfo()

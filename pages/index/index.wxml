@@ -112,7 +112,8 @@
                                 <view style="color:#6b6b6b;font-size:26rpx;margin:5rpx 0">请点击查看</view>
                             </view>
                         </view>
-                        <view bindtap="start" style="background-color:#377cd4;color:#fff;padding:10rpx 20rpx;display:inline-block;font-size:26rpx;border-radius:10rpx">开始登山</view>
+                        <view bindtap="cancel" style="background-color:#377cd4;color:#fff;padding:10rpx 20rpx;display:inline-block;font-size:26rpx;border-radius:10rpx">取消备案</view>
+                        <!-- <view bindtap="start" style="background-color:#377cd4;color:#fff;padding:10rpx 20rpx;display:inline-block;font-size:26rpx;border-radius:10rpx">开始登山</view> -->
                     </view>
                 </view>
                 <view style="display:flex;justify-content:space-between;margin:0;padding:0 40rpx;">
@@ -220,7 +221,8 @@
         </view>
         <image class="addpopup" wx:if="{{!userInfo.bean_info}}" src="/images/popup.gif"></image>
         <view bindtap="record" wx:if="{{!userInfo.bean_info}}" class="add">登山备案</view>
-        <view bindtap="start" wx:if="{{userInfo.bean_info}}" class="add">开始登山</view>
+        <view bindtap="start" wx:if="{{userInfo.bean_info&&userInfo.bean_info.status==1}}" class="add">开始登山</view>
+        <view bindtap="start" wx:if="{{userInfo.bean_info&&userInfo.bean_info.status==3}}" class="add">查看登山</view>
         <view style="position:fixed;left:-100%">
             <canvas bindlongtap="save" canvasId="canvas" class="canvas" style="width:{{qrcodeWidth}}px; height:{{qrcodeWidth}}px"></canvas>
         </view>

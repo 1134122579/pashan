@@ -16,8 +16,9 @@
             <view class="testify-title">
                 <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view>手机号码
             </view>
-            <view>{{userInfo.mobile}}</view>
-            <button open-type="getPhoneNumber" bindgetphonenumber="getphone" class="getPhone">获取手机号</button>
+            <!-- <view>{{userInfo.mobile}}</view> -->
+            <input type="text" value="{{userInfo.mobile}}" placeholder="请输入手机号" bindinput="onInput"/>
+            <button open-type="getPhoneNumber" bindgetphonenumber="getphone" class="getPhone" style="background: #377cd4;">获取手机号</button>
         </view>
     </view>
     <view class="testify-desc">请准确输入您的姓名及身份证号码以便下一步进行核验</view>
@@ -81,7 +82,7 @@
     </view>
 
     <view class="read">
-        <image bindtap="isRead" src="/images/add_notok.png" style="width:36rpx;height:36rpx;margin:0 20rpx;flex-shrink: 0;" wx:if="{{!queding}}"></image>
+        <image bindtap="isnewRead" src="/images/add_notok.png" style="width:36rpx;height:36rpx;margin:0 20rpx;flex-shrink: 0;" wx:if="{{!queding}}"></image>
         <image bindtap="notRead" src="/images/add_ok.png" style="width:36rpx;height:36rpx;margin:0 20rpx;flex-shrink: 0" wx:else></image>
         <view class="read-words"> 我已阅读并同意<label style="color:#4E63A9" bindtap="isRead">《用户服务协议》</label>以及<label bindtap="isRead" style="color:#4E63A9">《隐私政策》</label>。 </view>
     </view>
@@ -97,8 +98,8 @@
             <rich-text id="f1" nodes="{{yhxy}}" wx:if="{{isyhxy}}"></rich-text>
         </view>
         <view style="padding-top:30rpx;">
-            <van-button type="primary" bindtap="onys" wx:if="{{iszrs}}" block>我已人认真阅读隐私政策</van-button>
-            <van-button type="primary" bindtap="onyszc" wx:if="{{isyhxy}}" block>我已人认真阅读用户协议</van-button>
+            <van-button type="primary" bindtap="onys" wx:if="{{iszrs}}" color="#377cd4" block>我已人认真阅读隐私政策</van-button>
+            <van-button type="primary" bindtap="onyszc" wx:if="{{isyhxy}}" color="#377cd4"  block>我已人认真阅读用户协议</van-button>
         </view>
     </view>
 </van-popup>

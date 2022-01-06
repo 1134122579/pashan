@@ -10,7 +10,7 @@ Page({
   data: {
     Weather: {},
     isUser: true,
-    isToken:false,
+    isToken: false,
     enter: [],
     date: '',
     enterIndex: '',
@@ -19,21 +19,40 @@ Page({
     DsCount: '',
     userInfo: App.globalData.userInfo
   },
-  onanlione(){
-      wx.navigateTo({
-        url: '/pages/anlione/anlione',
-      })
+  onanlione() {
+    wx.navigateTo({
+      url: '/pages/anlione/anlione',
+    })
   },
-  onanlitwo(){
+  onanlitwo() {
     wx.navigateTo({
       url: '/pages/anlitwo/anlitwo',
     })
-},
-onanlitiaoli(){
-  wx.navigateTo({
-    url: '/pages/anlitiaoli/anlitiaoli',
+  },
+  cancel () {
+    var e = this;
+    let {
+        bean_info
+    } = storage.getUserInfo()
+    Api.cacheDsLog({
+        ...bean_info
+    }).then(res => {
+        wx.showToast({
+            title: '备案已取消',
+            icon: 'none',
+            mask: true
+        })
+  this.setData({
+    "userInfo.bean_info":''
   })
+    })
+
 },
+  onanlitiaoli() {
+    wx.navigateTo({
+      url: '/pages/anlitiaoli/anlitiaoli',
+    })
+  },
   bindDateChange: function (e) {
     this.setData({
       date: e.detail.value
@@ -56,15 +75,15 @@ onanlitiaoli(){
   //  判断是否登录
   islogin(callback) {
     let token = storage.getToken()
-    let userInfo=storage.getUserInfo()
+    let userInfo = storage.getUserInfo()
     if (token) {
-     if( userInfo.is_auth==1){
+      if (userInfo.is_auth == 1) {
         (callback && typeof (callback) === "function") && callback();
-      }else{
+      } else {
         wx.navigateTo({
           url: '/pages/testify/testify',
         })
-      
+
       }
     } else {
       wx.showModal({
@@ -134,7 +153,7 @@ onanlitiaoli(){
     })
   },
   start() {
-    App.isGetlocation(()=>{
+    App.isGetlocation(() => {
       wx.navigateTo({
         url: '/pages/entryDetail/entryDetail',
       })
@@ -149,7 +168,7 @@ onanlitiaoli(){
   getWeather() {
     Api.getWeather().then(res => {
       console.log()
-      res['BG']=res.power.slice(0,1)
+      res['BG'] = res.power.slice(0, 1)
       this.setData({
         Weather: res
       })
@@ -201,20 +220,26 @@ onanlitiaoli(){
         wx.showLoading({
           title: '登陆中..',
         })
-  
+
         Api.wx_mini_login(obj).then(res => {
           console.log(res)
           // 获取用户信息
           storage.setToken(res.token)
           Api.getUserInfo().then(res => {
             storage.setUserInfo(res)
+        
             wx.hideLoading()
             that.setData({
               userInfo: res,
-          isToken:!storage.getToken()?false:true
+              isToken: !storage.getToken() ? false : true
             })
-            App.globalData.userInfo=res
-            App.globalData.is_login=false
+            App.globalData.userInfo = res
+            App.globalData.is_login = false
+            if(res.is_auth!=1){
+              wx.navigateTo({
+                url: '/pages/testify/testify',
+              })
+            }
           })
         })
       },
@@ -258,8 +283,8 @@ onanlitiaoli(){
    */
   onShow: function () {
     this.setData({
-      isToken:!storage.getToken()?false:true
-    }) 
+      isToken: !storage.getToken() ? false : true
+    })
     this.getWeather()
     if (storage.getToken()) {
       this.getDsCount()

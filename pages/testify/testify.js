@@ -6,20 +6,23 @@ var e = require("../../@babel/runtime/helpers/interopRequireDefault"),
 let App = getApp()
 import storage from "../../utils/cache"
 import Api from "../../api/index"
-import {zrs,yhxy} from './zrs'
+import {
+    zrs,
+    yhxy
+} from './zrs'
 Page({
     mixins: [a.default],
     data: {
-        iszrs:true,
-        isyhxy:false,
-        xytext:zrs,
-        floorNum:"f0",
+        iszrs: true,
+        isyhxy: false,
+        xytext: zrs,
+        floorNum: "f0",
         yhxy,
-        queding:false,
+        queding: false,
         prop: 0,
-        isRead:false,
-        clear:false,
-        isXieyi:false,
+        isRead: false,
+        clear: false,
+        isXieyi: false,
         userInfo: App.globalData.userInfo,
         ensureBloodType: void 0,
         ensureRole: void 0,
@@ -67,47 +70,61 @@ Page({
             promise: !1
         });
     },
-    onxieyiChange(e){
+    onxieyiChange(e) {
         this.setData({
-            isXieyi:false
+            isXieyi: false
         })
-console.log("协议",e)
+        console.log("协议", e)
     },
-    onClose(){
-this.setData({
-    clear:false,
-})
+    onClose() {
+        this.setData({
+            clear: false,
+        })
+    },
+    onInput(e) {
+        console.log(e)
+        let {
+            value
+        } = e.detail
+        this.setData({
+            "userInfo.mobile": value
+        })
+    },
+    isnewRead(){
+        this.setData({
+            queding:!this.data.queding
+        })
     },
     isRead: function () {
         this.data.queding ? this.setData({
             queding: false
         }) : this.setData({
-        //    queding:true
-        clear:true,
-        fire:true
+            //    queding:true
+            clear: true,
+            fire: true
         });
     },
-    onys(){
-this.setData({
-    iszrs:false,
-    isyhxy:true,
-})
-    },
-    onyszc(){
+    onys() {
         this.setData({
-            floorNum:"f1",
-            clear:false,
-            iszrs:true,
-            isyhxy:false,
-            queding:true
+            iszrs: false,
+            isyhxy: true,
         })
     },
-    notRead(){
+    onyszc() {
         this.setData({
-            clear:false,
-            iszrs:true,
-            isyhxy:false,
-            queding:false
+            floorNum: "f1",
+            clear: false,
+            iszrs: true,
+            isyhxy: false,
+            queding: true
+        })
+    },
+    notRead() {
+        this.setData({
+            clear: false,
+            iszrs: true,
+            isyhxy: false,
+            queding: false
         })
     },
     promise: function () {
@@ -127,13 +144,13 @@ this.setData({
         }).then(res => {
             console.log(res)
             that.setData({
-                "userInfo.mobile":res.purePhoneNumber
+                "userInfo.mobile": res.purePhoneNumber
             })
         })
     },
     confirmTestify: s.throttle(function (e) {
         var t = this;
-        let that=this
+        let that = this
         let {
             userInfo,
             queding
@@ -171,19 +188,19 @@ this.setData({
                     title: '认证成功',
                     mask: true
                 })
-            wx.hideLoading()
+                wx.hideLoading()
                 storage.setUserInfo(res)
                 that.setData({
-                  userInfo: res
+                    userInfo: res
                 })
-                App.globalData.userInfo=res
-                App.globalData.is_login=false
+                App.globalData.userInfo = res
+                App.globalData.is_login = false
                 setTimeout(() => {
                     wx.redirectTo({
                         url: "/pages/index/index"
                     })
                 }, 1500);
-              })
+            })
 
         })
         return

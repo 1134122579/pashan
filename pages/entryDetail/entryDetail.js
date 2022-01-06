@@ -72,6 +72,7 @@ Page({
     data: {
         userInfo: App.globalData.userInfo,
         mask: true,
+        is_gostart:true,
         statusPoup: true,
         windowHeight:H,
         createCodeImg: "",
@@ -270,7 +271,12 @@ Page({
         })
 
     }, 2e3),
-    start: i.throttle(function (t) {
+    start() {
+        App.isGetlocation(() => {
+         this.startgo()
+        })
+      },
+    startgo: i.throttle(function (t) {
         let newDate = +new Date()
         // if (wx.getStorageSync('state') == 1) {
         //     return
@@ -290,6 +296,7 @@ Page({
                 wx.setStorageSync('polylineLocatoion', [statusDWobj])
                 clearInterval(JStimeDSQ)
                 e.setPolyline()
+            
                 wx.setStorageSync('statTime', newDate)
                 e.time()
                 wx.showToast({
@@ -297,9 +304,10 @@ Page({
                     icon: "none"
                 })
                 e.setData({
+                    is_gostart:false,
                     mask: true,
                     timecostItv: !0,
-                    statusPoup: false
+                    statusPoup: true
                 })
             })
         })
@@ -346,13 +354,13 @@ Page({
         console.log(1)
         this.setData({
             mask: true,
-            statusPoup: false
+            statusPoup: true
         })
     },
     onlookcancel() {
         this.setData({
             mask: false,
-            statusPoup: false
+            statusPoup: true
         })
     },
     finish: i.throttle(function (t) {
@@ -560,7 +568,9 @@ Page({
         })
         if (wx.getStorageSync("state")) {
             this.setData({
-                mask: wx.getStorageSync("state") == 1 ? false : true
+                mask: wx.getStorageSync("state") == 1 ? false : true,
+            is_gostart: wx.getStorageSync("state") == 1 ? false : true
+
             })
         }
         wx.getSetting({

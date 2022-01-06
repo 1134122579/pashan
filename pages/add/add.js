@@ -3,11 +3,13 @@ var e = require("../../@babel/runtime/helpers/interopRequireDefault"),
     a = e(require("../../utils/mixins/pageMixin/myPageMixin")),
     n = getApp(),
     s = require("../../utils/util.js");
-
+let App=getApp()
 import Api from "../../api/index"
 Page({
     mixins: [a.default],
     data: t({
+        islookTL: false,
+        Timedate: '05:00',
         dataBack: true,
         ensureEnter: '',
         group: ["单人", "团队"],
@@ -29,10 +31,20 @@ Page({
             promise: !1
         });
     },
+
     promise: function () {
         this.setData({
             promise: !0,
             isRead: !0,
+            // clear: !1,
+            islookTL: true
+        });
+    },
+    lookTL: function () {
+        this.setData({
+            promise: !0,
+            isRead: !0,
+            islookTL: false,
             clear: !1
         });
     },
@@ -58,7 +70,12 @@ Page({
             })
         })
     },
-    createDone: s.throttle(function (e) {
+    createDone() {
+        App.isGetlocation(() => {
+     this.createDone1()
+        })
+      },
+    createDone1: s.throttle(function (e) {
         let that = this
         let {
             ensureGroup,
@@ -66,22 +83,31 @@ Page({
             ensureReason,
             date,
             ensureEnter,
-            isRead
+            isRead,
+            Timedate
         } = this.data
+        date = date.replaceAll('/', "-")
         let type = ensureGroup != "团队" ? 1 : 2
         let reason = ensureReason //登山原因
-        let ds_time = date //登山时间
+        let ds_time = `${date} ${Timedate}` //登山时间
         let rukou = ensureEnter //登山入口
-        if (!isRead) {
+        if (type == 2 && !showEnsureFamilyNum) {
             wx.showToast({
-                title: '请阅读并勾选责任书',
+                title: '请填写数量',
                 icon: "none"
             })
             return
         }
-        if(type==2&&!showEnsureFamilyNum){
+        if (Number(showEnsureFamilyNum) < 1 || Number(showEnsureFamilyNum) > 50) {
             wx.showToast({
-                title: '请填写数量',
+                title: '团队人数不能小于1人大于50人',
+                icon: "none"
+            })
+            return
+        }
+        if (!isRead) {
+            wx.showToast({
+                title: '请阅读并勾选责任书',
                 icon: "none"
             })
             return
@@ -95,7 +121,7 @@ Page({
             reason,
             ds_time,
             rukou,
-            num:type==1?"":showEnsureFamilyNum
+            num: type == 1 ? "" : showEnsureFamilyNum
         }).then(res => {
             wx.hideLoading()
             wx.showToast({
@@ -104,9 +130,12 @@ Page({
                 mask: true
             })
             setTimeout(() => {
-                wx.redirectTo({
-                    url: "/pages/index/index"
-                })
+                wx.navigateTo({
+                    url: '/pages/entryDetail/entryDetail',
+                  })
+                // wx.redirectTo({
+                //     url: "/pages/index/index"
+                // })
             }, 1500);
         })
         return
@@ -276,6 +305,11 @@ Page({
             date: e.detail.value
         });
     },
+    bindtimeChange: function (e) {
+        this.setData({
+            Timedate: e.detail.value
+        });
+    },
     bindPickerGroup: function (e) {
         this.setData({
             groupIndex: e.detail.value,
@@ -337,10 +371,6 @@ Page({
     onPullDownRefresh: function () {},
     onReachBottom: function () {},
     onShareAppMessage: function () {
-        return {
-            path: "/pages/index/index",
-            imageUrl: "/images/share.jpg",
-            title: "行山易"
-        };
+
     }
 });

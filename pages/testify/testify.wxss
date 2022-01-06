@@ -53,9 +53,9 @@ page{
 }
 
 .testify-confirm {
-    background: #4e63a9;
+    background: #377cd4;
     bottom: calc(env(safe-area-inset-bottom));
-    opacity: 1;
+    opacity: 1; 
     width: 694rpx;
 }
 

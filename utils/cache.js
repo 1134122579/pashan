@@ -20,6 +20,9 @@ export default {
   removeToken() {
     wx.removeStorageSync(name);
   },
+  removeUserInfo() {
+    wx.removeStorageSync(userName);
+  },
   getUserInfo() {
     return wx.getStorageSync(userName);
   },
