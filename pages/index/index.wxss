@@ -588,6 +588,9 @@ page {
     background: rgba(0, 0, 0, 0.5);
     position: absolute;
     top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
 }
 
 .bubble {
@@ -636,12 +639,16 @@ page {
 }
 .bubbleTwo{
     width: 680rpx;
+    bottom: 200rpx;
     height: 250rpx;
+    right: 0;
+    left: 0;
     background: #fff;
     margin: 0 auto;
     position: relative;
+    position: absolute;
     border-radius: 20rpx;
-    margin-top: 716rpx;
+    /* margin-top: 716rpx; */
     display: flex;
     justify-content: space-between;
     align-items: center;

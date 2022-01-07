@@ -71,9 +71,9 @@ Page({
         })
     },
     createDone() {
-        App.isGetlocation(() => {
      this.createDone1()
-        })
+        // App.isGetlocation(() => {
+        // })
       },
     createDone1: s.throttle(function (e) {
         let that = this

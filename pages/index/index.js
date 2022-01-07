@@ -177,11 +177,12 @@ Page({
     })
   },
   start() {
-    App.isGetlocation(() => {
-      wx.navigateTo({
-        url: '/pages/entryDetail/entryDetail',
-      })
+    wx.navigateTo({
+      url: '/pages/entryDetail/entryDetail',
     })
+    // App.isGetlocation(() => {
+    
+    // })
   },
 
   cancelModify() {
@@ -300,11 +301,12 @@ Page({
    */
   onReady: function () {
     // wx.setStorageSync('ISTS', false)
-   let ISTS=  wx.getStorageSync('ISTS')
-    this.setData({
-      is_ts:ISTS?false:true
-    })
-
+    if (!storage.getToken()) {
+      let ISTS=  wx.getStorageSync('ISTS')
+      this.setData({
+        is_ts:ISTS?false:true
+      })
+    }
   },
 
   /**

@@ -169,13 +169,13 @@ Page({
             })
             return
         }
-        if (!userInfo.idcard) {
-            wx.showModal({
-                title: "校验失败",
-                content: "身份证校验错误，请重新输入。"
-            })
-            return
-        }
+        // if (!userInfo.idcard) {
+        //     wx.showModal({
+        //         title: "校验失败",
+        //         content: "身份证校验错误，请重新输入。"
+        //     })
+        //     return
+        // }
 
         wx.showLoading({
             title: '认证中...',

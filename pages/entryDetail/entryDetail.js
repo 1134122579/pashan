@@ -560,28 +560,8 @@ Page({
             }
         })
     },
-    onLoad: function (e) {
-        let that = this
-        var o = this;
-        wx.showLoading({
-            title: "加载中..",
-        })
-        if (wx.getStorageSync("state")) {
-            this.setData({
-                mask: wx.getStorageSync("state") == 1 ? false : true,
-            is_gostart: wx.getStorageSync("state") == 1 ? false : true
-
-            })
-        }
-        wx.getSetting({
-            success: function (res) {
-                if (res.authSetting['scope.userLocationBackground']) {} else {
-                    wx.navigateBack({
-                        delta: 1,
-                    })
-                }
-            }
-        });
+    // 获取登山定位
+    getDengshanLocation(){
 
         wx.startLocationUpdateBackground({
             success: function (t) {
@@ -721,6 +701,30 @@ Page({
                 });
             }
         });
+    },
+    onLoad: function (e) {
+        let that = this
+        var o = this;
+        wx.showLoading({
+            title: "加载中..",
+        })
+        if (wx.getStorageSync("state")) {
+            this.setData({
+                mask: wx.getStorageSync("state") == 1 ? false : true,
+            is_gostart: wx.getStorageSync("state") == 1 ? false : true
+
+            })
+        }
+        wx.getSetting({
+            success: function (res) {
+                if (res.authSetting['scope.userLocationBackground']) {} else {
+                    wx.navigateBack({
+                        delta: 1,
+                    })
+                }
+            }
+        });
+
         this.toCurrentLocation();
     },
     toDQLocation() {

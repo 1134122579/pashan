@@ -195,13 +195,13 @@
                 </view>
             </view>
             <view class="content">
-                <view bindtap="onanlitiaoli" class="content-item" data-id="{{item.id}}">
+                <!-- <view bindtap="onanlitiaoli" class="content-item" data-id="{{item.id}}">
                     <view class="content-itemd">
                         <view class="content-item-title">森林防火条例</view>
                         <view class="content-item-date">2021-04-21</view>
                     </view>
                     <view class="content-item-dashed"></view>
-                </view>
+                </view> -->
                 <view bindtap="onanlione" class="content-item" data-id="{{item.id}}">
                     <view class="content-itemd">
                         <view class="content-item-title">违反森林用火案例一</view>
