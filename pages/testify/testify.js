@@ -90,9 +90,9 @@ Page({
             "userInfo.mobile": value
         })
     },
-    isnewRead(){
+    isnewRead() {
         this.setData({
-            queding:!this.data.queding
+            queding: !this.data.queding
         })
     },
     isRead: function () {
@@ -162,13 +162,13 @@ Page({
             })
             return
         }
-        if (!userInfo.name) {
-            wx.showModal({
-                title: "校验失败",
-                content: "真实姓名校验错误，请重新输入。"
-            })
-            return
-        }
+        // if (!userInfo.name) {
+        //     wx.showModal({
+        //         title: "校验失败",
+        //         content: "真实姓名校验错误，请重新输入。"
+        //     })
+        //     return
+        // }
         // if (!userInfo.idcard) {
         //     wx.showModal({
         //         title: "校验失败",
@@ -261,6 +261,10 @@ Page({
     },
     idcard: function (e) {
         var t = e.detail.value;
+        this.setData({
+            "userInfo.idcard":t
+        })
+        return
         console.log(t);
         var a = "",
             o = !0;
@@ -328,6 +332,10 @@ Page({
         })), o || console.log("tip" + a), o;
     },
     name: function (e) {
+        this.setData({
+            "userInfo.name": e.detail.value
+        })
+        return
         var t = /^((?![\u3000-\u303F])[\u2E80-\uFE4F]|\·)*(?![\u3000-\u303F])[\u2E80-\uFE4F](\·)*$/.test(e.detail.value);
         console.log(t), t ? this.setData({
             "userInfo.name": e.detail.value
@@ -430,11 +438,4 @@ Page({
     onUnload: function () {},
     onPullDownRefresh: function () {},
     onReachBottom: function () {},
-    onShareAppMessage: function () {
-        return {
-            path: "/pages/index/index",
-            imageUrl: "/images/share.jpg",
-            title: "行山易"
-        };
-    }
 });

@@ -5,7 +5,7 @@ var t = function(t) {
 module.exports = {
     formatTime: function(r) {
         var e = r.getFullYear(), n = r.getMonth() + 1, a = r.getDate(), o = r.getHours(), u = r.getMinutes(), c = r.getSeconds();
-        return [ e, n, a ].map(t).join("/") + " " + [ o, u, c ].map(t).join(":");
+        return [ e, n, a ].map(t).join("-") + " " + [ o, u, c ].map(t).join(":");
     },
     base64_encode: function(t) {
         for (var r, e, n, a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", o = 0, u = t.length, c = ""; o < u; ) {

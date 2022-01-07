@@ -123,7 +123,7 @@
                 </view>
             </view>
         </picker>
-        <picker bindchange="bindtimeChange" class="add-type" end="2031-04-13" mode="time" start="{{Timedate}}" value="{{Timedate}}">
+        <picker bindchange="bindtimeChange" class="add-type" end="23:00" mode="time" start="{{Timedate}}" value="{{Timedate}}">
             <view wx:if="{{!Timedate}}">请选择时间</view>
             <view class="picker picker-date" wx:else>
                 <view>开始时间</view>

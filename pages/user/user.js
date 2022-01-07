@@ -59,7 +59,7 @@ Page({
           icon:'none'
         })
         setTimeout(() => {
-            wx.navigateTo({
+            wx.redirectTo({
                 url: '/pages/index/index',
               })
         }, 1500);
@@ -76,11 +76,4 @@ Page({
     onUnload: function() {},
     onPullDownRefresh: function() {},
     onReachBottom: function() {},
-    onShareAppMessage: function() {
-        return {
-            path: "/pages/index/index",
-            imageUrl: "/images/share.jpg",
-            title: "行山易"
-        };
-    }
 });

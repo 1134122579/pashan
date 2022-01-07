@@ -25,7 +25,8 @@
     <view class="testify-box">
         <view class="testify-type">
             <view class="testify-title">
-                <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view>姓名
+                <!-- <view style="color:#DA3131;margin-right:10rpx;font-weight:bold">*</view> -->
+                姓名
             </view>
             <input bindblur="name" class="testify-input" placeholder="请输入您的真实姓名" type="text" value="{{userInfo.name}}"></input>
         </view>
@@ -60,13 +61,15 @@
     <view class="testify-box">
         <view class="testify-type">
             <view class="testify-title">
-                <view style="color:#fff;margin-right:10rpx;font-weight:bold">*</view>紧急联系人姓名
+                <!-- <view style="color:#fff;margin-right:10rpx;font-weight:bold">*</view> -->
+                紧急联系人姓名
             </view>
             <input bindblur="urgentname" class="testify-input" placeholder="请输入您的紧急联系人姓名" style="width:320rpx" type="text" value="{{userInfo.sos_name}}"></input>
         </view>
         <view class="testify-type">
             <view class="testify-title">
-                <view style="color:#fff;margin-right:10rpx;font-weight:bold">*</view>紧急联系人电话
+                <!-- <view style="color:#fff;margin-right:10rpx;font-weight:bold">*</view> -->
+                紧急联系人电话
             </view>
             <input bindblur="urgentphone" class="testify-input" placeholder="请输入您的紧急联系人电话" style="width:320rpx" type="text" value="{{userInfo.sos_mobile}}"></input>
         </view>

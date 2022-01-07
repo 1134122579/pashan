@@ -54,7 +54,7 @@ const windowHeight = wx.getSystemInfoSync().windowHeight;
 
 
 const rate = 750.0 / W;
-const H=windowHeight*rate
+const H = windowHeight * rate
 // 300rpx 在6s上为 150px
 const qrcode_w = 600 / rate;
 let JStimeDSQ = ''
@@ -70,11 +70,12 @@ import {
 Page({
     mixins: [n.default],
     data: {
+        isShowMask: false,
         userInfo: App.globalData.userInfo,
         mask: true,
-        is_gostart:true,
+        is_gostart: true,
         statusPoup: true,
-        windowHeight:H,
+        windowHeight: H,
         createCodeImg: "",
         qrcodeWidth: qrcode_w,
         latitude: 22.510274072389358,
@@ -98,6 +99,7 @@ Page({
         satellite: !1,
         startLocstartationUpdateBackground: ''
     },
+
     // 设置路线
     setPolyline() {
         clearInterval(lineTime)
@@ -123,6 +125,199 @@ Page({
                 newpolyline: polylineone
             })
         }, 60000);
+    },
+    isGps: function (callback) {
+        let vm = this
+        let that = this
+        wx.getSetting({
+            success: (res) => {
+                // res.authSetting['scope.userLocation'] == undefined    表示 初始化进入该页面
+                // res.authSetting['scope.userLocation'] == false    表示 非初始化进入该页面,且未授权
+                // res.authSetting['scope.userLocation'] == true    表示 地理位置授权
+                // 拒绝授权后再次进入重新授权
+                if (res.authSetting['scope.userLocation'] != undefined && res.authSetting['scope.userLocation'] != true) {
+                    // console.log('authSetting:status:拒绝授权后再次进入重新授权', res.authSetting['scope.userLocation'])
+                    that.setData({
+                        isShowMask: true
+                    })
+                    return
+                    wx.showModal({
+                        title: '',
+                        content: '未开启后台位置获取，请点击右上角“…”，进入设置，选择位置消息，勾选按钮“使用小程序期间和离开小程序后”。',
+                        success: function (res) {
+                            if (res.cancel) {
+                                wx.showToast({
+                                    title: '拒绝授权',
+                                    icon: 'none'
+                                })
+                            } else if (res.confirm) {
+                                wx.openSetting({
+                                    success: function (dataAu) {
+                                        // console.log('dataAu:success', dataAu)
+                                        if (dataAu.authSetting["scope.userLocation"] == true) {
+                                            //再次授权，调用wx.getLocation的API
+                                            vm.getLocation(dataAu, callback)
+                                        } else {
+                                            wx.showToast({
+                                                title: '授权失败',
+                                                icon: 'none'
+                                            })
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }
+                // 初始化进入，未授权
+                else if (res.authSetting['scope.userLocation'] == undefined) {
+                    // console.log('authSetting:status:初始化进入，未授权', res.authSetting['scope.userLocation'])
+                    //调用wx.getLocation的API
+                    wx.getLocation({})
+                    // vm.getLocation(res, callback)
+                }
+                // 已授权
+                else if (res.authSetting['scope.userLocation']) {
+                    // console.log('authSetting:status:已授权', res.authSetting['scope.userLocation'])
+                    //调用wx.getLocation的API
+                    vm.getLocation(res, callback)
+                }
+            }
+        })
+    },
+    // 微信获取移动定位
+    isGetlocation(cb) {
+        let that = this
+        // this.isGps(() => {
+        wx.getSetting({
+            success(res) {
+                if (res.authSetting['scope.userLocationBackground']) {
+                    that.setData({
+                        isShowMask: false
+                    })
+                    cb()
+                } else {
+                    that.setData({
+                        isShowMask: true
+                    })
+                    return
+                    wx.showModal({
+                        showCancel: true,
+                        content: "未开启后台位置获取，请点击右上角“…”，进入设置，选择位置消息，勾选按钮“使用小程序期间和离开小程序后”。",
+                        success: function (t) {
+                            wx.openSetting({})
+                        }
+                    });
+                }
+            }
+        })
+        // })
+
+    },
+    // 微信获得经纬度
+    getLocation: function (userLocation, callback) {
+        let vm = this
+        let that = this
+        wx.getLocation({
+            success: function (res) {
+                // console.log('getLocation:success', res)
+                var latitude = res.latitude
+                var longitude = res.longitude
+                callback && callback();
+                that.setData({
+                    isShowMask: false
+                })
+
+            },
+            fail: function (res) {
+                that.setData({
+                    isShowMask: true
+                })
+                // console.log('getLocation:fail', res)
+                if (res.errMsg === 'getLocation:fail:auth denied') {
+                    wx.showToast({
+                        title: '拒绝授权',
+                        icon: 'none'
+                    })
+                }
+                // if (!userLocation || !userLocation.authSetting['scope.userLocation']) {
+                //   vm.isGetlocation(callback)
+                // } else 
+                if (userLocation.authSetting['scope.userLocation']) {
+                    wx.showModal({
+                        title: '您手机定位功能没有开启',
+                        content: '请在系统设置中打开定位服务',
+                        showCancel: false,
+                        success: result => {
+                            // vm.isGetlocation(callback)
+                        }
+                    })
+                } else {
+                    wx.showToast({
+                        title: '授权失败',
+                        icon: 'none'
+                    })
+                }
+            }
+        })
+    },
+    //禁止滚动
+    stopScroll() {
+        var mo = function (e) {
+            e.preventDefault();
+        };
+        document.body.style.overflow = 'hidden';
+        document.addEventListener("touchmove", mo, false); //禁止页面滑动
+    },
+    //取消滑动限制
+    canScroll() {
+        var mo = function (e) {
+            e.preventDefault();
+        };
+        document.body.style.overflow = ''; //出现滚动条
+        document.removeEventListener("touchmove", mo, false);
+    },
+    onshowMask() {
+        this.setData({
+            isShowMask: true
+        })
+    },
+    onokcancleshowMask() {
+        let vm = this
+        wx.openSetting({
+            success: function (dataAu) {
+                console.log('过去后台定位权限', dataAu)
+                if (dataAu.authSetting["scope.userLocationBackground"] == true) {
+                    //再次授权，调用wx.getLocation的API
+                    // vm.getLocation(dataAu, callback)
+                    vm.getDengshanLocation(() => {})
+                    // wx.getLocation({
+                    //     success: function (res) {
+                    //         // console.log('getLocation:success', res)
+                    //         var latitude = res.latitude
+                    //         var longitude = res.longitude
+                    //         that.setData({
+                    //             isShowMask:false
+                    //         })
+
+                    //     },})
+                } else {
+                    wx.showToast({
+                        title: '授权失败',
+                        icon: 'none'
+                    })
+                }
+            }
+        })
+    },
+    oncancleshowMask() {
+        this.setData({
+            isShowMask: false
+        })
+        wx.showToast({
+            title: '拒绝授权',
+            icon: 'none'
+        })
     },
     getLine() {
         let that = this
@@ -151,14 +346,18 @@ Page({
         }, 1000);
 
     },
-    onSos() {
+    onSos1() {
         let {
             userInfo,
             statusDWobj
         } = this.data
-        wx.showLoading({
-            title: '申请中...',
+        // wx.showLoading({
+        //     title: '申请中...',
+        // })
+        this.setData({
+            isShowMask: false
         })
+
         Api.subSosLog({
             beian_id: userInfo.bean_info.id,
             lat: statusDWobj.latitude,
@@ -170,6 +369,60 @@ Page({
                 content: '已发送救援申请！请等待'
             })
         })
+    },
+    onSos() {
+        let {
+            is_gostart
+        } = this.data
+        if (is_gostart) {
+            wx.showToast({
+                title: '未开始登山不可申请',
+                icon: 'none'
+            })
+            return
+        }
+        this.isGetlocation(() => {
+            this.onSos11()
+        })
+    },
+    onSos11() {
+        let newDate = +new Date()
+        // if (wx.getStorageSync('state') == 1) {
+        //     return
+        // }
+        let {
+            statusDWobj,
+            userInfo
+        } = this.data
+        let e = this
+        this.getDengshanLocation()
+        wx.showLoading({
+            title: '申请中..',
+        })
+        setTimeout(() => {
+            Api.subPosition({
+                lat: statusDWobj.latitude,
+                lng: statusDWobj.longitude,
+                beian_id: userInfo["bean_info"]["id"]
+            }).then(res => {
+                // wx.hideLoading({
+                //     success: (res) => {},
+                // })
+                // wx.setStorageSync("state", 1);
+                wx.setStorageSync('polylineLocatoion', [statusDWobj])
+                clearInterval(JStimeDSQ)
+                e.setPolyline()
+                wx.setStorageSync('statTime', newDate)
+                e.onSos1()
+                e.setData({
+                    is_gostart: false,
+                    // mask: true,
+                    timecostItv: !0,
+                    statusPoup: true
+                })
+            })
+        }, 500);
+
     },
     showNum(num) {
         if (num < 10) {
@@ -199,9 +452,9 @@ Page({
             That.upDK()
             That.setPolyline()
         } else {
-            this.setData({
-                mask: true
-            })
+            // this.setData({
+            //     mask: true
+            // })
         }
     },
     // 上传打卡
@@ -272,10 +525,34 @@ Page({
 
     }, 2e3),
     start() {
-        App.isGetlocation(() => {
-         this.startgo()
+        let newDate = +new Date()
+        let {
+            statusDWobj,
+            userInfo
+        } = this.data
+        var e = this;
+        Api.startDsLog().then(res => {
+            wx.setStorageSync("state", 1);
+            // wx.setStorageSync('polylineLocatoion', [statusDWobj])
+            clearInterval(JStimeDSQ)
+            // e.setPolyline()
+            wx.setStorageSync('statTime', newDate)
+            e.time()
+            wx.showToast({
+                title: '开始登山',
+                icon: "none"
+            })
+            e.setData({
+                is_gostart: false,
+                mask: true,
+                timecostItv: !0,
+                statusPoup: true
+            })
         })
-      },
+        // App.isGetlocation(() => {
+        //     this.startgo()
+        // })
+    },
     startgo: i.throttle(function (t) {
         let newDate = +new Date()
         // if (wx.getStorageSync('state') == 1) {
@@ -287,6 +564,7 @@ Page({
         } = this.data
         var e = this;
         Api.startDsLog().then(res => {
+
             Api.subPosition({
                 lat: statusDWobj.latitude,
                 lng: statusDWobj.longitude,
@@ -296,7 +574,6 @@ Page({
                 wx.setStorageSync('polylineLocatoion', [statusDWobj])
                 clearInterval(JStimeDSQ)
                 e.setPolyline()
-            
                 wx.setStorageSync('statTime', newDate)
                 e.time()
                 wx.showToast({
@@ -304,7 +581,7 @@ Page({
                     icon: "none"
                 })
                 e.setData({
-                    is_gostart:false,
+                    is_gostart: false,
                     mask: true,
                     timecostItv: !0,
                     statusPoup: true
@@ -543,6 +820,9 @@ Page({
             userInfo
         } = this.data
         let that = this
+        wx.showLoading({
+            title: '生成中..',
+        })
         let t = new r("canvas", {
             // image: "/images/bg.png",
             text: `${+new Date()}+${userInfo.idcard}+${+new Date()}`,
@@ -554,15 +834,18 @@ Page({
             callback: (res) => {
                 // 生成二维码的临时文件
                 console.log("生成二维码的临时文件", res.path)
-                that.setData({
-                    createCodeImg: res.path
-                })
+                setTimeout(() => {
+                    wx.hideLoading()
+                    that.setData({
+                        createCodeImg: res.path
+                    })
+                }, 500);
             }
         })
     },
     // 获取登山定位
-    getDengshanLocation(){
-
+    getDengshanLocation(cb) {
+        let that = this
         wx.startLocationUpdateBackground({
             success: function (t) {
                 console.log("授权实时获取定位检测权限", t)
@@ -574,85 +857,28 @@ Page({
                         var n = t;
                         n.latitude = parseFloat(t.latitude).toFixed(6)
                         n.longitude = parseFloat(t.longitude).toFixed(6);
+                        cb()
                         wx.hideLoading({
                             success: (res) => {},
                         })
-
                         that.setData({
                             statusDWobj: n,
+                            isShowMask: false
+
                         })
                         wx.setStorageSync('location', t)
-                        // clearTimeout(islatitude)
-                        // islatitude = setTimeout(() => {
-                        //     if (t.latitude) {
-                        //         wx.navigateBack({
-                        //             delta: 1,
-                        //         })
-                        //     }
-                        // }, 500);
-                        return
-                        if (console.log(t), e >= 1) {
-                            var n = t;
-                            n.latitude = parseFloat(t.latitude).toFixed(6), n.longitude = parseFloat(t.longitude).toFixed(6);
-                            o.setData({
-                                statusArr: [{
-                                    latitude,
-                                    longitude,
-                                    altitude
-                                }],
-                                currentStatus: n,
-                                altitude: t.altitude.toFixed(2)
-                            });
-                        }
-
                     });
-                } else wx.showModal({
-                    showCancel: true,
-                    content: "未开启后台位置获取，请点击右上角“…”，进入设置，选择位置消息，勾选按钮“使用小程序期间和离开小程序后”。",
-                    success: function (t) {
-                        wx.navigateTo({
-                            url: '/pages/index/index',
-                        })
-                        return
-                        wx.openSetting({
-                            success: function (t) {
-                                wx.getSetting({
-                                    success: function (t) {
-                                        if (console.log(t), 1 == t.authSetting["scope.userLocationBackground"]) {
-                                            var e = 0;
-                                            setInterval(function () {
-                                                e++;
-                                            }, 1e3), wx.onLocationChange(function (t) {
-                                                var n = t;
-                                                n.latitude = parseFloat(t.latitude).toFixed(6), n.longitude = parseFloat(t.longitude).toFixed(6)
-                                                that.setData({
-                                                    statusDWobj: n
-                                                })
-                                                wx.setStorageSync('location', t)
-                                                return
-                                                if (console.log(t), e >= 1) {
-                                                    var n = t;
-                                                    n.latitude = parseFloat(t.latitude).toFixed(6), n.longitude = parseFloat(t.longitude).toFixed(6),
-                                                        o.setData({
-                                                            currentStatus: n,
-                                                            altitude: t.altitude.toFixed(2)
-                                                        });
-                                                }
-
-                                            });
-                                        } else {
-                                            wx.redirectTo({
-                                                url: '/pages/index/index',
-                                            })
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
+                } else {
+                    that.setData({
+                        isShowMask: true
+                    })
+                }
             },
             fail: function () {
+                that.setData({
+                    isShowMask: true
+                })
+                return
                 wx.showModal({
                     showCancel: !0,
                     content: "未开启后台位置获取，请点击右上角“…”，进入设置，选择位置消息，勾选按钮“使用小程序期间和离开小程序后”。",
@@ -710,20 +936,34 @@ Page({
         })
         if (wx.getStorageSync("state")) {
             this.setData({
-                mask: wx.getStorageSync("state") == 1 ? false : true,
-            is_gostart: wx.getStorageSync("state") == 1 ? false : true
+                // mask: wx.getStorageSync("state") == 1 ? false : true,
+                is_gostart: wx.getStorageSync("state") == 1 ? false : true
 
             })
         }
-        wx.getSetting({
+        // wx.getSetting({
+        //     success: function (res) {
+        //         if (res.authSetting['scope.userLocationBackground']) {} else {
+        //             wx.navigateBack({
+        //                 delta: 1,
+        //             })
+        //         }
+        //     }
+        // });
+        wx.getLocation({
             success: function (res) {
-                if (res.authSetting['scope.userLocationBackground']) {} else {
-                    wx.navigateBack({
-                        delta: 1,
-                    })
+                // console.log('getLocation:success', res)
+                var latitude = parseFloat(res.latitude).toFixed(6)
+                var longitude = parseFloat(res.longitude).toFixed(6)
+                let statusDWobj = {
+                    latitude,
+                    longitude
                 }
-            }
-        });
+                that.setData({
+                    statusDWobj
+                })
+            },
+        })
 
         this.toCurrentLocation();
     },
@@ -778,5 +1018,4 @@ Page({
     onUnload: function () {},
     onPullDownRefresh: function () {},
     onReachBottom: function () {},
-    onShareAppMessage: function () {}
 });

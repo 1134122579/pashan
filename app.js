@@ -74,8 +74,8 @@ App({
         if (res.authSetting['scope.userLocation'] != undefined && res.authSetting['scope.userLocation'] != true) {
           // console.log('authSetting:status:拒绝授权后再次进入重新授权', res.authSetting['scope.userLocation'])
           wx.showModal({
-            title: '',
-            content: '未开启后台位置获取，请点击右上角“…”，进入设置，选择位置消息，勾选按钮“使用小程序期间和离开小程序后”。',
+            title: '获取定位',
+            content: '请求获取位置权限。',
             success: function (res) {
               if (res.cancel) {
                 wx.showToast({

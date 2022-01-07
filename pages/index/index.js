@@ -110,11 +110,14 @@ Page({
 
       }
     } else {
-      wx.showModal({
-        content: '请点击左上方登录按钮',
-        showCancel: false,
-        title: '暂未登录',
+      this.setData({
+        is_ts:true
       })
+      // wx.showModal({
+      //   content: '请点击左上方登录按钮',
+      //   showCancel: false,
+      //   title: '暂未登录',
+      // })
       // wx.redirectTo({
       //   url: '/pages/login/login',
       // })

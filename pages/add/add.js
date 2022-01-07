@@ -3,7 +3,7 @@ var e = require("../../@babel/runtime/helpers/interopRequireDefault"),
     a = e(require("../../utils/mixins/pageMixin/myPageMixin")),
     n = getApp(),
     s = require("../../utils/util.js");
-let App=getApp()
+let App = getApp()
 import Api from "../../api/index"
 Page({
     mixins: [a.default],
@@ -71,10 +71,10 @@ Page({
         })
     },
     createDone() {
-     this.createDone1()
-        // App.isGetlocation(() => {
-        // })
-      },
+        App.isGps(() => {
+            this.createDone1()
+        })
+    },
     createDone1: s.throttle(function (e) {
         let that = this
         let {
@@ -132,7 +132,7 @@ Page({
             setTimeout(() => {
                 wx.navigateTo({
                     url: '/pages/entryDetail/entryDetail',
-                  })
+                })
                 // wx.redirectTo({
                 //     url: "/pages/index/index"
                 // })
@@ -285,6 +285,13 @@ Page({
         });
     }, 1e3),
     ensureFamilyNum: function (e) {
+        if (parseInt(e.detail.value) < 1 || parseInt(e.detail.value) > 50) {
+            wx.showToast({
+                title: '团队人数不能小于1人大于50人',
+                icon: 'none'
+            })
+            return
+        }
         console.log(e.detail.value), this.setData({
             showEnsureFamilyNum: parseInt(e.detail.value),
             ensureFamilyNum: parseInt(e.detail.value) + 1
@@ -352,8 +359,10 @@ Page({
                     ensureEnter: this.data.enter[t]
                 }));
         var a = s.formatTime(new Date()).split(" ");
+        console.log(a,1231231212)
         this.setData({
-            date: a[0]
+            date: a[0],
+            Timedate:a[1].slice(0,5)
         }), wx.getSetting({
             success: function (e) {
                 console.log(e.authSetting), console.log(e.authSetting["scope.userLocationBackground"]),
@@ -370,7 +379,5 @@ Page({
     onUnload: function () {},
     onPullDownRefresh: function () {},
     onReachBottom: function () {},
-    onShareAppMessage: function () {
 
-    }
 });
