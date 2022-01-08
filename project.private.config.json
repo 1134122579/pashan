@@ -83,6 +83,12 @@
           "pathName": "pages/testify/testify",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/testify/testify",
+          "pathName": "pages/testify/testify",
+          "query": "state=reset",
+          "scene": null
         }
       ]
     }

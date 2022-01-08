@@ -54,6 +54,7 @@ Page({
     goOut(){
         storage.removeToken()
         storage.removeUserInfo()
+        App.globalData.userInfo=""
         wx.showToast({
           title: '退出成功！1秒后跳转首页',
           icon:'none'

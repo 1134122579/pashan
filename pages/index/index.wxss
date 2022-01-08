@@ -566,8 +566,9 @@ page {
     margin-right: 20rpx;
     font-size: 14px;
     padding: 4rpx 10rpx;
-    border: 1px solid #367CD5;
-    color: #367CD5;
+    /* border: 1px solid #367CD5; */
+    background-color: #367CD5;
+    color: #fff;
     border-radius: 10rpx;
 }
 
@@ -610,9 +611,9 @@ page {
 .title_tx {
     font-size: 50rpx;
     text-align: center;
-    line-height: 1.8;
-    padding: 20rpx;
-
+    line-height: 1.5;
+    color: #377cd4;
+    margin-top: 40rpx;
 }
 
 .bubble:before {

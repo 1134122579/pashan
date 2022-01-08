@@ -70,12 +70,9 @@ Page({
             })
         })
     },
-    createDone() {
-        App.isGps(() => {
-            this.createDone1()
-        })
-    },
-    createDone1: s.throttle(function (e) {
+
+    createDone: s.throttle(function (e) {
+
         let that = this
         let {
             ensureGroup,
@@ -91,6 +88,13 @@ Page({
         let reason = ensureReason //登山原因
         let ds_time = `${date} ${Timedate}` //登山时间
         let rukou = ensureEnter //登山入口
+        if(!rukou){
+            wx.showToast({
+                title: '请选择登山口',
+                icon: "none"
+            })
+            return
+        }
         if (type == 2 && !showEnsureFamilyNum) {
             wx.showToast({
                 title: '请填写数量',
@@ -105,184 +109,41 @@ Page({
             })
             return
         }
-        if (!isRead) {
-            wx.showToast({
-                title: '请阅读并勾选责任书',
-                icon: "none"
+        // if (!isRead) {
+        //     wx.showToast({
+        //         title: '请阅读并勾选责任书',
+        //         icon: "none"
+        //     })
+        //     return
+        // }
+        App.isGps(() => {
+            wx.showLoading({
+                title: '备案中',
+                mask: true,
             })
-            return
-        }
-        wx.showLoading({
-            title: '备案中',
-            mask: true,
-        })
-        Api.subDsLog({
-            type,
-            reason,
-            ds_time,
-            rukou,
-            num: type == 1 ? "" : showEnsureFamilyNum
-        }).then(res => {
-            wx.hideLoading()
-            wx.showToast({
-                title: '备案成功',
-                icon: 'none',
-                mask: true
-            })
-            setTimeout(() => {
-                wx.navigateTo({
-                    url: '/pages/entryDetail/entryDetail',
+            Api.subDsLog({
+                type,
+                reason,
+                ds_time,
+                rukou,
+                num: type == 1 ? "" : showEnsureFamilyNum
+            }).then(res => {
+                wx.hideLoading()
+                wx.showToast({
+                    title: '备案成功',
+                    icon: 'none',
+                    mask: true
                 })
-                // wx.redirectTo({
-                //     url: "/pages/index/index"
-                // })
-            }, 1500);
+                setTimeout(() => {
+                    wx.navigateTo({
+                        url: '/pages/entryDetail/entryDetail',
+                    })
+                    // wx.redirectTo({
+                    //     url: "/pages/index/index"
+                    // })
+                }, 1500);
+            })
         })
-        return
-        var t = this;
-        if (0 != this.data.isRead)
-            if (this.data.ensureEnter) {
-                if ("单人" == this.data.ensureGroup) wx.showModal({
-                    title: "提交备案",
-                    content: "请确认备案信息是否正确，正确请选择确定返回主页",
-                    success: function (e) {
-                        e.confirm &&
-                            e.confirm && wx.login({
-                                success: function (e) {
-                                    wx.request({
-                                        url: "https://sumou-server.tsunamitek.com/dengshan?code=".concat(e.code, "&cmd=entry.create"),
-                                        method: "POST",
-                                        data: {
-                                            appid: "".concat(n.globalData.appId),
-                                            entry: t.data.ensureEnter,
-                                            exit: " ",
-                                            time: t.data.date,
-                                            purpose: t.data.ensureReason,
-                                            type: t.data.groupIndex.toString()
-                                        },
-                                        success: function (e) {
-                                            console.log("entry.create", e), "必填项目缺失" != e.data.err ? wx.navigateBack({
-                                                delta: 0
-                                            }) : wx.showToast({
-                                                title: "必填项目缺失",
-                                                icon: "error"
-                                            });
-                                        }
-                                    });
-                                }
-                            }), e.cancel;
-                    }
-                });
-                else if ("团体" == this.data.ensureGroup) {
-                    if (!this.data.ensureFamily) return void wx.showToast({
-                        title: "必填项目缺失",
-                        icon: "error"
-                    });
-                    this.data.subsMsg || wx.requestSubscribeMessage({
-                        tmplIds: ["KG6-W5Wf235B33PwAGJ8JccsFfHmtA74Py9VfgPrX0g"],
-                        success: function (e) {
-                            t.setData({
-                                subsMsg: !0
-                            }), wx.showModal({
-                                title: "提交备案",
-                                content: "请确认备案信息是否正确，正确请选择确定前往团队界面。",
-                                success: function (e) {
-                                    e.confirm && wx.login({
-                                        success: function (e) {
-                                            wx.request({
-                                                url: "https://sumou-server.tsunamitek.com/dengshan?code=".concat(e.code, "&cmd=entry.create"),
-                                                method: "POST",
-                                                data: {
-                                                    appid: "".concat(n.globalData.appId),
-                                                    entry: t.data.ensureEnter,
-                                                    exit: "",
-                                                    time: t.data.date,
-                                                    purpose: t.data.ensureReason,
-                                                    type: t.data.groupIndex.toString()
-                                                },
-                                                success: function (e) {
-                                                    console.log("entry.create success", e), "必填项目缺失" != e.data.err ? (t.setData({
-                                                        teamid: e.data.entry_id
-                                                    }), wx.redirectTo({
-                                                        url: "/pages/detail/detail?myteamid=".concat(t.data.teamid)
-                                                    })) : wx.showToast({
-                                                        title: "必填项目缺失",
-                                                        icon: "error"
-                                                    });
-                                                }
-                                            });
-                                        }
-                                    }), e.cancel;
-                                }
-                            });
-                        }
-                    });
-                } else if ("团队" == this.data.ensureGroup) {
-                    if (!this.data.ensureFamilyNum || "0" == this.data.ensureFamilyNum) return void wx.showToast({
-                        title: "团队人数错误",
-                        icon: "error"
-                    });
-                    wx.showModal({
-                        title: "提交备案",
-                        content: "请确认备案信息是否正确，正确请选择确定返回主页",
-                        success: function (e) {
-                            e.confirm && Api.subDsLog({}).then(res => {
-
-                            })
-                            return
-                            e.confirm && wx.login({
-                                success: function (e) {
-                                    wx.request({
-                                        url: "https://sumou-server.tsunamitek.com/dengshan?code=".concat(e.code, "&cmd=entry.create"),
-                                        method: "POST",
-                                        data: {
-                                            appid: "".concat(n.globalData.appId),
-                                            entry: t.data.ensureEnter,
-                                            exit: " ",
-                                            time: t.data.date,
-                                            purpose: t.data.ensureReason,
-                                            type: t.data.groupIndex.toString(),
-                                            count: t.data.ensureFamilyNum.toString()
-                                        },
-                                        success: function (e) {
-                                            console.log("entry.create", e);
-                                            var t = e.data.entry_id;
-                                            console.log(t), wx.login({
-                                                success: function (e) {
-                                                    wx.request({
-                                                        url: "https://sumou-server.tsunamitek.com/dengshan?code=".concat(e.code, "&cmd=entry.teammates.leaderApprove"),
-                                                        method: "POST",
-                                                        data: {
-                                                            teamid: t
-                                                        },
-                                                        success: function (e) {
-                                                            n.globalData.detailStuff, console.log("approve success ", e), wx.showToast({
-                                                                title: "申报成功"
-                                                            });
-                                                        }
-                                                    });
-                                                }
-                                            }), "必填项目缺失" != e.data.err ? wx.navigateBack({
-                                                delta: 0
-                                            }) : wx.showToast({
-                                                title: "必填项目缺失",
-                                                icon: "error"
-                                            });
-                                        }
-                                    });
-                                }
-                            }), e.cancel;
-                        }
-                    });
-                }
-            } else wx.showToast({
-                title: "必填项目缺失",
-                icon: "error"
-            });
-        else wx.showToast({
-            title: "请勾选声明后重试",
-            icon: "error"
-        });
     }, 1e3),
     ensureFamilyNum: function (e) {
         if (parseInt(e.detail.value) < 1 || parseInt(e.detail.value) > 50) {
@@ -359,10 +220,10 @@ Page({
                     ensureEnter: this.data.enter[t]
                 }));
         var a = s.formatTime(new Date()).split(" ");
-        console.log(a,1231231212)
+        console.log(a, 1231231212)
         this.setData({
             date: a[0],
-            Timedate:a[1].slice(0,5)
+            Timedate: a[1].slice(0, 5)
         }), wx.getSetting({
             success: function (e) {
                 console.log(e.authSetting), console.log(e.authSetting["scope.userLocationBackground"]),

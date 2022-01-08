@@ -72,7 +72,7 @@ Page({
     data: {
         isShowMask: false,
         userInfo: App.globalData.userInfo,
-        mask: true,
+        mask:false,
         is_gostart: true,
         statusPoup: true,
         windowHeight: H,
@@ -416,7 +416,6 @@ Page({
                 e.onSos1()
                 e.setData({
                     is_gostart: false,
-                    // mask: true,
                     timecostItv: !0,
                     statusPoup: true
                 })
@@ -452,9 +451,7 @@ Page({
             That.upDK()
             That.setPolyline()
         } else {
-            // this.setData({
-            //     mask: true
-            // })
+           
         }
     },
     // 上传打卡
@@ -544,7 +541,7 @@ Page({
             })
             e.setData({
                 is_gostart: false,
-                mask: true,
+                // mask: true,
                 timecostItv: !0,
                 statusPoup: true
             })
@@ -582,7 +579,6 @@ Page({
                 })
                 e.setData({
                     is_gostart: false,
-                    mask: true,
                     timecostItv: !0,
                     statusPoup: true
                 })
@@ -936,9 +932,7 @@ Page({
         })
         if (wx.getStorageSync("state")) {
             this.setData({
-                // mask: wx.getStorageSync("state") == 1 ? false : true,
                 is_gostart: wx.getStorageSync("state") == 1 ? false : true
-
             })
         }
         // wx.getSetting({
@@ -1010,6 +1004,9 @@ Page({
                 that.time()
             })
         }
+        this.setData({
+            mask:wx.getStorageSync('state')?false:true
+        })
         if (wx.getStorageSync('polylineLocatoion')) {
             this.getLine()
         }

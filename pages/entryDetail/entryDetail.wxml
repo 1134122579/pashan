@@ -39,29 +39,25 @@
     <view class="mask" style="width:100%;height:100vh;z-index:10;background-color:rgba(0,0,0,.4)" wx:if="{{mask}}"></view>
     <view class="mask" style="width:100%;height:{{windowHeight}}rpx;z-index:10;background-color:#999;opacity:0.7" wx:if="{{canvasmask}}"></view>
     <view class="start" style="z-index:11" wx:if="{{mask}}">
-        <view class="startt" wx:if="{{statusPoup}}">
+        <view class="startt" >
             <view>南澳祝您登山路途愉快，一路平安</view>
             <view>如遇到突发情况请及时进行紧急呼叫</view>
         </view>
-        <view class="startt" wx:if="{{!statusPoup}}">
+        <!-- <view class="startt" wx:if="{{!statusPoup}}">
             <view>{{userInfo.bean_info.rukou}}</view>
-        </view>
-        <image class="qrcode" wx:if="{{!statusPoup}}" src="{{userInfo.headimgurl}}" style="width:100px; height:100px;display: block;border-radius: 50%;"></image>
-        <image class="qrcode" wx:else src="{{createCodeImg}}" style="width:285px; height:285px;display: block;"></image>
+        </view> -->
+        <!-- <image class="qrcode" wx:if="{{!statusPoup}}" src="{{userInfo.headimgurl}}" style="width:100px; height:100px;display: block;border-radius: 50%;"></image> -->
+        <image class="qrcode"  src="{{createCodeImg}}" style="width:285px; height:285px;display: block;"></image>
         <view class="qrcode-info">
             <view class="cub time">
-                <!-- <view>11月</view>
-                <view>11日</view> -->
                 <view>{{fn.split(userInfo.bean_info.ds_time)}}</view>
             </view>
-            <!-- <view class="cub">12</view> -->
         </view>
-
-        <view class="btn-group" wx:if="{{!statusPoup}}">
+        <!-- <view class="btn-group" wx:if="{{!statusPoup}}">
             <view bindtap="start" class="startbtn">开始登山</view>
             <view bindtap="cancel" class="cancelbtn">取消备案</view>
-        </view>
-        <view class="btn-group" wx:if="{{statusPoup}}">
+        </view> -->
+        <view class="btn-group">
             <view bindtap="onlookcancel" class="cancelbtn" style="width: 80%;">返回</view>
         </view>
     </view>

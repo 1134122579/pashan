@@ -342,13 +342,13 @@
 </view>
 <view class="ismc" wx:if="{{is_ts}}">
     <view class="bubble" wx:if="{{isone}}">
-        <view class="title_tx">第一步:点击登录</view>
+        <view class="title_tx" >第一步:点击登录</view>
         <view style="display: flex;justify-content: space-around;width: 100%;">
             <view class="qd" style="color: #377cd4;" bindtap="onOne">
                 确定
             </view>
             <view class="qd"  bindtap="onTSclone">
-                不在提示
+                不再提示
             </view>
         </view>
     </view>
@@ -359,7 +359,7 @@
                 确定
             </view>
             <view class="qd" bindtap="onTSclone">
-                不在提示
+                不再提示
             </view>
         </view>
     </view>

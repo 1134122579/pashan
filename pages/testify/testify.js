@@ -62,7 +62,48 @@ Page({
             id: 6
         }],
         cList: [],
-        dArr: []
+        dArr: [],
+
+        iszrsReadOK: false,
+        zrsclear: false,
+        fire: true,
+        promise: false,
+        islookTL: false,
+        clear: false,
+
+    },
+    iszrsRead() {
+        this.setData({
+            zrsclear: true
+        })
+    },
+    onfire() {
+        console.log(1)
+        this.setData({
+            fire: false,
+            promise: true,
+        })
+    },
+    onpromise() {
+        console.log(1)
+        this.setData({
+            promise: false,
+            islookTL: true
+        })
+    },
+    onlookTL() {
+        this.setData({
+            zrsclear: false,
+            fire: true,
+            promise: false,
+            islookTL: false,
+            iszrsReadOK: true
+        })
+    },
+    notzrsRead() {
+        this.setData({
+            iszrsReadOK: false
+        })
     },
     fire: function () {
         this.setData({
@@ -153,12 +194,28 @@ Page({
         let that = this
         let {
             userInfo,
-            queding
+            queding,
+            iszrsReadOK
         } = this.data
+        if(!userInfo.mobile){
+            wx.showToast({
+                title: "请输入手机号",
+                icon:'none'
+            })
+            return
+        }
+        
         if (!queding) {
-            wx.showModal({
-                title: "协议",
-                content: "请勾选用户协议。"
+            wx.showToast({
+                title: "请勾选用户协议",
+                icon:'none'
+            })
+            return
+        }
+        if(!iszrsReadOK){
+            wx.showToast({
+              title: '请阅读登山协议',
+              icon:'none'
             })
             return
         }
@@ -184,11 +241,11 @@ Page({
         })
         Api.editUserInfo(userInfo).then(res => {
             Api.getUserInfo().then(res => {
+                wx.hideLoading()
                 wx.showToast({
-                    title: '认证成功',
+                    title: '认证成功,1.5秒后自动跳转',
                     mask: true
                 })
-                wx.hideLoading()
                 storage.setUserInfo(res)
                 that.setData({
                     userInfo: res
@@ -262,7 +319,7 @@ Page({
     idcard: function (e) {
         var t = e.detail.value;
         this.setData({
-            "userInfo.idcard":t
+            "userInfo.idcard": t
         })
         return
         console.log(t);
