@@ -2,6 +2,7 @@
     "pages": [
         "pages/index/index",
         "pages/anlione/anlione",
+        "pages/lookdkpage/lookdkpage",
         "pages/anlitwo/anlitwo",
         "pages/anlitiaoli/anlitiaoli",
         "pages/count/count",

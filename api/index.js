@@ -186,4 +186,28 @@ export default {
       isThree: false,
     });
   },
+  makeCard (params) {
+    return fly({
+       url: `makeCard`, 
+      method: "post",
+      params,
+      isThree: false,
+    });
+  },
+  makeCardLog(params) {
+    return fly({
+       url: `makeCardLog`, 
+      method: "get",
+      params,
+      isThree: false,
+    });
+  },
+  makeCardDetial(params) {
+    return fly({
+       url: `makeCardDetial`, 
+      method: "post",
+      params,
+      isThree: false,
+    });
+  },
 };
