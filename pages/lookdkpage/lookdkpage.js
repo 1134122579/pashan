@@ -30,7 +30,7 @@ Page({
         longitude: "",
         color: "#ff4163",
         fillColor: "#7cb5ec88",
-        radius: 500,
+        radius: 200,
         strokeWidth: 2,
       },
     ],
