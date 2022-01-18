@@ -84,7 +84,7 @@
         <image src="{{item.headimgurl}}" style="width: 50px;height: 50px;border-radius: 50%;display: block;"></image>
         <view class="name">{{item.name}}</view>
         <view class="name dt Dk" bindtap="onDkonclick" data-item="{{item}}">{{type==1?'上班打卡':'下班打卡'}}</view>
-        <view class="name newJY DKTimeStyle">
+        <view class="name newJY DKTimeStyle" bindtap="golookpage" data-item="{{item}}">
           <view>
             <view class="DKTimeStyle_t">上班打卡:{{item.onTime}}</view>
             <view class="DKTimeStyle_t"> 下班打卡:{{item.upTime}}</view>

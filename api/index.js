@@ -115,7 +115,7 @@ export default {
   },
   endDsLog(params) {
     return fly({
-       url: `endDsLog`, 
+      url: `endDsLog`,
       method: "get",
       params,
       isThree: false,
@@ -123,7 +123,7 @@ export default {
   },
   getSosList(params) {
     return fly({
-       url: `getSosList`, 
+      url: `getSosList`,
       method: "post",
       params,
       isThree: false,
@@ -131,7 +131,7 @@ export default {
   },
   getWeather(params) {
     return fly({
-       url: `getWeather`, 
+      url: `getWeather`,
       method: "get",
       params,
       isThree: false,
@@ -139,7 +139,7 @@ export default {
   },
   getDsCount(params) {
     return fly({
-       url: `getDsCount`, 
+      url: `getDsCount`,
       method: "get",
       params,
       isThree: false,
@@ -147,7 +147,7 @@ export default {
   },
   subSosLog(params) {
     return fly({
-       url: `subSosLog`, 
+      url: `subSosLog`,
       method: "post",
       params,
       isThree: false,
@@ -155,7 +155,7 @@ export default {
   },
   startDsLog(params) {
     return fly({
-       url: `startDsLog`, 
+      url: `startDsLog`,
       method: "get",
       params,
       isThree: false,
@@ -164,31 +164,31 @@ export default {
 
   getSosRoute(params) {
     return fly({
-       url: `getSosRoute`, 
+      url: `getSosRoute`,
       method: "post",
       params,
       isThree: false,
     });
   },
-  endSosLog (params) {
+  endSosLog(params) {
     return fly({
-       url: `endSosLog`, 
+      url: `endSosLog`,
       method: "post",
       params,
       isThree: false,
     });
   },
-  getTeamPosition (params) {
+  getTeamPosition(params) {
     return fly({
-       url: `getTeamPosition`, 
+      url: `getTeamPosition`,
       method: "get",
       params,
       isThree: false,
     });
   },
-  makeCard (params) {
+  makeCard(params) {
     return fly({
-       url: `makeCard`, 
+      url: `makeCard`,
       method: "post",
       params,
       isThree: false,
@@ -196,7 +196,7 @@ export default {
   },
   makeCardLog(params) {
     return fly({
-       url: `makeCardLog`, 
+      url: `makeCardLog`,
       method: "get",
       params,
       isThree: false,
@@ -204,8 +204,8 @@ export default {
   },
   makeCardDetial(params) {
     return fly({
-       url: `makeCardDetial`, 
-      method: "post",
+      url: `makeCardDetial`,
+      method: "get",
       params,
       isThree: false,
     });

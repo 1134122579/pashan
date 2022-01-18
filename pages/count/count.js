@@ -46,6 +46,14 @@ Page({
       });
     }
   },
+  golookpage(event){
+    let { item } = event.currentTarget.dataset;
+    let{dk_time}=this.data
+      wx.navigateTo({
+        // url: '/pages/lookdkpage/lookdkpage?user_id='+item.user_id,
+        url:`/pages/lookdkpage/lookdkpage?user_id=${item.user_id}&date=${dk_time}&rukou_id=2`
+      })
+  },
   getCount() {
     Api.getDsCount().then((res) => {
       let all_numAll = res.reduce((total, num) => {
@@ -129,7 +137,7 @@ Page({
     Api.makeCardLog({ date }).then((res) => {
       // 判断不是队长
       if (res.length > 0 && !is_admin) {
-        res = res.filter((item) => item.user_id != user_id);
+        res = res.filter((item) => item.user_id == user_id);
       }
       if (res.length > 0) {
         res = res.map((res) => {

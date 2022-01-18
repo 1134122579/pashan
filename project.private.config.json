@@ -89,6 +89,12 @@
           "pathName": "pages/testify/testify",
           "query": "state=reset",
           "scene": null
+        },
+        {
+          "name": "地图。。。。",
+          "pathName": "pages/lookdkpage/lookdkpage",
+          "query": "user_id=35&date=2022-1-17&rukou_id=2",
+          "scene": null
         }
       ]
     }
