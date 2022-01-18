@@ -94,11 +94,13 @@ page {
   position: fixed;
   bottom: 0;
   width: 100%;
-  padding: 25rpx 0;
+  padding: 30rpx 0;
   display: flex;
   justify-content: center;
   align-items: center;
   background: #fff;
+  /* padding-bottom: constant(safe-area-inset-bottom); 兼容 IOS<11.2 */
+  /* padding-bottom: env(safe-area-inset-bottom);  兼容 IOS>11.2 */
 }
 
 .block {
@@ -183,12 +185,15 @@ white-space: nowrap;
 }
 .DKTimeStyle_t{
   color: #333;
+  line-height: 2;
 }
 .isnullbuttonDk{
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  margin-top: 20rpx;
 }
 .isnullbuttonDk .Dk{
   width: 180rpx;

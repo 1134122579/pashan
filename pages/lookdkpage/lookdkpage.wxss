@@ -26,6 +26,9 @@ page {
   width: 100%;
   width: 100vw;
   background: #fff;
+  padding-bottom: constant(safe-area-inset-bottom); /*兼容 IOS<11.2*/
+padding-bottom: env(safe-area-inset-bottom); /*兼容 IOS>11.2*/
+/* 顺序不可变*/
 }
 
 .text {

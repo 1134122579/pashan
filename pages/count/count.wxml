@@ -71,7 +71,7 @@
   </view>
 </view>
 <view class="countPage" wx:if="{{is_jy==3}}">
-  <picker mode="date" value="{{date}}" start="2021-08-01" end="{{dk_time}}" bindchange="bindDateChange">
+  <picker mode="date" value="{{dk_time}}" start="2021-08-01" end="{{enddate}}" bindchange="bindDateChange">
     <view class="header_btton">
       <van-icon name="arrow-left" size="16" color="#367CD5" />
       <view class="dk_time">{{dk_time}}</view>
@@ -98,8 +98,8 @@
   </block>
   <!-- <view class="listnull" wx:if="{{isNulist}}">暂无更多</view> -->
   <view class="isnullbuttonDk" wx:if="{{DkList.length<=0}}">
-    <!-- <van-empty description="暂无数据" /> -->
-    <view class="name dt Dk" bindtap="onDkonclick" data-item="{{item}}">{{type==1?'上班打卡':'下班打卡'}}</view>
+    <van-empty description="暂无数据" />
+    <!-- <view class="name dt Dk" bindtap="onDkonclick" data-item="{{item}}">{{type==1?'上班打卡':'下班打卡'}}</view> -->
   </view>
 </view>
 

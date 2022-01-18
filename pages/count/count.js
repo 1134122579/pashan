@@ -3,14 +3,18 @@ let App = getApp();
 import Api from "../../api/index";
 import storage from "../../utils/cache";
 import { parseTime } from "../../utils/index";
+let tmie = null;
 Page({
   /**
    * 页面的初始数据
    */
   data: {
     isgps: false,
+    enddate:"",
     DkList: [],
     dk_time: "",
+    isloadtion: false,
+    loadtion: "",
     lat: "",
     lng: "",
     page: 1,
@@ -142,15 +146,12 @@ Page({
   },
   // 获取打卡列表
   makeCardLog() {
-    let { dk_time } = this.data;
+    let { dk_time, userInfo } = this.data;
     let date = dk_time || parseTime(new Date(), "{y}-{m}-{d}");
     let is_admin = storage.getUserInfo().is_admin == 1;
     let user_id = storage.getUserInfo().user_id;
     Api.makeCardLog({ date }).then((res) => {
-      // 判断不是队长
-      if (res.length > 0 && !is_admin) {
-        res = res.filter((item) => item.user_id == user_id);
-      }
+      // res=[]
       if (res.length > 0) {
         res = res.map((res) => {
           res["upTime"] = res["upTime"]
@@ -161,6 +162,25 @@ Page({
             : "未打卡";
           return res;
         });
+      }
+      // 判断是否已有自己
+      let ismy = res.filter((item) => item.user_id == user_id).length <= 0||res.length<=0;
+      // 没有追加一个
+      if (ismy) {
+        let myuserinfo = {
+          upTime: "未打卡",
+          headimgurl: userInfo.headimgurl,
+          name: userInfo.name,
+          onTime: "未打卡",
+          rukou_id: userInfo.rukou_id,
+          user_id: userInfo.user_id,
+        };
+        res.push(myuserinfo);
+      }
+      console.log(res)
+      // 判断不是队长
+      if (res.length > 0 && !is_admin) {
+        res = res.filter((item) => item.user_id == user_id);
       }
       this.setData({
         DkList: res,
@@ -183,7 +203,11 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {},
+  onReady: function () {
+    this.setData({
+      enddate:parseTime(new Date(), "{y}-{m}-{d}")
+    })
+  },
   onDkonclick1(res) {
     let { type } = this.data;
     let rukou_id = storage.getUserInfo().rukou_id;
@@ -201,25 +225,42 @@ Page({
   onDkonclick(e) {
     let { item } = e.currentTarget.dataset;
     console.log(21);
-    let { isgps } = this.data;
+    let { isgps, isloadtion, loadtion } = this.data;
     let that = this;
     if (item.user_id != storage.getUserInfo().user_id) {
       wx.showToast({
         title: "非本人，禁止打卡",
-        icon:"none"
+        icon: "none",
       });
       return;
     }
     if (isgps) {
-      wx.getLocation({
-        success(res) {
-          that.onDkonclick1(res);
-        },
-      });
+      if (isloadtion) {
+        let res = loadtion;
+        that.onDkonclick1(res);
+        clearTimeout(tmie);
+        tmie = setTimeout(() => {
+          that.setData({
+            loadtion: res,
+            isloadtion: false,
+          });
+        }, 3000);
+      } else {
+        wx.getLocation({
+          success(res) {
+            that.setData({
+              loadtion: res,
+              isloadtion: true,
+            });
+          },
+        });
+      }
     } else {
       App.isGps((res) => {
         that.setData({
           isgps: true,
+          loadtion: res,
+          isloadtion: true,
         });
         this.onDkonclick1(res);
       });
