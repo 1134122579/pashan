@@ -25,6 +25,7 @@ page {
 .classstyle {
   width: 100%;
   width: 100vw;
+  background: #fff;
 }
 
 .text {
@@ -32,6 +33,10 @@ page {
   flex-shrink: 0;
   color: #333;
   font-size: 30rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
 }
 
 .sure {
@@ -54,7 +59,7 @@ page {
   position: absolute;
   top: 50rpx;
   right: 0;
-  width: 250rpx;
+  min-width: 250rpx;
   border-radius: 20rpx 0 0 20rpx;
   background: #fff;
   text-align: left;

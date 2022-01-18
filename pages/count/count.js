@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isgps: false,
     DkList: [],
     dk_time: "",
     lat: "",
@@ -46,13 +47,24 @@ Page({
       });
     }
   },
-  golookpage(event){
+  golookpage(event) {
     let { item } = event.currentTarget.dataset;
-    let{dk_time}=this.data
+    let { dk_time, isgps } = this.data;
+    let that = this;
+    if (isgps) {
       wx.navigateTo({
-        // url: '/pages/lookdkpage/lookdkpage?user_id='+item.user_id,
-        url:`/pages/lookdkpage/lookdkpage?user_id=${item.user_id}&date=${dk_time}&rukou_id=2`
-      })
+        url: `/pages/lookdkpage/lookdkpage?user_id=${item.user_id}&date=${dk_time}&rukou_id=${item.rukou_id}`,
+      });
+    } else {
+      App.isGps(() => {
+        that.setData({
+          isgps: true,
+        });
+        wx.navigateTo({
+          url: `/pages/lookdkpage/lookdkpage?user_id=${item.user_id}&date=${dk_time}&rukou_id=${item.rukou_id}`,
+        });
+      });
+    }
   },
   getCount() {
     Api.getDsCount().then((res) => {
@@ -172,15 +184,46 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {},
-  onDkonclick() {
-    let { type, lng, lat } = this.data;
+  onDkonclick1(res) {
+    let { type } = this.data;
     let rukou_id = storage.getUserInfo().rukou_id;
+    let that = this;
+    const lat = res.latitude;
+    const lng = res.longitude;
     Api.makeCard({ type, lat, lng, rukou_id }).then((res) => {
       wx.showToast({
         title: "打卡成功",
       });
-      this.makeCardLog();
+      that.makeCardLog();
     });
+  },
+
+  onDkonclick(e) {
+    let { item } = e.currentTarget.dataset;
+    console.log(21);
+    let { isgps } = this.data;
+    let that = this;
+    if (item.user_id != storage.getUserInfo().user_id) {
+      wx.showToast({
+        title: "非本人，禁止打卡",
+        icon:"none"
+      });
+      return;
+    }
+    if (isgps) {
+      wx.getLocation({
+        success(res) {
+          that.onDkonclick1(res);
+        },
+      });
+    } else {
+      App.isGps((res) => {
+        that.setData({
+          isgps: true,
+        });
+        this.onDkonclick1(res);
+      });
+    }
   },
   // 获取时间
   getType() {
@@ -204,19 +247,6 @@ Page({
     this.getSosList();
     this.getType();
     let that = this;
-    wx.getLocation({
-      type: "wgs84",
-      success(res) {
-        const lat = res.latitude;
-        const lng = res.longitude;
-        const speed = res.speed;
-        const accuracy = res.accuracy;
-        that.setData({
-          lat,
-          lng,
-        });
-      },
-    });
   },
 
   /**
