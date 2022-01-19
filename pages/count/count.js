@@ -269,7 +269,7 @@ Page({
   // 获取时间
   getType() {
     let h = new Date(
-      parseTime(new Date(), "{y}-{m}-{d}") + " 12:00:00"
+      parseTime(new Date(), "{y}/{m}/{d}") + " 12:00:00"
     ).getTime();
     let nT = new Date().getTime();
     console.log(h, nT);
