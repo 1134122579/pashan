@@ -2,7 +2,9 @@
 let App = getApp();
 import Api from "../../api/index";
 import storage from "../../utils/cache";
-import { parseTime } from "../../utils/index";
+import {
+  parseTime
+} from "../../utils/index";
 let tmie = null;
 Page({
   /**
@@ -10,7 +12,7 @@ Page({
    */
   data: {
     isgps: false,
-    enddate:"",
+    enddate: "",
     DkList: [],
     dk_time: "",
     isloadtion: false,
@@ -34,7 +36,9 @@ Page({
   },
   goJypage(event) {
     console.log(event);
-    let { item } = event.currentTarget.dataset;
+    let {
+      item
+    } = event.currentTarget.dataset;
     if (item.status == 2) {
       App.isGetlocation(() => {
         item["latitude"] = item["lat"];
@@ -52,8 +56,13 @@ Page({
     }
   },
   golookpage(event) {
-    let { item } = event.currentTarget.dataset;
-    let { dk_time, isgps } = this.data;
+    let {
+      item
+    } = event.currentTarget.dataset;
+    let {
+      dk_time,
+      isgps
+    } = this.data;
     let that = this;
     if (isgps) {
       wx.navigateTo({
@@ -95,7 +104,11 @@ Page({
     });
   },
   getSosList() {
-    let { is_jy, page, jy_list } = this.data;
+    let {
+      is_jy,
+      page,
+      jy_list
+    } = this.data;
     if (is_jy == 1) {
       Api.getSosList({
         page,
@@ -146,25 +159,30 @@ Page({
   },
   // 获取打卡列表
   makeCardLog() {
-    let { dk_time, userInfo } = this.data;
+    let {
+      dk_time,
+      userInfo
+    } = this.data;
     let date = dk_time || parseTime(new Date(), "{y}-{m}-{d}");
     let is_admin = storage.getUserInfo().is_admin == 1;
     let user_id = storage.getUserInfo().user_id;
-    Api.makeCardLog({ date }).then((res) => {
+    Api.makeCardLog({
+      date
+    }).then((res) => {
       // res=[]
       if (res.length > 0) {
         res = res.map((res) => {
-          res["upTime"] = res["upTime"]
-            ? parseTime(res["upTime"], "{h}:{i}")
-            : "未打卡";
-          res["onTime"] = res["onTime"]
-            ? parseTime(res["onTime"], "{h}:{i}")
-            : "未打卡";
+          res["upTime"] = res["upTime"] ?
+            parseTime(res["upTime"], "{h}:{i}") :
+            "未打卡";
+          res["onTime"] = res["onTime"] ?
+            parseTime(res["onTime"], "{h}:{i}") :
+            "未打卡";
           return res;
         });
       }
       // 判断是否已有自己
-      let ismy = res.filter((item) => item.user_id == user_id).length <= 0||res.length<=0;
+      let ismy = res.filter((item) => item.user_id == user_id).length <= 0 || res.length <= 0;
       // 没有追加一个
       if (ismy) {
         let myuserinfo = {
@@ -205,16 +223,23 @@ Page({
    */
   onReady: function () {
     this.setData({
-      enddate:parseTime(new Date(), "{y}-{m}-{d}")
+      enddate: parseTime(new Date(), "{y}-{m}-{d}")
     })
   },
   onDkonclick1(res) {
-    let { type } = this.data;
+    let {
+      type
+    } = this.data;
     let rukou_id = storage.getUserInfo().rukou_id;
     let that = this;
     const lat = res.latitude;
     const lng = res.longitude;
-    Api.makeCard({ type, lat, lng, rukou_id }).then((res) => {
+    Api.makeCard({
+      type,
+      lat,
+      lng,
+      rukou_id
+    }).then((res) => {
       wx.showToast({
         title: "打卡成功",
       });
@@ -223,9 +248,15 @@ Page({
   },
 
   onDkonclick(e) {
-    let { item } = e.currentTarget.dataset;
+    let {
+      item
+    } = e.currentTarget.dataset;
     console.log(21);
-    let { isgps, isloadtion, loadtion } = this.data;
+    let {
+      isgps,
+      isloadtion,
+      loadtion
+    } = this.data;
     let that = this;
     if (item.user_id != storage.getUserInfo().user_id) {
       wx.showToast({
@@ -288,6 +319,15 @@ Page({
     this.getSosList();
     this.getType();
     let that = this;
+    this.setData({
+      userInfo: storage.getUserInfo()
+    })
+    let {
+      userInfo
+    } = this.data
+      this.setData({
+        is_jy: userInfo.is_team_leader == 1?1:2
+      })
   },
 
   /**
@@ -310,7 +350,9 @@ Page({
    */
   onReachBottom: function () {
     console.log(112);
-    let { is_jy } = this.data;
+    let {
+      is_jy
+    } = this.data;
     if (is_jy != 1) {
       this.onBottom();
     }

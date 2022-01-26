@@ -217,7 +217,13 @@
                     </view>
                     <view class="content-item-dashed"></view>
                 </view>
-
+                <view bindtap="onanlitree" class="content-item" data-id="{{item.id}}">
+                    <view class="content-itemd">
+                        <view class="content-item-title">深圳市森林防火通告</view>
+                        <view class="content-item-date">2021-01-24</view>
+                    </view>
+                    <view class="content-item-dashed"></view>
+                </view>
             </view>
         </view>
         <image class="addpopup" wx:if="{{!userInfo.bean_info}}" src="/images/popup.gif"></image>

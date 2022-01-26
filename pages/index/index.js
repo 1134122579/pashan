@@ -53,6 +53,26 @@ Page({
       url: '/pages/anlitwo/anlitwo',
     })
   },
+  onanlitree() {
+     wx.downloadFile({
+      // 示例 url，并非真实存在
+      url: 'https://api.uba9.com/img/a.pdf',
+      success: function (res) {
+        const filePath = res.tempFilePath
+        console.log('打开文档成功',res)
+        wx.openDocument({
+          filePath: filePath,
+          success: function (res) {
+            console.log('打开文档成功',res)
+          }
+        })
+      }
+    })
+    return
+    wx.navigateTo({
+      url: '/pages/onanlitree/onanlitree',
+    })
+  },
   cancel() {
     var e = this;
     let {
