@@ -95,6 +95,18 @@
           "pathName": "pages/lookdkpage/lookdkpage",
           "query": "user_id=35&date=2022-1-17&rukou_id=2",
           "scene": null
+        },
+        {
+          "name": "队长端",
+          "pathName": "pages/count/count",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "登山口结束",
+          "pathName": "pages/endcode/endcode",
+          "query": "end_rukou=俄公登山口       ",
+          "scene": null
         }
       ]
     }

@@ -1,0 +1,59 @@
+<view class="userinfo">
+  <image class="header" src="{{userInfo.headimgurl}}"></image>
+  <view class="usertext">
+    <view class="name">{{userInfo.name}}</view>
+    <view class="mobile">{{userInfo.mobile}}</view>
+  </view>
+</view>
+<view class="desc" wx:if="{{dsdetail}}">
+  <view class="desc_title">登山信息</view>
+  <view class="ul">
+    <view class="li">
+      <view class="view">上山入口：</view>
+      <view class="rukou">
+        {{dsdetail.rukou}}
+      </view>
+    </view>
+    <view class="li">
+      <view class="view">开始时间：</view>
+      <view class="rukou">
+        {{dsdetail.start_time}}
+      </view>
+    </view>
+    <view class="li">
+      <view class="view">下山出口：</view>
+      <view class="rukou">
+        {{end_rukou}}
+      </view>
+    </view>
+    <view class="li">
+      <view class="view">结束时间：</view>
+      <view class="rukou">
+        {{dsdetail.end_time}}
+      </view>
+    </view>
+    <view class="li">
+      <view class="view">登山类型：</view>
+      <view class="rukou" wx:if="{{dsdetail.type==2}}">
+        团体
+      </view>
+      <view class="rukou" wx:if="{{dsdetail.type==1}}">
+        个人
+      </view>
+    </view>
+    <view class="li">
+      <view class="view">登山人数：</view>
+      <view class="rukou">
+        {{dsdetail.num}} 人
+      </view>
+    </view>
+  </view>
+  <canvas bindlongtap="save" canvasId="canvas" class="canvas" style="width:{{qrcode_w}}px; height:{{qrcode_w}}px;"></canvas>
+</view>
+<view class="desc" wx:if="{{!dsdetail}}">
+  <view class="desc_title">登山信息</view>
+<view class="null">暂无记录~</view>
+</view>
+<view class="button"bindtap="back">
+  返回
+</view>

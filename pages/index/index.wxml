@@ -92,6 +92,12 @@
                 </swiper>
             </view>
         </view>
+        <view class="codeStyleAll" wx:if="{{isToken}}" >
+        <view class="codeStyle" bindtap="scanCode" >
+        <image src="../../images/code.png" mode="widthFix" class="codeimage"></image>
+        扫一扫</view>
+        </view>
+        <van-notice-bar  left-icon="volume-o" bind:click="noticeOnClick"  scrollable text="{{Noticecontent.msg}}" />
         <view wx:if="{{userInfo.bean_info}}" style="margin:20rpx 0;">
             <view bindtap="start" class="start" style="padding:20rpx 45rpx;border-radius: 10rpx;" wx:if="{{userInfo.bean_info.status==3}}">
                 <view class="startl" style="padding:30rpx auto">
@@ -177,7 +183,7 @@
         </view>
         <view wx:else>
             <!-- bindtap="pdf" -->
-            <view class="warning" bindtap="onanlitiaoli" style="background: #fff; margin:10rpx;margin-top:30rpx;font-size:36rpx;border-radius: 10rpx;">
+            <view class="warning" bindtap="onanlitiaoli" style="background: #fff; margin:10rpx;font-size:36rpx;border-radius: 10rpx;">
                 <view class="warning-box" style="margin:5rpx;padding:40rpx 32rpx; display: flex;justify-content: center;align-items: center;">
                     <view class="warning-left" style="color:#4E63A9;margin-bottom:10rpx;letter-spacing:6rpx;font-weight:bold"> 根据《广东省森林防火条例》设立森林防火检查站，请进入林区人员积极配合接受检查。</view>
                     <van-icon name="arrow" color="#4E63A9" />
@@ -202,11 +208,11 @@
                     </view>
                     <view class="content-item-dashed"></view>
                 </view> -->
+           
                 <view bindtap="onanlione" class="content-item" data-id="{{item.id}}">
                     <view class="content-itemd">
                         <view class="content-item-title">违反森林用火案例一</view>
                         <view class="content-item-date">2021-04-21</view>
-
                     </view>
                     <view class="content-item-dashed"></view>
                 </view>
@@ -217,13 +223,14 @@
                     </view>
                     <view class="content-item-dashed"></view>
                 </view>
-                <view bindtap="onanlitree" class="content-item" data-id="{{item.id}}">
+                <view bindtap="onanlithree" class="content-item" data-id="{{item.id}}">
                     <view class="content-itemd">
-                        <view class="content-item-title">深圳市森林防火通告</view>
-                        <view class="content-item-date">2021-01-24</view>
+                        <view class="content-item-title">深圳市森林防火禁火通告</view>
+                        <view class="content-item-date">2022-01-24</view>
                     </view>
                     <view class="content-item-dashed"></view>
                 </view>
+
             </view>
         </view>
         <image class="addpopup" wx:if="{{!userInfo.bean_info}}" src="/images/popup.gif"></image>
@@ -377,3 +384,10 @@
         }),
     });
 </wxs>
+<van-popup show="{{ isNoticeshow }}" closeable bind:close="onNoticeClose">
+    <view class="pwinfoStyle">
+    <view class="userImageStyle">
+        <image src="{{Noticecontent.img_url}}" style="width: 100%;" mode="widthFix"></image>
+    </view>
+    </view>
+</van-popup>

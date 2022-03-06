@@ -30,7 +30,7 @@ Page({
         longitude: "",
         color: "#ff4163",
         fillColor: "#7cb5ec88",
-        radius: 100,
+        radius: 200,
         strokeWidth: 2,
       },
     ],
@@ -244,7 +244,7 @@ Page({
         radius = ((this.getDistance(lng1, lat1, lng2, lat1) * 1000) / 2) * 0.8;
       }
       this.setData({
-        // "circles[0].radius": radius,
+        "circles[0].radius": radius,
       });
       console.log(this.data.circles[0].radius);
     });

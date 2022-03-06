@@ -11,6 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    DsLogList: [],
     isgps: false,
     enddate: "",
     DkList: [],
@@ -109,7 +110,8 @@ Page({
       page,
       jy_list
     } = this.data;
-    if (is_jy == 1) {
+    console.log(is_jy,'getSosList')
+    if (is_jy != 1) {
       Api.getSosList({
         page,
       }).then((res) => {
@@ -149,13 +151,53 @@ Page({
     });
     this.makeCardLog();
   },
+  jl() {
+    console.log(4);
+    this.setData({
+      is_jy: 4,
+      page: 1,
+    });
+    this.getDsLogList()
+  },
+  // 获取登山记录
+  getDsLogList() {
+    let {
+      page,
+      DsLogList
+    } = this.data
+    Api.getDsLogList({
+      page
+    }).then(res => {
+      console.log(res,'getDsLogList')
+      this.setData({
+        isNulist: res.length <= 0
+      })
+      if (page == 1) {
+        this.setData({
+          DsLogList: res,
+        })
+      } else {
+        this.setData({
+          DsLogList: DsLogList.concat(res)
+        })
+      }
+
+    })
+  },
 
   //触底响应函数
   onBottom() {
     var that = this;
+    let {
+      is_jy
+    } = this.data
     this.data.page++;
-    console.log(this.data.page);
-    this.getSosList();
+    console.log(this.data.page,is_jy);
+    if (is_jy == 4) {
+      this.getDsLogList()
+    } else {
+      this.getSosList();
+    }
   },
   // 获取打卡列表
   makeCardLog() {
@@ -319,15 +361,6 @@ Page({
     this.getSosList();
     this.getType();
     let that = this;
-    this.setData({
-      userInfo: storage.getUserInfo()
-    })
-    let {
-      userInfo
-    } = this.data
-      this.setData({
-        is_jy: userInfo.is_team_leader == 1?1:2
-      })
   },
 
   /**
@@ -349,11 +382,11 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    console.log(112);
     let {
       is_jy
     } = this.data;
     if (is_jy != 1) {
+    console.log(112);
       this.onBottom();
     }
   },

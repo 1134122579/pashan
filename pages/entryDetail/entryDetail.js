@@ -72,7 +72,7 @@ Page({
     data: {
         isShowMask: false,
         userInfo: App.globalData.userInfo,
-        mask:false,
+        mask: false,
         is_gostart: true,
         statusPoup: true,
         windowHeight: H,
@@ -451,7 +451,7 @@ Page({
             That.upDK()
             That.setPolyline()
         } else {
-           
+
         }
     },
     // 上传打卡
@@ -592,29 +592,26 @@ Page({
         wx.showLoading({
             title: '上传中',
         })
-        Api.endDsLog().then(res => {
-            Api.endDsLog(userInfo.bean_info).then(res => {
-                wx.hideLoading()
-                wx.showToast({
-                    title: '结束登山',
-                    mask: true
+        Api.endDsLog(userInfo.bean_info).then(res => {
+            wx.hideLoading()
+            wx.showToast({
+                title: '结束登山',
+                mask: true
+            })
+            setTimeout(() => {
+                wx.redirectTo({
+                    url: '/pages/index/index',
                 })
-                setTimeout(() => {
-                    wx.redirectTo({
-                        url: '/pages/index/index',
-                    })
-                }, 1500);
-                clearInterval(JStimeDSQ)
-                clearInterval(UPDKDD)
-                clearInterval(lineTime)
-                wx.removeStorageSync('statTime')
-                wx.removeStorageSync('state')
-                wx.offLocationChange((data) => {
-                    console.log(data, "结束定位")
-                })
+            }, 1500);
+            clearInterval(JStimeDSQ)
+            clearInterval(UPDKDD)
+            clearInterval(lineTime)
+            wx.removeStorageSync('statTime')
+            wx.removeStorageSync('state')
+            wx.offLocationChange((data) => {
+                console.log(data, "结束定位")
             })
         })
-
     },
     // 获取位置
     // getLocation() {
@@ -1005,7 +1002,7 @@ Page({
             })
         }
         this.setData({
-            mask:wx.getStorageSync('state')?false:true
+            mask: wx.getStorageSync('state') ? false : true
         })
         if (wx.getStorageSync('polylineLocatoion')) {
             this.getLine()

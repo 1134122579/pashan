@@ -210,4 +210,29 @@ export default {
       isThree: false,
     });
   },
+  getNotice(params) {
+    return fly({
+      url: `getNotice`,
+      method: "get",
+      params,
+      isThree: false,
+    });
+  },
+  getDsLogList(params) {
+    return fly({
+      url: `getDsLogList`,
+      method: "post",
+      params,
+      isThree: false,
+    });
+  },
+  getUserDsLog(params) {
+    return fly({
+      url: `getUserDsLog`,
+      method: "get",
+      params,
+      isThree: false,
+    });
+  },
+  
 };

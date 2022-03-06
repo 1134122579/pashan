@@ -109,7 +109,8 @@ page {
   /* padding: 10px 0; */
   color: #367CD5;
 }
-.title_time{
+
+.title_time {
   text-align: center;
   background: #cccccc;
   color: #fff;
@@ -119,54 +120,63 @@ page {
   border-radius: 30rpx;
   font-size: 12px;
 }
-.block{
+
+.block {
   width: 100%;
 }
-.isNulist{
+
+.isNulist {
   display: flex;
   justify-content: center;
   align-items: center;
   flex: 1;
   height: 100%;
 }
-.listnull{
+
+.listnull {
   padding: 20rpx;
   text-align: center;
   font-size: 14px;
-  color:#ccc;
+  color: #ccc;
 }
-.backgroundred{
+
+.backgroundred {
   background: #e72828;
 }
-.textRukou{
+
+.textRukou {
 
   overflow: hidden;
-text-overflow:ellipsis;
-white-space: nowrap;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.jysize{
+
+.jysize {
   width: 100%;
   text-align: right;
   font-size: 24rpx;
   color: #ccc;
 }
+
 /* 打卡 */
-.header_btton{
+.header_btton {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   padding: 20rpx 0;
 }
-.dk_time{
+
+.dk_time {
   background: #367CD5;
   padding: 6rpx 20rpx;
-  margin:0 20rpx;
+  margin: 0 20rpx;
   border-radius: 40rpx;
   color: #fff;
   font-size: 24rpx;
 }
-.Dk{
+
+.Dk {
   width: 150rpx;
   height: 150rpx;
   border-radius: 50%;
@@ -174,7 +184,8 @@ white-space: nowrap;
   background: #367CD5;
   line-height: 150rpx;
 }
-.DKTimeStyle{
+
+.DKTimeStyle {
   width: 32%;
   flex-shrink: 0;
   text-align: left;
@@ -183,11 +194,13 @@ white-space: nowrap;
   justify-content: space-between;
   align-items: center;
 }
-.DKTimeStyle_t{
+
+.DKTimeStyle_t {
   color: #333;
   line-height: 2;
 }
-.isnullbuttonDk{
+
+.isnullbuttonDk {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -195,9 +208,51 @@ white-space: nowrap;
   flex-direction: column;
   margin-top: 20rpx;
 }
-.isnullbuttonDk .Dk{
+
+.isnullbuttonDk .Dk {
   width: 180rpx;
   height: 180rpx;
   line-height: 180rpx;
 
+}
+
+/* 记录 */
+.block .olgstyle {
+  height: 80px;
+  width: 50.4%;
+  text-align: right;
+  font-size: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-direction: column;
+}
+.olgstyle .textRukou{
+  color: #367CD5;
+}
+.olg{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+}
+.olg .name{
+  width: 100%;
+  margin-top: 18rpx;
+}
+.descolg{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.counttitle{
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+  font-size: 38rpx;
+  background: #ffffff;
+  padding: 10px 0;
+  position: fixed;
+  top: 0;
 }

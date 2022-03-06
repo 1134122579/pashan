@@ -8,9 +8,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    is_ts:false,
+    isNoticeshow: false,
+    Noticecontent: {},
+    is_ts: false,
     isone: true,
-    isTwo:false,
+    isTwo: false,
     Weather: {},
     isUser: true,
     isToken: false,
@@ -22,25 +24,68 @@ Page({
     DsCount: '',
     userInfo: App.globalData.userInfo
   },
-  onTSclone(){
+  noticeOnClick() {
+    this.setData({
+      isNoticeshow: true
+    })
+  },
+  scanCode() {
+    // wx.navigateTo({
+    //   url: '/pages/endcode/endcode?end_rukou=' + '出口',
+    // })
+    // return
+    wx.scanCode({
+      onlyFromCamera: true,
+      success(res) {
+        console.log(res.path)
+        if(res.path) {
+          wx.navigateTo({
+            url:"/"+res.path,
+          })
+        }else{
+          // wx.showToast({
+          //   title: '扫码错误，请从新扫码',
+          //   duration: 1000,
+          //   icon: "none",
+          // })
+        }
+      
+      }
+    })
+  },
+  onNoticeClose() {
+    this.setData({
+      isNoticeshow: false
+    })
+  },
+  onTSclone() {
     this.setData({
       isone: true,
-      isTwo:false,
-      is_ts:false
+      isTwo: false,
+      is_ts: false
     })
     wx.setStorageSync('ISTS', true)
   },
   onOne() {
     this.setData({
       isone: false,
-      isTwo:true
+      isTwo: true
     })
   },
-  onTwo(){
+  getNotice() {
+    Api.getNotice().then(res => {
+      console.log(res, 21212332132321312)
+
+      this.setData({
+        Noticecontent: res
+      })
+    })
+  },
+  onTwo() {
     this.setData({
       isone: true,
-      isTwo:false,
-      is_ts:false
+      isTwo: false,
+      is_ts: false
     })
   },
   onanlione() {
@@ -53,24 +98,9 @@ Page({
       url: '/pages/anlitwo/anlitwo',
     })
   },
-  onanlitree() {
-     wx.downloadFile({
-      // 示例 url，并非真实存在
-      url: 'https://api.uba9.com/img/a.pdf',
-      success: function (res) {
-        const filePath = res.tempFilePath
-        console.log('打开文档成功',res)
-        wx.openDocument({
-          filePath: filePath,
-          success: function (res) {
-            console.log('打开文档成功',res)
-          }
-        })
-      }
-    })
-    return
+  onanlithree() {
     wx.navigateTo({
-      url: '/pages/onanlitree/onanlitree',
+      url: '/pages/anlithree/anlithree',
     })
   },
   cancel() {
@@ -131,7 +161,7 @@ Page({
       }
     } else {
       this.setData({
-        is_ts:true
+        is_ts: true
       })
       // wx.showModal({
       //   content: '请点击左上方登录按钮',
@@ -204,7 +234,7 @@ Page({
       url: '/pages/entryDetail/entryDetail',
     })
     // App.isGetlocation(() => {
-    
+
     // })
   },
 
@@ -325,9 +355,9 @@ Page({
   onReady: function () {
     // wx.setStorageSync('ISTS', false)
     if (!storage.getToken()) {
-      let ISTS=  wx.getStorageSync('ISTS')
+      let ISTS = wx.getStorageSync('ISTS')
       this.setData({
-        is_ts:ISTS?false:true
+        is_ts: ISTS ? false : true
       })
     }
   },
@@ -340,6 +370,7 @@ Page({
       isToken: !storage.getToken() ? false : true
     })
     this.getWeather()
+    this.getNotice()
     if (storage.getToken()) {
       this.getDsCount()
       this.getUser()

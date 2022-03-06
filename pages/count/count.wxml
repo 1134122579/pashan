@@ -1,4 +1,4 @@
-<view class="countPage" wx:if="{{is_jy==1&&userInfo.is_team_leader==1}}">
+<view class="countPage" wx:if="{{is_jy==1}}">
   <view class="header" style="display: flex;">
     <image src="{{userInfo.headimgurl}}" style="width: 50px;height: 50px;border-radius: 50%;display: block;"></image>
     <view class="name">{{userInfo.name}}</view>
@@ -102,9 +102,64 @@
     <!-- <view class="name dt Dk" bindtap="onDkonclick" data-item="{{item}}">{{type==1?'上班打卡':'下班打卡'}}</view> -->
   </view>
 </view>
+<view class="countPage" style="margin-top: 50px;" wx:if="{{is_jy==4}}">
+<view class="counttitle">当日登山记录</view>
+  <block wx:for="{{DsLogList}}" wx:key="index" wx:if="{{DsLogList.length>0}}">
+    <view class="block" style="margin-top: 14rpx;">
+      <!-- <view class=" {{item.status==2?' title_time backgroundred':'title_time'}}">{{item.create_time}}</view> -->
+      <view class="header" style="display: flex; justify-content: space-between;align-items: center;height: 100%">
+      <view class="olg" >
+        <image src="{{item.headimgurl}}" mode="widthFix" style="width: 50px;height: 50px;border-radius: 50%;display: block;"></image>
+        <view class="name">{{item.name}}</view>
+      </view>
+      <view>
+      <view style="color: #333;">状态</view>
+        <view wx:if="{{item.status==1}}" style="color: #67C23A;font-size: 24rpx;">已备案</view>
+      <view wx:if="{{item.status==2}}" style="color: #ccc;font-size: 28rpx;">已结束</view>
+      <view wx:if="{{item.status==3}}" style="color:#E6A23C;font-size: 28rpx;">在途中</view>
+      <view wx:if="{{item.status==4}}" style="color:#F56C6C;font-size: 28rpx;">已取消</view>
+      </view>
+
+        <view class="name newJY olgstyle">
+          <view class="descolg">
+            <view class="textRukou" style="color: #333;font-weight: 600;">登山入口：</view>
+            <view class="textRukou">{{item.rukou}}</view>
+          </view>
+          <view class="descolg">
+            <view class="textRukou" style="color: #333;font-weight: 600;">登山时间：</view>
+            <view class="textRukou">{{item.start_time}}</view>
+          </view>
+          <view class="descolg">
+            <view class="textRukou" style="color: #333;font-weight: 600;">下山出口：</view>
+            <view class="textRukou">{{item.end_rukou}}</view>
+          </view>
+          <view class="descolg">
+            <view class="textRukou" style="color: #333;font-weight: 600;">下山时间：</view>
+            <view class="textRukou">{{item.end_time||""}}</view>
+          </view>
+          
+        </view>
+
+        <view class="name " style="margin-top: -30rpx;  width: 36%;font-size: 22rpx;" wx:if="{{item.status==1}}">
+          <view class="jysize"> 已完成</view>
+          <view style="display:flex;justify-content: flex-start;align-items: center;">
+            <image style="width: 30rpx;height: 30rpx;display: block;" src="/images/rukou.jpg"></image>
+            <view class="textRukou">{{item.rukou}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </block>
+  <view class="listnull" wx:if="{{isNulist}}">暂无更多</view>
+  <view class="isNulist" wx:if="{{DsLogList.length<=0}}">
+    <van-empty description="暂无数据" />
+  </view>
+</view>
+
 
 <view class="flooter">
-  <view class="block" bindtap="tj" wx:if="{{userInfo.is_team_leader==1}}">
+  <view class="block" bindtap="tj">
     统计
   </view>
   <view class="block" bindtap="jy">
@@ -112,5 +167,8 @@
   </view>
   <view class="block" bindtap="dk">
     打卡
+  </view>
+  <view class="block" bindtap="jl">
+    记录
   </view>
 </view>
