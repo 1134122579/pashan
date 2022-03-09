@@ -113,7 +113,7 @@
         <view class="name">{{item.name}}</view>
       </view>
       <view>
-      <view style="color: #333;">状态</view>
+      <view style="color: #333;font-size: 20rpx;padding-bottom: 20rpx;">状态</view>
         <view wx:if="{{item.status==1}}" style="color: #67C23A;font-size: 24rpx;">已备案</view>
       <view wx:if="{{item.status==2}}" style="color: #ccc;font-size: 28rpx;">已结束</view>
       <view wx:if="{{item.status==3}}" style="color:#E6A23C;font-size: 28rpx;">在途中</view>

@@ -219,7 +219,7 @@ page {
 /* 记录 */
 .block .olgstyle {
   height: 80px;
-  width: 51%;
+  width: 54%;
   text-align: right;
   font-size: 24rpx;
   display: flex;
