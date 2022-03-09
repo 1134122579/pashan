@@ -7,7 +7,7 @@ const windowHeight = wx.getSystemInfoSync().windowHeight;
 const rate = 750.0 / W;
 const H = windowHeight * rate
 // 300rpx 在6s上为 150px
-const qrcode_w = 600 / rate;
+const qrcode_w = 450/ rate;
 
 Page({
 

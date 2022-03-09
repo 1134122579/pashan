@@ -1,5 +1,14 @@
 /* pages/endcode/endcode.wxss */
 
+page {
+  background: #F7F7F7;
+}
+
+.edncode {
+  background: #fff;
+  margin: 20rpx ;
+  box-sizing: border-box;
+}
 
 .userinfo {
   display: flex;
@@ -8,29 +17,33 @@
   background: #ffffff;
   padding: 20rpx;
   margin: 20rpx;
-  border-radius: 10rpx;
+  /* border-radius: 10rpx; */
+  border-bottom: 1px solid #F7F7F7;
 }
 
 .header {
-  width: 80px;
-  height: 80px;
+  width: 80rpx;
+  height: 80rpx;
   border-radius: 50%;
-
 }
 
 .usertext {
-  margin-left: 30rpx;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .name {
   color: #333333;
-  font-size: 38rpx;
+  font-size: 28rpx;
+  margin: 0 30rpx;
 }
 
 .mobile {
   color: #cccccc;
   margin-top: 20rpx;
-  font-size: 30rpx;
+  font-size: 26rpx;
 }
 
 
@@ -49,19 +62,64 @@
   margin-bottom: 20rpx;
 }
 
+.block- {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+.block-2{
+  background: #F7F7F7;
+}
+.block-2 .text{
+  width: 100%;
+  text-align: center;
+}
+.block-2 .view{
+  width: 100%;
+}
+
 .li {
   display: flex;
-  justify-content: flex-start;
-  margin-bottom: 20rpx;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rpx;
   font-size: 28rpx;
-}.view{
+  background: #F7F7F7;
+  width: 49%;
+  padding: 20rpx 0;
+  flex-shrink: 0;
+}
+
+.li-icon {
+  width: 60rpx;
+  max-height: 60rpx;
+  display: block;
+}
+
+.text {
+  margin-left: 10rpx;
+  text-align: center;
+}
+
+.view {
   width: 150rpx;
-  text-align: left;
+  /* text-align: left; */
+  font-size: 24rpx;
+  color: #cccccc;
 }
-.rukou{
-  color: #377cd4;
+
+.rukou {
+  /* color: #377cd4; */
+  color: #333333;
+  font-weight: 600;
+  padding: 10rpx 0;
+  font-size: 26rpx;
 }
-.button{
+
+.button {
   background: #377cd4;
   border-radius: 10rpx;
   color: #fff;
@@ -75,9 +133,11 @@
   text-align: center;
   width: 694rpx;
 }
-.null{
+
+.null {
   padding: 20px;
 }
-.canvas{
+
+.canvas {
   margin: 20rpx auto;
 }
