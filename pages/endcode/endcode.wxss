@@ -8,6 +8,7 @@ page {
   background: #fff;
   margin: 20rpx ;
   box-sizing: border-box;
+  padding: 10rpx 0;
 }
 
 .userinfo {
@@ -20,7 +21,6 @@ page {
   /* border-radius: 10rpx; */
   border-bottom: 1px solid #F7F7F7;
 }
-
 .header {
   width: 80rpx;
   height: 80rpx;
@@ -89,7 +89,8 @@ page {
   font-size: 28rpx;
   background: #F7F7F7;
   width: 49%;
-  padding: 20rpx 0;
+  /* padding: 20rpx 0; */
+  height: 120rpx;
   flex-shrink: 0;
 }
 
