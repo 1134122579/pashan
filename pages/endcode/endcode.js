@@ -59,7 +59,9 @@ Page({
       this.setData({
         dsdetail: res
       })
-    this.onjieshu()
+      if(res.status!=3){
+        this.onjieshu()
+      }
     })
   },
 
@@ -74,8 +76,8 @@ Page({
 
   },
   back(){
-wx.navigateBack({
-  delta: 1,
+wx.redirectTo({
+  url: '/pages/index/index',
 })
   },
   // 结束登山
