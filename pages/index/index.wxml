@@ -238,7 +238,7 @@
         <view bindtap="start" wx:if="{{userInfo.bean_info&&userInfo.bean_info.status==1}}" class="add">开始登山</view>
         <view bindtap="start" wx:if="{{userInfo.bean_info&&userInfo.bean_info.status==3}}" class="add">查看登山</view>
         <view style="position:fixed;left:-100%">
-            <canvas bindlongtap="save" canvasId="canvas" class="canvas" style="width:{{qrcodeWidth}}px; height:{{qrcodeWidth}}px"></canvas>
+            <!-- <canvas bindlongtap="save" canvasId="canvas" class="canvas" style="width:{{qrcodeWidth}}px; height:{{qrcodeWidth}}px"></canvas> -->
         </view>
     </view>
     <view wx:else>

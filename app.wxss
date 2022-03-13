@@ -16,7 +16,7 @@ page {
 
 .title-words {
     color: #000;
-    font-family: PingFang SC;
+    /* font-family: PingFang SC; */
     font-size: 32rpx;
     font-weight: 700;
     line-height: 44rpx;

@@ -85,6 +85,18 @@
   </view>
   <view class="desc" wx:if="{{!dsdetail}}">
     <view class="desc_title">登山信息</view>
+    <view class="block-3">
+      <view class="li">
+          <image src="/images/pa.png" mode="aspectFit" class="li-icon">
+          </image>
+          <view class="text">
+            <view class="view">下山出口</view>
+            <view class="rukou">
+              {{end_rukou}}
+            </view>
+          </view>
+        </view></view>
+ 
     <view class="null">暂无记录~</view>
   </view>
   <view class="button" bindtap="back">

@@ -137,8 +137,14 @@ page {
 
 .null {
   padding: 20px;
+  font-size: 24rpx;
 }
 
 .canvas {
   margin: 20rpx auto;
+}
+.block-3{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

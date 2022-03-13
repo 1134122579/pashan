@@ -59,7 +59,7 @@ Page({
       this.setData({
         dsdetail: res
       })
-      if(res.status!=3){
+      if(res&&res?.status==3){
         this.onjieshu()
       }
     })
@@ -70,6 +70,7 @@ Page({
    */
   onLoad: function (options) {
     let {end_rukou}=options
+    console.log(decodeURI(end_rukou),21212213113)
     this.setData({
       end_rukou:decodeURI(end_rukou)
     })
@@ -87,6 +88,7 @@ wx.redirectTo({
     if(!dsdetail)return
     Api.endDsLog(userInfo.bean_info).then(res => {
       wx.hideLoading()
+      this.getUserDsLog()
       // wx.showToast({
       //     title: '结束登山',
       //     mask: true
